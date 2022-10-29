@@ -1,0 +1,50 @@
+.navbar{
+    position: fixed;
+    width: $leftSide-width;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    background:var(--main-bg);
+    padding: 1rem 0.8rem;
+    z-index: 100;
+    
+    &__logo{
+        @include flex(center, center);
+        img{
+            width: 80%;
+            border-radius: 10px;
+        }
+    }
+
+    &__link{
+        margin-top: 4rem;
+        &__item{
+            a{
+                @include flex(center, center);
+                gap: 5px 0;
+                flex-direction: column;
+                padding: 15px 5px;
+                border-radius: 15px;
+            }
+            margin-top: 1rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--txt-color);
+            &.active{
+                a{
+                    background-color: var(--hover);
+                }
+            }
+            i{
+                font-size: 1.8rem;
+            }
+            a:hover{
+                background-color: var(--hover);
+            }
+            &:hover i{
+                transform: scale(1.1);
+                transform-origin: center;
+            }
+        }
+    }
+}

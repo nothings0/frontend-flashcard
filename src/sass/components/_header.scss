@@ -1,0 +1,59 @@
+.header{
+    position: fixed;
+    width: $leftSide-width;
+    top: $top-height;
+    left: 0;
+    bottom: 0;
+    background:var(--main-bg);
+    padding: 0 0.8rem;
+    z-index: 100;
+    box-shadow: var(--box-shadow);
+    @include tablet{
+        width: $leftSide-width-sm;
+    }
+    @include mobile{
+        display: none;
+    }
+    &__link{
+        margin: 2rem 0;
+        & ~ &{
+            margin-top: 3rem
+        }
+        &__item{
+            a{
+                @include flex(center, center);
+                gap: 5px 0;
+                flex-direction: column;
+                padding: 15px 5px;
+                border-radius: 15px;
+                text-align: center;
+            }
+            margin-top: 1rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--txt-color);
+            &.active{
+                a{
+                    background-color: var(--hover);
+                }
+            }
+            i{
+                font-size: 1.8rem;
+            }
+            a:hover{
+                background-color: var(--hover);
+            }
+            &:hover i{
+                transform: scale(1.1);
+                transform-origin: center;
+            }
+        }
+        &__mode{
+            text-align: center;
+            i{
+                cursor: pointer;
+                font-size: 2rem;
+            }
+        }
+    }
+}

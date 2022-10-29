@@ -1,0 +1,26 @@
+.not-found{
+    &__container{
+        margin: auto auto;
+        height: 60vh;
+        @include flex(center, space-around);
+        gap: 2rem 0;
+        flex-direction: column;
+        h2{
+            font-size: 80px;
+            font-weight: 900;
+            background: linear-gradient(90deg, red, orange);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        h3{
+            font-size: 45px;
+            font-weight: 800;
+        }
+        a{
+            margin-top: 40px;
+            font-size: 20px;
+            @include flex(center, unset);
+            gap: 0 10px;
+        }
+    }
+}

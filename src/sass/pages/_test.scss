@@ -1,0 +1,46 @@
+.test{
+    &__container{
+        @include flex(center, center);
+        flex-direction: column;
+        gap: 1.5rem 0;
+    }
+    &__bottom{
+        margin-top: 4rem;
+        padding: 0 15%;
+        @include flex(center, space-between);
+    }
+    &__nums{
+        @include flex(center, center);
+        gap: 0 0.5rem;
+        font-size: 2rem;
+        &__item{
+            background-color: var(--main-bg);
+            padding: 5px 8px;
+            cursor: pointer;
+            box-shadow: var(--box-shadow);
+            width: 30px;
+            text-align: center;
+            border-radius: 5px;
+            &.active{
+                color: $main-color;
+                transform: scale(1.2) translateY(-5px);
+            }
+            &.false{
+                background-color: #fb6e58;
+                color: #fff;
+            }
+            &.true{
+                background-color: #23b26d;
+                color: #fff;
+            }
+        }
+    }
+    &__submit{
+        padding: 1rem 2rem;
+        background-color: $main-color;
+        color: $txt-white;
+        font-size: 1.8rem;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+}

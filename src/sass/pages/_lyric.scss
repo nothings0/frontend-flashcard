@@ -1,0 +1,155 @@
+.lyric{
+    position: relative;
+    &__container{
+        // @include flex(center, center);
+        margin-bottom: 5rem;
+    }
+    &__header{
+        position: sticky;
+        top: $top-height;
+        background-color: var(--main-bg);
+        z-index: 100;
+        padding: 3rem 0 2rem 0;
+    }
+    &__line{
+        margin: 2px 0;
+        padding: 1.8rem 3rem;
+        cursor: pointer;
+        span{
+            opacity: 0.3;
+            font-size: 2.6rem;
+            font-weight: 600;
+        }
+        &.active{
+            transform: scale(1.04);
+            transform-origin: center left;
+            span{
+                opacity: 1;
+            }
+        }
+    }
+    &__define{
+        width: 100%;
+        &__heading{
+            font-size: 1.8rem;
+            color: var(--txt-color);
+            text-align: center;
+        }
+        &__search{
+            position: relative;
+            margin: 3rem auto;
+            width: 60%;
+            input{
+                // box-shadow: var(--box-shadow);
+                border: 2px solid var(--icon);
+                width: 100%;
+                font-size: 1.6rem;
+                padding: 0.8rem 6rem 0.8rem 1rem;
+                border-radius: 10px;
+                background-color: var(--main-bg);
+                color: var(--txt-color);
+                &::placeholder{
+                    color: var(--txt-color);
+                }
+                &:not(:placeholder-shown) ~ .search__icon{
+                    color: var(--icon-2);
+                    pointer-events: auto;
+                }
+                &:focus{
+                    border: 2px solid var(--icon-2);
+                }
+            }
+            .search__icon{
+                position: absolute;
+                font-size: 2rem;
+                right: 0;
+                top: 50%;
+                transform: translateY(-50%);
+                cursor: pointer;
+                color: var(--icon);
+                padding: 1rem 2rem 1rem 1rem;
+                pointer-events: none;
+                &::after{
+                    content: "";
+                    position: absolute;
+                    top: 50%;
+                    left: 0;
+                    width: 1px;
+                    height: 65%;
+                    transform: translateY(-50%);
+                    background-color: var(--icon);
+                }
+            }
+        }
+        &__data{
+            @include grid(25rem);
+            gap: 2rem;
+            .list__item{
+                @include flex(center, unset);
+                gap: 0 20px;
+                border-radius: 5px;
+                cursor: pointer;
+                &:hover{
+                    box-shadow: var(--box-shadow);
+                }
+                &__img{
+                    img{
+                        border-radius: 10px;
+                    }
+                }
+                &__txt{
+                    &__title{
+                        font-size: 1.6rem;
+                    }
+                    &__artist{
+                        margin-top: 5px;
+                        font-size: 1.4rem;
+                        font-weight: 400;
+                    }
+                }
+            }
+        }
+    }
+    &__result{
+        position: absolute;
+        top: 110%;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 96%;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: var(--box-shadow);
+        &__list{
+            background-color: var(--main-bg);
+            z-index: 1;
+            padding: 0 5px 10px 5px;
+            max-height: 30rem;
+            overflow-y: auto;
+            &__item{
+                @include flex(center, unset);
+                gap: 0 20px;
+                margin-top: 8px;
+                cursor: pointer;
+                &__ava{
+                    img{
+                        width: 6.5rem;
+                        border-radius: 10px;
+                    }
+                }
+                &__title{
+                    h3{
+                        font-size: 14px;
+                    }
+                    p{
+                        margin-top: 5px;
+                        font-size: 12px;
+                    }
+                }
+                &:hover{
+                    background-color: var(--second-bg);
+                    color: $main-color;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,131 @@
+.lyric-training{
+    &__container{
+        @include grid1(30rem);
+        gap: 25px 20px;
+    }
+    &__item{
+        width: 100%;
+        &__img{
+            position: relative;
+            img{
+                width: 100%;
+                aspect-ratio: 16/9;
+            }
+            & > span{
+                position: absolute;
+                bottom: 20px;
+                right: 20px;
+                font-size: 14px;
+                font-weight: 500;
+                padding: 5px;
+                background-color: rgba(32, 25, 27, 0.8);
+                border-radius: 5px;
+                color: #fff;
+            }
+        }
+        &__text{
+
+        }
+        &__title{
+            font-size: 1.8rem;
+            font-weight: 600;
+            line-height: 1.5;
+            margin: 10px 0;
+        }
+        &__time{
+            font-size: 1.4rem;
+            font-weight: 400;
+            line-height: 1.6;
+        }
+    }
+}
+.lyric-main{
+    @include flex(flex-start, space-between);
+    gap: 0 2rem;
+    @include tablet{
+        flex-direction: column;
+        gap: 20px 0;
+    }
+    &__video{
+        position: sticky;
+        top: $top-height;
+        padding: 20px 0 10px 0;
+        background-color: var(--main-bg);
+        @include tablet{
+            width: 100%;
+            @include flex(center, center);
+        }
+        .react-player-video{
+            @include tablet{
+                width: 60% !important;
+                height: 250px !important;
+            }
+            @include mobile{
+                width: 100% !important;
+                height: 250px !important;
+            }
+        }
+    }
+    &__line{
+        word-wrap: break-word;
+        margin: 20px 0;
+        &.active{
+            color: var(--txt-color);
+        }
+    }
+    &__translation{
+        color: var(--hover);
+        overflow: hidden;
+        @include tablet{
+            width: 100%;
+            @include flex(center, center);
+        }
+        &__wrap{
+            overflow-y: auto;
+        }
+        .sentence{
+            display: inline;
+            padding: 3px 0;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            flex-wrap: wrap;
+            &.active{
+                background-color: var(--color-sub);
+            }
+            & ~ & {
+                margin: 0 10px;
+            }
+            width: 100%;
+            &__item{
+                white-space:nowrap;
+                font-size: 18px;
+                padding-right: 10px;
+                line-height: 30px;
+            }
+        }
+    }
+    &__submit{
+        position: fixed;
+        right: 20px;
+        bottom: 20px;
+        padding: 10px 15px;
+        background-color: $main-color;
+        border-radius: 5px;
+        font-size: 1.6rem;
+        color: #fff;
+        cursor: pointer;
+        box-shadow: 0 0 5px 2px var(--hover);
+        span{
+            display: none;
+        }
+        &:hover{
+            i{
+                display: none;
+            }
+            span{
+                display: block;
+            }
+        }
+    }
+}

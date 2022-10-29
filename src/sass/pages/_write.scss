@@ -1,0 +1,79 @@
+.write{
+    height: 40vh;
+    &__container{
+        height: 45rem;
+        width: 100%;
+        margin: 0 auto;
+        box-shadow: var(--box-shadow);
+        background-color: var(--main-bg);
+        border-radius: 5px;
+        padding: 4rem;
+        @include flex(stretch, space-between);
+        flex-direction: column;
+        @include mobile{
+            padding: 4rem 10px
+        }
+    }
+    &__top{
+        padding-bottom: 4rem;
+        &__define{
+            @include flex(center, space-between);
+            font-weight: 500;
+        }
+        &__prompt{
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+        &__des{
+            margin-top: 3rem;
+            font-size: 1.8rem;
+            text-transform: capitalize;
+            font-weight: 400;
+        }
+    }
+    &__middle{
+        &__title{
+            font-size: 2rem;
+            &.correct{
+                color: #23b26d;
+            }
+            &.incorrect{
+                color: #ff9c8c;
+            }
+        }
+        &__item{
+            margin-top: 3rem;
+            p{
+                font-size: 1.6rem;
+                color: $second-color;
+            }
+            h3{
+                font-size: 2rem;
+                font-weight: 500;
+                padding-top: 1rem;
+                text-transform: capitalize
+            }
+        }
+    }
+    &__bottom{
+        @include flex(center, space-between);
+        gap: 0 2rem;
+        margin-top: 2rem;
+        &__input{
+            width: 80%;
+            p{
+                font-size: 1.3rem;
+                color: $second-color;
+                text-transform: uppercase;
+            }
+        }
+        &__btn{
+            padding: 1.5rem 2rem;
+            background-color: $main-color;
+            color: #fff;
+            font-size: 1.4rem;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    }
+}

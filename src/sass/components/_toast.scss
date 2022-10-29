@@ -1,0 +1,100 @@
+.toast{
+    position: fixed;
+    top: 80px;
+    right: 32px;
+    z-index: 99;
+    @include flex(center, space-between);
+    gap: 2rem;
+    padding: 1rem;
+    background-color: var(--main-bg);
+    width: 40rem;
+    animation: slideInLeft ease .3s;
+    box-shadow: 0 5px 8px rgba(0, 0, 0, 0.08);
+    &.error::before{
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0px;
+        height: 5px;
+        animation: AniLine ease 5s;
+        background-color: #ff623d;
+    }
+    &.success::before{
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0px;
+        height: 5px;
+        animation: AniLine ease 5s;
+        background-color: #47d864;
+    }
+    @keyframes slideInLeft {
+        0% {
+          opacity: 0;
+          transform: translateX(calc(100% + 32px));
+        }
+        100% {
+          opacity: 1;
+          transform: translateX(0);
+        }
+    }
+    @keyframes AniLine {
+        from {
+            width: 40rem;
+        }
+        to {
+            width: 0;
+        }
+    }
+    &.success{
+        border-left: 5px solid #47d864;
+        .toast__icon i{
+            color: #47d864;
+        }
+        .toast__txt__type{
+            color: #47d864;
+        }
+        
+    }
+    &.error{
+        border-left: 5px solid #ff623d;
+        .toast__icon i{
+            color: #ff623d;
+        }
+        .toast__txt__type{
+            color: #ff623d;
+        }
+    }
+    &__icon{
+        @include flex(center, center);
+        width: 10%;
+        i{
+            font-size: 2rem;
+        }
+    }
+    &__txt{
+        flex: 1;
+        text-transform: capitalize;
+        &__type{
+            font-size: 2rem;
+            color: var(--txt-color);
+            margin-bottom: 1rem;
+        }
+        &__des{
+            font-size: 1.4rem;
+            color: var(--txt-color);
+            margin-bottom: 1rem;
+        }
+    }
+    &__close{
+        @include flex(center, flex-end);
+        width: 20%;
+        i{
+            font-size: 2rem;
+            color: var(--txt-color);
+            cursor: pointer;
+            padding: 1rem;
+            border-radius: 50%;
+        }
+    }
+}

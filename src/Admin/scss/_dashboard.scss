@@ -1,0 +1,54 @@
+.admin{
+    background-color: var(--main-bg);
+    color: var(--txt-color);
+    margin-left: 96px;
+    padding: 91px 2rem 5rem 2rem;
+    min-height: 100vh;
+    &__header{
+        @include flex(center, space-between);
+        position: fixed;
+        left: 96px;
+        top: 0;
+        right: 0;
+        padding: 1rem 2%;
+        background-color: var(--main-bg);
+        z-index: 99;
+        
+    }
+    .dashboard{
+        @include flex(flex-start, flex-start);
+        flex-direction: column;
+        gap: 2rem 0;
+        table {
+            width: 100%;
+            min-width: 400px;
+            border-spacing: 0;
+            font-size: 1.5rem;
+        }
+        
+        thead {
+            background-color: var(--second-bg);
+        }
+        
+        tr {
+            text-align: left;
+            cursor: pointer;
+        }
+        
+        th,
+        td {
+            text-transform: capitalize;
+            padding: 15px 10px;
+        }
+        tbody > tr:hover {
+            background-color: var(--icon);
+            color: var(--txt-color);
+        }
+    }
+    &__user, &__card{
+        padding: 1rem;
+        background-color: var(--hover);
+        border-radius: 10px;
+        width: 80%;
+    }
+}

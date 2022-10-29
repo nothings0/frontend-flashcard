@@ -1,0 +1,28 @@
+.term{
+    background-color: var(--second-bg);
+    padding: 2rem;
+    margin: 1rem 0;
+    border-radius: 10px;
+    &__header{
+        @include flex(center, space-between);
+        font-size: 1.6rem;
+        &__control{
+            cursor: pointer;
+            &:hover{
+                color: $main-color
+            }
+        }
+    }
+    &__content{
+        @include flex(center, space-between);
+        &__input{
+            width: 48%;
+            p{
+                font-size: 1.4rem;
+                color: var(--txt-color);
+                font-weight: 500;
+                text-transform: capitalize;
+            }
+        }
+    }
+}

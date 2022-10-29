@@ -1,0 +1,20 @@
+{
+  "short_name": "Fluxquiz.com",
+  "name": "Ghi nhớ từ vựng hiệu quả",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "16x16",
+      "type": "./favicon-16x16.png"
+    },
+    {
+      "src": "favicon.ico",
+      "sizes": "32x32",
+      "type": "./favicon-32x32.png"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}

@@ -1,0 +1,149 @@
+.edit{
+    padding: 4rem 0;
+    &__top{
+        @include flex(center, space-between);
+        &.shrink{
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1rem 5%;
+            background-color: var(--main-bg);
+            transition: 0.2s linear;
+        }
+        &__left{
+            font-size: 2rem;
+        }
+        &__right{
+            font-size: 2rem;
+            padding: 1rem 1.5rem;
+            background-color: $main-color;
+            color: #fff;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    }
+    &__header{
+        margin-top: 3rem;
+        @include flex(flex-start, space-between);
+        gap: 0 5rem;
+        &__left{
+            width: 50%;
+        }
+        &__input{
+            margin-bottom: 2rem;
+            &__wrap{
+                position: relative;
+                small{
+                    position: absolute;
+                    bottom: 1rem;
+                    right: 3px;
+                    font-size: 1.4rem;
+                    font-weight: 500;
+                    opacity: 0.5;
+                }
+                &__des{
+                    height: unset;
+                    border: 2px solid #939bb4;
+                    border-radius: 5px;
+                    padding: 5px;
+                    &:focus{
+                        border-bottom-color:  unset;
+                    }
+                }
+            }
+            p{
+                font-size: 1.4rem;
+                color: #939bb4;
+                text-transform: capitalize;
+            }
+        }
+        &__right{
+            flex: 1;
+            @include flex(flex-start, unset);
+            flex-direction: column;
+            &__item{
+                font-size: 1.6rem;
+                font-weight: 500;
+                .checkbox__private{
+                    margin-top: 3rem;
+                    &__txt{
+                        @include flex(center, unset);
+                        gap: 2rem;
+                        span{
+                            font-size: 1.6rem;
+                        }
+                    }
+                }
+                &__txt{
+                    font-size: 1.8rem;
+                    margin-bottom: 10px
+                }
+                &__color{
+                    @include flex(center, unset);
+                    gap: 5px;
+                    flex-wrap: wrap;
+                    &__item{
+                        width: 50px;
+                        height: 50px;
+                        cursor: pointer;
+                        border-radius: 5px;
+                        &.active{
+                            border: 2px dashed $main-color
+                        }
+                    }
+                }
+            }
+        }
+    }
+    &__btn{
+        @include flex(center, center);
+        margin-top: 2rem;
+        font-size: 1.8rem;
+        padding: 3rem 0;
+        background-color: var(--second-bg);
+        text-transform: uppercase;
+        cursor: pointer;
+        border-radius: 10px;
+        &:hover &__wrap{
+            color: $main-color;
+            transition: 0.2s linear;
+        }
+        i{
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+    }
+}
+input[type="checkbox"]{
+	position: relative;
+	height: 18px;
+	width: 36px;
+	-webkit-appearance: none;
+	background: white;
+	outline: none;
+	cursor: pointer;
+	border-radius: 20px;
+	box-shadow: inset 0 0 5px rgba(0,0,0,.2);
+	transition: .5s;
+}
+input[type="checkbox"]:before{
+	content: '';
+	position: absolute;
+	width: 18px;
+	height: 18px;
+	border-radius: 20px;
+	top: 0;
+	left: 0;
+	transform: scale(.85);
+	box-shadow: 0 2px 5px rgba(0,0,0,.2);
+	background: linear-gradient(#fff,#f2f2f2,#e6e6e6,#d9d9d9);
+	transition: .5s;
+}
+input:checked[type="checkbox"]{
+	background: $main-color;
+}
+input:checked[type="checkbox"]:before{
+	left: 18px;
+}

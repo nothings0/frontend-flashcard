@@ -1,0 +1,36 @@
+.list{
+    margin-bottom: 2rem;
+    &__heading{
+        margin-bottom: 2rem;
+        padding: 0 1rem;
+        @include flex(center, space-between);
+        &__title{
+            font-size: 2rem;
+            text-transform: capitalize;
+            @include mobile{
+                font-size: 1.8rem;   
+            }
+        }
+        &__more{
+            font-size: 1.4rem;
+            cursor: pointer;
+            &:hover{
+                color: $main-color;
+                letter-spacing: 1px;
+            }
+        }
+    }
+    &__container{
+        @include grid(20%);
+        gap: 2rem;
+        @include tablet{
+            @include grid(25%);
+            gap: 14px 12px; 
+        }
+        @include mobile{
+            @include grid(48%);
+            gap: 12px 8px;
+        }
+    }
+
+}

@@ -1,0 +1,12 @@
+.library{
+    &__heading{
+        &__title{
+            font-size: 2rem;
+            padding: 2rem 0;
+        }
+    }
+    &__container{
+        @include grid(25rem);
+        gap: 2rem;
+    }
+}

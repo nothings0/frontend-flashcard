@@ -1,0 +1,19 @@
+.header-primary{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 69px;
+    z-index: 1000;
+    &__title{
+        @include flex(center, center);
+        gap: 0 2rem;
+        h3{
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+    }
+    &__round{
+        font-size: 1.6rem;
+    }
+}
