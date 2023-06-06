@@ -5,7 +5,7 @@ import { updateIndex } from "../redux/cardSlice";
 import { handleSpeech } from "../util/speech";
 import { GetUsage } from "../redux/apiRequest";
 
-const FlipCard = ({ data, setProgess, isVolume }) => {
+const FlipCard = ({ data, setProgess, isVolume, isOpenAI = true }) => {
   const dispatch = useDispatch();
   const [current, setCurrent] = useState(
     useSelector((state) => state.card.index)
@@ -101,16 +101,18 @@ const FlipCard = ({ data, setProgess, isVolume }) => {
         </span>
         <i className="fa-solid fa-chevron-right" onClick={nextSlide}></i>
       </div>
-      <div className="flip-card__usage">
-        {!isActive ? (
-          <button onClick={handleOpenAi}>Cách dùng</button>
-        ) : (
-          <div className="">
-            {usage.length > 0 &&
-              usage.map((item, index) => <p key={index}>{item}</p>)}
-          </div>
-        )}
-      </div>
+      {isOpenAI && (
+        <div className="flip-card__usage">
+          {!isActive ? (
+            <button onClick={handleOpenAi}>Cách dùng</button>
+          ) : (
+            <div className="">
+              {usage.length > 0 &&
+                usage.map((item, index) => <p key={index}>{item}</p>)}
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 };
