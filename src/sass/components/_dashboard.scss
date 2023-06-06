@@ -1,0 +1,92 @@
+.dashboard_user{
+    margin-top: 3rem;
+    border: 1px solid #ccc;
+    box-shadow: -1px 0px 5px 5px var(--hover);
+    padding: 15px;
+    .dashboard__title{
+        font-size: 2rem;
+        margin-bottom: 2rem;
+    }
+    .dashboard__target{
+        font-size: 1.5rem;
+        margin-bottom: 2rem;
+        @include flex(center, space-between);
+        &__left{
+            input{
+                font-weight: 600;
+                font-size: 1.6rem;
+                margin-left: 0.6rem;
+                border: 1px solid $main-color;
+                padding: 5px;
+                width: 50px;
+                border-radius: 10px;
+                &:disabled{
+                    border: none;
+                }
+            }
+        }
+        &__right{
+            i{
+                padding: 8px;
+                background-color: $main-color;
+                color: #fff;
+                border-radius: 50%;
+                cursor: pointer;
+            }
+        }
+    }
+    .dashboard__container{
+        @include grid(20%);
+        gap: 2rem;
+        @include tablet{
+            @include grid(30%);
+        }
+        @include mobile{
+            @include grid(50%);
+        }
+    }
+    .dashboard-item{
+        &__title{
+            padding: 8px 0;
+            font-size: 1.8rem;
+        }
+        padding: 10px 15px;
+        box-shadow: 0 0 2px 1px var(--hover);
+        &:hover{
+            box-shadow: 5px 5px 8px 5px var(--hover);
+        }
+    }
+    .dashboard__middle{
+        @include flex(flex-end, space-between);
+        &__left{
+            width: 40%;
+            h3{
+                font-size: 1.6rem;
+            }
+        }
+        &__right{
+            flex: 1;
+            @include flex(center, center);
+        }
+        &__progress{
+            position: relative;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: conic-gradient(#349eff 50deg, #ededed 0deg);
+            @include flex(center, center);
+            &::before{
+                content: "";
+                position: absolute;
+                width: 80px;
+                height: 80px;
+                border-radius: 50%;
+                background-color: var(--main-bg);
+            }
+            &__value{
+                position: relative;
+                font-size: 1.6rem;
+            }
+        }
+    }
+}

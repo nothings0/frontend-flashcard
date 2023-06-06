@@ -1,189 +1,189 @@
-.task__item{
-    margin-top: 1rem;
-    background-color: var(--main-bg);
-    border-radius: 5px;
-    position: relative;
-    &__selector{
-        padding: 10px;
-        width: 100%;
-        background-color: var(--hover);
-        cursor: pointer;
-        border-bottom-left-radius: 5px;
-        border-bottom-right-radius: 5px;
-    }
-    textarea{
+.task__item {
+  margin-top: 1rem;
+  background-color: var(--main-bg);
+  border-radius: 5px;
+  position: relative;
+  &__selector {
+    padding: 10px;
+    width: 100%;
+    background-color: var(--hover);
+    cursor: pointer;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+  }
+  textarea {
     padding-left: 8px;
     padding-right: 8px;
+  }
+  &__delete {
+    position: absolute;
+    top: 0;
+    right: 8px;
+    font-size: 14px;
+    display: none;
+    cursor: pointer;
+    &:hover {
+      color: #ff6a00;
     }
-    &__delete{
-        position: absolute;
-        top: 0;
-        right: 8px;
-        font-size: 14px;
-        display: none;
-        cursor: pointer;
-        &:hover{
-            color: #ff6a00;
-        }
-    }
-    &:hover &__delete{
-        display: block;
-    }
-    &__title{
-        font-weight: 600;
-        font-size: 1.6rem;
-        text-transform: capitalize;
-    }
-    &__description{
-        font-weight: 500;
-        font-size: 1.4rem;
-    }
-    &__drop-preview{
-        background-color: rgba(150, 150, 200, 0.1);
-        border: 1px dashed #abc;
-        margin: 5px;
-    }
-    &-ghost{
-        transition: transform 0.18s ease;
-        transform: rotateZ(5deg)
-    }
-    &-ghost-drop{
-        transition: transform 0.18s ease-in-out;
-        transform: rotateZ(0deg)
-    }
+  }
+  &:hover &__delete {
+    display: block;
+  }
+  &__title {
+    font-weight: 600;
+    font-size: 1.6rem;
+    text-transform: capitalize;
+  }
+  &__description {
+    font-weight: 500;
+    font-size: 1.4rem;
+  }
+  &__drop-preview {
+    background-color: rgba(150, 150, 200, 0.1);
+    border: 1px dashed #abc;
+    margin: 5px;
+  }
+  &-ghost {
+    transition: transform 0.18s ease;
+    transform: rotateZ(5deg);
+  }
+  &-ghost-drop {
+    transition: transform 0.18s ease-in-out;
+    transform: rotateZ(0deg);
+  }
 }
-.section{
-    color: var(--txt-color);
-    background-color: var(--second-bg);
-    padding: 1rem;
-    border-radius: 10px;
-    width: 300px;
-    max-height: 500px;
-    overflow-y: auto;
-    overflow-x: hidden;
-    &::-webkit-scrollbar{
-        width: 6px;
+.section {
+  color: var(--txt-color);
+  background-color: var(--second-bg);
+  padding: 1rem;
+  border-radius: 10px;
+  width: 300px;
+  max-height: 500px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #acd7ff;
+    border-radius: 5px;
+  }
+  textarea {
+    height: unset;
+    border-bottom: 3px solid transparent;
+    &:focus {
+      border-bottom: 3px solid $main-color;
     }
-    &::-webkit-scrollbar-thumb{
-        background-color: #acd7ff;
-        border-radius: 5px;
+  }
+  &__selector {
+    padding: 10px 0;
+    margin: -10px -20px 0 -20px;
+    width: 115%;
+    background-color: var(--hover);
+    cursor: pointer;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    // overflow: hidden;
+  }
+  &__title {
+    position: relative;
+    textarea {
+      text-transform: capitalize;
+      padding-right: 1.8rem;
     }
-    textarea{
+    &__delete {
+      position: absolute;
+      top: 0px;
+      right: 8px;
+      font-size: 14px;
+      cursor: pointer;
+      display: none;
+      &:hover {
+        color: #ff6a00;
+      }
+    }
+    &:hover &__delete {
+      display: block;
+    }
+  }
+  &__top {
+    margin-bottom: 1rem;
+    &__form {
+      background-color: var(--main-bg);
+      padding: 8px;
+      border-radius: 5px;
+      textarea {
         height: unset;
-        border-bottom: 3px solid transparent;
-        &:focus{
-            border-bottom: 3px solid $main-color;
+        padding: 3px 0;
+        margin-bottom: 2rem;
+      }
+      &__btn {
+        margin-top: 2rem;
+        @include flex(center, space-between);
+        &__add {
+          background-color: green;
+          padding: 5px 10px;
+          border-radius: 5px;
+          cursor: pointer;
+          color: #fff;
         }
+        &__cancel {
+          background-color: var(--icon);
+          padding: 5px 10px;
+          border-radius: 5px;
+          cursor: pointer;
+          color: #fff;
+        }
+      }
     }
-    &__selector{
-        padding: 10px 0;
-        margin: -10px -20px 0 -20px;
-        width: 115%;
-        background-color: var(--hover);
-        cursor: pointer;
-        border-bottom-left-radius: 5px;
-        border-bottom-right-radius: 5px;
-        // overflow: hidden;
+    &__create {
+      @include flex(center, center);
+      background-color: #e8f1f0;
+      color: $main-color;
+      padding: 1rem 0;
+      border-radius: 5px;
+      cursor: pointer;
+      gap: 0 1rem;
+      font-size: 1.4rem;
     }
-    &__title{
-        position: relative;
-        textarea{
-            text-transform: capitalize;
-            padding-right: 1.8rem;
-        }
-        &__delete{
-            position: absolute;
-            top: 0px;
-            right: 8px;
-            font-size: 14px;
-            cursor: pointer;
-            display: none;
-            &:hover{
-                color: #ff6a00;
-            }
-        }
-        &:hover &__delete{
-            display: block;
-        }
+  }
+  &__item {
+    position: relative;
+    background-color: var(--main-bg);
+    padding: 1rem;
+    font-size: 1.8rem;
+    margin-top: 1rem;
+    border-radius: inherit;
+    cursor: move;
+    textarea {
+      height: fit-content;
+      padding: 3px 0;
+      margin-bottom: 2rem;
     }
-    &__top{
-        margin-bottom: 1rem;
-        &__form{
-            background-color: var(--main-bg);
-            padding: 8px;
-            border-radius: 5px;
-            textarea{
-                height: unset;
-                padding: 3px 0;
-                margin-bottom: 2rem;
-            }
-            &__btn{
-                margin-top: 2rem;
-                @include flex(center, space-between);
-                &__add{
-                    background-color: green;
-                    padding: 5px 10px;
-                    border-radius: 5px;
-                    cursor: pointer;
-                    color: #fff;
-                }
-                &__cancel{
-                    background-color: var(--icon);
-                    padding: 5px 10px;
-                    border-radius: 5px;
-                    cursor: pointer;
-                    color: var(--main-bg)
-                }
-            }
-        }
-        &__create{
-            @include flex(center, center);
-            background-color: #e8f1f0;
-            color: $main-color;
-            padding: 1rem 0;
-            border-radius: 5px;
-            cursor: pointer;
-            gap: 0 1rem;
-            font-size: 1.4rem;
-        }
+    &__delete {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      cursor: pointer;
+      & > i {
+        display: none;
+      }
     }
-    &__item{
-        position: relative;
-        background-color: var(--main-bg);
-        padding: 1rem;
-        font-size: 1.8rem;
-        margin-top: 1rem;
-        border-radius: inherit;
-        cursor: move;
-        textarea{
-            height: fit-content;
-            padding: 3px 0;
-            margin-bottom: 2rem;
-        }
-        &__delete{
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            cursor: pointer;
-            & > i{
-                display: none;
-            }
-        }
-        &:hover &__delete > i{
-            display: block;
-        }
+    &:hover &__delete > i {
+      display: block;
     }
-    &__drop-preview{
-        background-color: rgba(150, 150, 200, 0.1);
-        border: 1px dashed #abc;
-        margin: 5px;
-    }
-    &-ghost{
-        transition: transform 0.18s ease;
-        transform: rotateZ(1deg)
-    }
-    &-ghost-drop{
-        transition: transform 0.18s ease-in-out;
-        transform: rotateZ(0deg)
-    }
+  }
+  &__drop-preview {
+    background-color: rgba(150, 150, 200, 0.1);
+    border: 1px dashed #abc;
+    margin: 5px;
+  }
+  &-ghost {
+    transition: transform 0.18s ease;
+    transform: rotateZ(1deg);
+  }
+  &-ghost-drop {
+    transition: transform 0.18s ease-in-out;
+    transform: rotateZ(0deg);
+  }
 }

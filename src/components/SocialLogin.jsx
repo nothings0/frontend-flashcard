@@ -26,7 +26,6 @@ const SocialLogin = () => {
         />
         <FacebookLogin
           appId="5511597725613944"
-          autoLoad={true}
           fields="name,email,picture"
           callback={responseFacebook}
           textButton=''

@@ -1,84 +1,85 @@
-.register{
-    height: calc(100vh - 15rem);
-    @include flex(center, center);
+.register {
+  height: calc(100vh - 15rem);
+  @include flex(center, center);
+  padding: 2rem;
+  .form {
     padding: 2rem;
-    .form{
-        padding: 2rem;
-        background-color: var(--main-bg);
-        text-align: center;
-        width: 50rem;
-        border-radius: 0.5rem;
-        box-shadow: var(--box-shadow);
-        &__item{
-            &__input{
-                position: relative;
-                & > i{
-                    position: absolute;
-                    top: 50%;
-                    right: 1rem;
-                    transform: translateY(-50%);
-                    font-size: 1.4rem;
-                    cursor: pointer;
-                }
-            }
+    background-color: var(--main-bg);
+    text-align: center;
+    width: 50rem;
+    border-radius: 0.5rem;
+    box-shadow: var(--box-shadow);
+    &__item {
+      &__input {
+        position: relative;
+        & > i {
+          position: absolute;
+          top: 50%;
+          right: 1rem;
+          transform: translateY(-50%);
+          font-size: 1.4rem;
+          cursor: pointer;
+          color: rgba(0, 0, 0, 0.8);
         }
-        .box {
-            width: 100%;
-            border-radius: 0.5rem;
-            padding: 1.2rem 1.4rem;
-            font-size: 1.8rem;
-            color: #32323d;
-            background-color: $second-bg;
-            margin: 1rem 0;
-        }
-        h3{
-            margin-bottom: 2rem;
-            color: var(--txt-color);
-            text-transform: uppercase;
-            font-size: 3rem;
-        }
-        input{
-            text-transform: none;
-            &::placeholder{
-                font-size: 1.5rem;
-            }
-        }
-        &__des{
-            margin-top: 1.5rem;
-            font-size: 1.6rem;
-            color: var(--txt-color);
-            a{
-                display: inline-block;
-                color: $main-color;
-                padding-left: 1rem;
-                &:hover{
-                    opacity: 0.8;
-                }
-            }
-        }
-        button{
-            padding: 1rem 3rem;
-            background-color: $main-color;
-            font-size: 1.6rem;
-            color: #fff;
-            cursor: pointer;
-            font-weight: 600;
-            margin-top: 3rem;
-            border-radius: 5px;
-        }
-        .errorMsg{
-            font-size: 1.2rem;
-            color: rgb(255, 108, 39);
-            margin: 0 0 5px 0;
-            text-align: left;
-        }
+      }
     }
-    &__notifi{
-        text-align: left;
-        font-size: 1.4rem;
-        letter-spacing: 1px;
-        margin-top: 0.5rem;
-        color: #ff571e;
-        height: 1.8rem;
+    .box {
+      width: 100%;
+      border-radius: 0.5rem;
+      padding: 1.2rem 1.4rem;
+      font-size: 1.8rem;
+      color: #32323d;
+      background-color: $second-bg;
+      margin: 1rem 0;
     }
+    h3 {
+      margin-bottom: 2rem;
+      color: var(--txt-color);
+      text-transform: uppercase;
+      font-size: 3rem;
+    }
+    input {
+      text-transform: none;
+      &::placeholder {
+        font-size: 1.5rem;
+      }
+    }
+    &__des {
+      margin-top: 1.5rem;
+      font-size: 1.6rem;
+      color: var(--txt-color);
+      a {
+        display: inline-block;
+        color: $main-color;
+        padding-left: 1rem;
+        &:hover {
+          opacity: 0.8;
+        }
+      }
+    }
+    button {
+      padding: 1rem 3rem;
+      background-color: $main-color;
+      font-size: 1.6rem;
+      color: #fff;
+      cursor: pointer;
+      font-weight: 600;
+      margin-top: 3rem;
+      border-radius: 5px;
+    }
+    .errorMsg {
+      font-size: 1.2rem;
+      color: rgb(255, 108, 39);
+      margin: 0 0 5px 0;
+      text-align: left;
+    }
+  }
+  &__notifi {
+    text-align: left;
+    font-size: 1.4rem;
+    letter-spacing: 1px;
+    margin-top: 0.5rem;
+    color: #ff571e;
+    height: 1.8rem;
+  }
 }

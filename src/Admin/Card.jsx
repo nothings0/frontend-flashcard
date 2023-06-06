@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Card = ({data}) => {
+const Card = ({data, handleDeleteCard}) => {
   return (
     <div className="admin__card">
       <table>
@@ -24,6 +24,7 @@ const Card = ({data}) => {
                 <td className="card__item">
                     {item.views}
                 </td>
+                <i className="fa-solid fa-xmark" onClick={() => handleDeleteCard(item._id, index)}></i>
               </tr>
             ))
         }

@@ -6,7 +6,7 @@ import { applyDrag } from "../util/index";
 import { useParams } from "react-router-dom";
 import { UpdateCard } from "../redux/apiRequest";
 
-const TermWrap = ({terms, setTerms, iUsername}) => {
+const TermWrap = ({terms, setTerms, iUsername, type}) => {
   
   const dispatch = useDispatch()
   const { cardId } = useParams();
@@ -74,28 +74,39 @@ const TermWrap = ({terms, setTerms, iUsername}) => {
             terms.map((_, index) => (
               <Draggable key={index}>
                 <div className="card-detail__des__term__item">
-                  <div className="card-detail__des__term__prompt prompt">
-                    <textarea
-                      name="prompt"
-                      maxLength="255"
-                      value={terms[index]?.prompt}
-                      onChange={(e) => handleCardChange(e, index)}
-                      onClick={handleSelect}
-                      onKeyDown={handleKeyDown}
-                      spellCheck="false"
-                    ></textarea>
-                  </div>
-                  <div className="card-detail__des__term__answer">
-                    <textarea
-                      name="answer"
-                      maxLength="255"
-                      value={terms[index]?.answer}
-                      onChange={(e) => handleCardChange(e, index)}
-                      onClick={handleSelect}
-                      onKeyDown={handleKeyDown}
-                      spellCheck="false"
-                    ></textarea>
-                  </div>
+                  {
+                    type !== "detail" ? <>
+                      <div className="card-detail__des__term__prompt prompt">
+                        <textarea
+                          name="prompt"
+                          maxLength="255"
+                          value={terms[index]?.prompt}
+                          onChange={(e) => handleCardChange(e, index)}
+                          onClick={handleSelect}
+                          onKeyDown={handleKeyDown}
+                          spellCheck="false"
+                        ></textarea>
+                      </div>
+                      <div className="card-detail__des__term__answer">
+                        <textarea
+                          name="answer"
+                          maxLength="255"
+                          value={terms[index]?.answer}
+                          onChange={(e) => handleCardChange(e, index)}
+                          onClick={handleSelect}
+                          onKeyDown={handleKeyDown}
+                          spellCheck="false"
+                        ></textarea>
+                      </div>                    
+                    </> : <>
+                    <div className="card-detail__des__term__prompt prompt">
+                        <p>{terms[index]?.prompt}</p>
+                      </div>
+                      <div className="card-detail__des__term__answer">
+                        <p>{terms[index]?.answer}</p>
+                      </div>
+                    </>
+                  }
                   <div className="card-detail__des__term__icon">
                     <i
                       className="fa-solid fa-volume-high"

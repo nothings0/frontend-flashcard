@@ -1,31 +1,30 @@
 @mixin grid($val) {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax($val, 1fr));
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax($val, 1fr));
 }
 
 @mixin grid1($val) {
-    display: grid !important;
-    grid-template-columns: repeat(auto-fit, minmax($val, 1fr));
-    gap: 1rem;
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax($val, 1fr));
+  gap: 1rem;
 }
 
 @mixin flex($aligin-item, $justify-content) {
-    display: flex;
-    align-items: $aligin-item;
-    justify-content: $justify-content;
+  display: flex;
+  align-items: $aligin-item;
+  justify-content: $justify-content;
 }
 
 @mixin mobile {
-    @media only screen and (max-width: $mobile-width) {
-        @content;
-    }
+  @media only screen and (max-width: $mobile-width) {
+    @content;
+  }
 }
-@mixin overlay(){
-    background: rgba(32, 32, 34, 0.5);
-}
-
 @mixin tablet {
-    @media only screen and (max-width: $tablet-width) {
-        @content;
-    }
+  @media only screen and (max-width: $tablet-width) {
+    @content;
+  }
+}
+@mixin overlay() {
+  background: rgba(32, 32, 34, 0.5);
 }

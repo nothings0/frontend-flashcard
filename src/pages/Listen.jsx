@@ -32,7 +32,7 @@ const Listen = () => {
 
   const getData = async (cardId) => {
     const res = await GetListen(dispatch, cardId, user, 10)
-    if(res.length === 0){
+    if(res?.length === 0){
       setModalType(2)
       setModalOpen(true)
     }else{

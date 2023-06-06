@@ -15,8 +15,9 @@ import DetailIcon from "../components/DetailIcon"
 import Skeleton from "../components/Skeleton"
 import TermWrap from "../components/TermWrap"
 import List from '../components/List'
-import { handleLoading, handleRemove } from "../redux/middleSlice"
+// import { handleLoading, handleRemove } from "../redux/middleSlice"
 import { add } from "../redux/cardSlice"
+// import GoogleAds from "../components/GoogleAds"
 
 const Detail = () => {
   const navigate = useNavigate()
@@ -105,13 +106,11 @@ const Detail = () => {
   }, [topActive])
 
   const handleDelete = async () => {
-    dispatch(handleLoading())
     const res = await DeleteCard(cardId, userId, accessToken, dispatch)
     setModalOpen(false)
     if (res.type === "success") {
       navigate(-1)
     }
-    dispatch(handleRemove())
   }
 
   const handleRate = (x) => {
@@ -219,11 +218,12 @@ const Detail = () => {
                     <DetailIcon data={data} setModalOpen={setModalOpen} iUsername={data?.cards?.user.username}/>
                   </div>
                 </div>
+                {/* <GoogleAds type="ngang"/> */}
                 <div className="card-detail__des">
                   <div className="card-detail__des__heading">
                     <h3>Thuật ngữ trong học phần này</h3>
                   </div>
-                  <TermWrap terms={terms} setTerms={setTerms} iUsername={data?.cards?.user.username}/>
+                  <TermWrap terms={terms} setTerms={setTerms} iUsername={data?.cards?.user.username} type='detail'/>
                   {
                     data?.total > page && <div className="load-more">
                     <span onClick={handleLoadMore}>Xem thêm</span>
@@ -345,6 +345,7 @@ const Detail = () => {
             </ModalFooter>
           </Modal>
         )}
+        {/* <GoogleAds type="ngang" /> */}
         <List title={listSuggest?.title} data={listSuggest?.cards} type="suggest"/>
       </div>
     </Helmet>

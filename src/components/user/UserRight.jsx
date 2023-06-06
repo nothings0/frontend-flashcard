@@ -2,11 +2,12 @@ import React from 'react'
 import Card from '../Card'
 
 const UserRight = ({data}) => {
+  
   return (
     <div className="user__right">
       <div className="user__right__item">
         <div className="user__right__item__heading">
-          Học phần đã tạo
+          <p>Học phần đã tạo</p> <span>Xem thêm</span>
         </div>
         {
           data?.length > 0 ? 

@@ -2,7 +2,7 @@ import {useState, useEffect} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import Card from './Card'
 import User from './User'
-import {GetAllUser, getAllCard} from '../redux/apiRequest.js'
+import {GetAllUser, getAllCard, DeleteCard} from '../redux/apiRequest.js'
 
 const Dashboard = () => {
 
@@ -12,7 +12,7 @@ const Dashboard = () => {
   const accessToken = useSelector(
     (state) => state.user.currentUser?.accessToken
   )
-  // const dispatch = useDispatch()
+  const dispatch = useDispatch()
 
   useEffect(() => {
     const getData = async () => {
@@ -24,10 +24,17 @@ const Dashboard = () => {
     getData()
   }, [])
 
+  const handleDeleteCard = (cardId, i, userId) => {
+    DeleteCard(cardId, userId, accessToken, dispatch)
+    let newCards = [...cards]
+    newCards.splice(i, 1)
+    setCards(newCards)
+  }
+
   return (
     <div className="dashboard">
       <User data={users}/>
-      <Card data={cards}/>
+      <Card data={cards} handleDeleteCard={handleDeleteCard}/>
     </div>
   )
 }

@@ -3,6 +3,9 @@
     min-height: 100vh;
     background-color: var(--main-bg);
     color: var(--txt-color);
+    @include mobile{
+        padding: $top-height 2% 15px 2%;
+    }
     & > .header{
         transform: translateX(-90%);
         transition: all 0.25s linear;
@@ -32,6 +35,9 @@
             position: absolute;
             bottom: -7.5rem;
             left: 40px;
+            @include mobile{
+                bottom: -4rem;
+            }
             &__ava{
                 background-color: var(--main-bg);
                 padding: 5px;
@@ -39,6 +45,10 @@
                 height: 15rem;
                 border-radius: 50%;
                 position: relative;
+                @include mobile{
+                    width: 8rem;
+                    height: 8rem;
+                }
                 img{
                     width: 100%;
                     height: 100%;
@@ -80,6 +90,11 @@
                 margin-bottom: 16px;
                 margin-left: 16px;
                 text-align: center;
+                @include mobile{
+                    font-size: 2.4rem;
+                    margin-bottom: 12px;
+                    margin-left: 12px;
+                }
             }
         }
         &__btn{
@@ -99,10 +114,15 @@
     &__content{
         margin-top: 10rem;
         @include flex(flex-start, space-between);
-        // gap: 0 5rem;
+        @include mobile{
+            flex-direction: column;
+        }
     }
     &__left{
         width: 45%;
+        @include mobile{
+            width: 100%;
+        }
         &__item{
             border: 1px solid #ccc;
             padding: 1rem;
@@ -110,9 +130,20 @@
             margin-bottom: 1rem;
             box-shadow: 1px 3px 3px var(--icon);
             &__heading{
-                font-size: 2rem;
-                font-weight: 600;
                 margin: 1rem 0 2.5rem 0;
+                @include flex(center, space-between);
+                font-size: 1.8rem;
+                p{
+                    font-weight: 600;
+                }
+                span{
+                    font-size: 1.4rem;
+                    font-weight: 500;
+                    cursor: pointer;
+                    &:hover{
+                        color: $main-color
+                    }
+                }
             }
             &__des{
                 font-size: 1.5rem;
@@ -130,8 +161,6 @@
                         &__btn{
                             @include flex(center, unset);
                             gap: 0 15px;
-                            // span{
-                            // }
                         }
                         i{
                             font-size: 1.6rem;
@@ -217,6 +246,9 @@
     }
     &__right{
         width: 50%;
+        @include mobile{
+            width: 100%;
+        }
 
         &__item{
             border: 1px solid #ccc;
@@ -224,9 +256,20 @@
             border-radius: 10px;
             box-shadow: 1px 3px 3px var(--icon);
             &__heading{
-                font-size: 1.8rem;
-                font-weight: 600;
                 margin: 1rem 0 2.5rem 0;
+                @include flex(center, space-between);
+                p{
+                    font-size: 1.8rem;
+                    font-weight: 600;
+                }
+                span{
+                    font-size: 1.4rem;
+                    font-weight: 500;
+                    cursor: pointer;
+                    &:hover{
+                        color: $main-color
+                    }
+                }
             }
             &__des{
             }

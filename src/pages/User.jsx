@@ -9,6 +9,7 @@ import UserLeft from '../components/user/UserLeft'
 import UserRight from '../components/user/UserRight'
 import { useParams } from 'react-router-dom'
 import Skeleton from '../components/Skeleton'
+import Dashboard from '../components/user/Dashboard'
 
 const User = () => {
   const {username} = useParams()
@@ -33,9 +34,10 @@ const User = () => {
         loading ? <Skeleton type='loading'/> : <>
           <UserTop data={data?.user}/>
           <div className="user__content">
-            <UserLeft data={data?.user} data2={data?.achieve}/>
+            <UserLeft data={data?.user}/>
             <UserRight data={data?.cards}/>
           </div>
+          <Dashboard data={data?.achieveRes}/>
         </>
       }
     </div>

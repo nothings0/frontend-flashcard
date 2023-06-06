@@ -40,7 +40,7 @@
     }
 }
 .lyric-main{
-    @include flex(flex-start, space-between);
+    @include flex(flex-start, space-around);
     gap: 0 2rem;
     @include tablet{
         flex-direction: column;

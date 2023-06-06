@@ -1,0 +1,26 @@
+.service {
+  &__button {
+    margin: 3rem 0;
+    text-align: center;
+    button {
+      font-size: 2rem;
+      cursor: pointer;
+      padding: 0.8rem 2rem;
+      background-color: $main-color;
+      color: $txt-white;
+      border-radius: 2rem;
+    }
+  }
+  &__notifi {
+    flex: 1;
+    textarea {
+      height: max-content;
+    }
+  }
+}
+.contact {
+  h3 {
+    font-size: 1.8rem;
+    text-align: center;
+  }
+}

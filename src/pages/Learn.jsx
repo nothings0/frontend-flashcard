@@ -30,7 +30,7 @@ const Learn = () => {
 
   const getQuestion = async (cardId) => {
     const res = await GetLearn(dispatch, cardId, user, 10)
-    if(res.question.length === 0){
+    if(res.question?.length === 0){
       setModalType(2)
       setModalOpen(true)
     }else{

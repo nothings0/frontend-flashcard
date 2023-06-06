@@ -58,6 +58,10 @@ input:disabled {
     background-color: var(--main-bg);
     border: none;
 }
+input{
+    background-color: var(--main-bg);
+    color: var(--txt-color);
+}
 .load-more{
     margin-top: 8rem;
     font-size: 1.6rem;

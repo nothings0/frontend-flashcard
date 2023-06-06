@@ -1,9 +1,8 @@
 let matched = 0;
 let cardOne, cardTwo;
 let disableDeck = false;
-let cards
 
-export function flipCard({target: clickedCard}, _setModalType, _setModalOpen) {
+export function flipCard({target: clickedCard}, _setModalType, _setModalOpen, handleUpdate) {
     if(cardOne !== clickedCard && !disableDeck) {
         clickedCard.classList.add("flip");
         if(!cardOne) {
@@ -13,14 +12,19 @@ export function flipCard({target: clickedCard}, _setModalType, _setModalOpen) {
         disableDeck = true;
         let cardOneImg = cardOne.querySelector(".back-view").dataset.id,
         cardTwoImg = cardTwo.querySelector(".back-view").dataset.id;
-        matchCards(cardOneImg, cardTwoImg, _setModalType, _setModalOpen);
+        matchCards(cardOneImg, cardTwoImg, _setModalType, _setModalOpen, handleUpdate);
     }
 }
-function matchCards(img1, img2, _setModalType, _setModalOpen) {
+function matchCards(img1, img2, _setModalType, _setModalOpen, handleUpdate) {
     if(img1 === img2) {
         matched++;
-        console.log(matched );
         if(matched === 8) {
+            handleUpdate()
+            const cards = document.querySelectorAll(".cardz");
+
+            for (let card of cards) {
+                card.classList.remove("flip", "hide")
+            }
             setTimeout(() => {
                 _setModalOpen(true)
                 _setModalType(2)
@@ -28,11 +32,7 @@ function matchCards(img1, img2, _setModalType, _setModalOpen) {
             matched = 0;
             disableDeck = false;
             cardOne = cardTwo = "";
-            cards.forEach((card) => {
-                card.classList.remove("flip")
-                card.classList.remove("hide")
-            })
-            return
+            return;
         }
         cardOne.removeEventListener("click", flipCard);
         cardTwo.removeEventListener("click", flipCard);

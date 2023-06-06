@@ -276,12 +276,15 @@
                 padding: 1rem;
                 font-size: 1.6rem;
                 margin-top: 1.4rem;
-                box-shadow: 0px 5px 2px rgb(0 0 0 / 15%);
+                box-shadow: 0px 2px 5px 3px rgb(0 0 0 / 15%);
                 @include mobile{
                     margin-top: 10px;
                     padding: 4px 8px;
                     gap: 0 6px;
                 }
+            }
+            p{
+                line-height: 1.6;
             }
             &__prompt{
                 width: 30%;

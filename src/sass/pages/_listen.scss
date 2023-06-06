@@ -1,98 +1,104 @@
-.listen{
-    height: 40vh;
-    &__container{
-        box-shadow: var(--box-shadow);
-        width: 100%;
-        margin: 0 auto;
-        height: 80vh;
-        background-color: var(--main-bg);
-        border-radius: 5px;
-        padding: 4rem;
-        @include flex(stretch, space-between);
-        flex-direction: column;
-        @include mobile{
-            padding: 4rem 10px
-        }
+.listen {
+  height: 50rem;
+  &__container {
+    box-shadow: var(--box-shadow);
+    width: 100%;
+    margin: 0 auto;
+    height: 100%;
+    background-color: var(--main-bg);
+    border-radius: 5px;
+    padding: 4rem;
+    @include flex(stretch, space-between);
+    flex-direction: column;
+    @include mobile {
+      padding: 4rem 10px;
     }
+  }
 
-    &__top{
-        &__define{
-            @include flex(center, space-between);
-            &__title{
-                font-size: 1.4rem;
-                @include flex(center, unset);
-                gap: 0 1.5rem;
-                i{
-                    cursor: pointer;
-                }
-            }
-            &__alert{
-                position: relative;
-                i{
-                    font-size: 1.6rem;
-                    opacity: 0.7;
-                    cursor: pointer;
-                }
-                &__popup{
-                    position: absolute;
-                    font-size: 12px;
-                    padding: 5px;
-                    top: calc(100% + 10px);
-                    right: 0;
-                    width: 150px;
-                    background-color: var(--second-bg);
-                    box-shadow: 0 0 2px 2px var(--hover);
-                    display: none;
-                }
-                &:hover &__popup{
-                    display: block;
-                }
-            }
+  &__top {
+    &__define {
+      @include flex(center, space-between);
+      &__title {
+        font-size: 1.4rem;
+        @include flex(center, unset);
+        gap: 0 1.5rem;
+        i {
+          cursor: pointer;
         }
+      }
+      &__alert {
+        position: relative;
+        i {
+          font-size: 1.6rem;
+          opacity: 0.7;
+          cursor: pointer;
+        }
+        &__popup {
+          position: absolute;
+          font-size: 12px;
+          padding: 5px;
+          top: calc(100% + 10px);
+          right: 0;
+          width: 150px;
+          background-color: var(--second-bg);
+          box-shadow: 0 0 2px 2px var(--hover);
+          display: none;
+        }
+        &:hover &__popup {
+          display: block;
+        }
+      }
     }
-    &__middle{
-        &__title{
-            font-size: 2rem;
-            &.correct{
-                color: #23b26d;
-            }
-            &.incorrect{
-                color: #ff9c8c;
-            }
-        }
-        &__item{
-            margin-top: 3rem;
-            p{
-                font-size: 1.6rem;
-                color: $second-color;
-            }
-            h3{
-                text-transform: capitalize;
-                font-size: 2rem;
-                font-weight: 500;
-                padding-top: 1rem;
-            }
-        }
+  }
+  &__middle {
+    &__title {
+      font-size: 2rem;
+      &.correct {
+        color: #23b26d;
+      }
+      &.incorrect {
+        color: #ff9c8c;
+      }
     }
-    &__bottom{
-        @include flex(center, space-between);
-        gap: 0 10px;
-        &__input{
-            width: 80%;
-            p{
-                font-size: 1.3rem;
-                color: $second-color;
-                text-transform: uppercase;
-            }
-        }
-        &__btn{
-            flex: 1;
-            padding: 1.5rem 2rem;
-            background-color: $main-color;
-            color: #fff;
-            font-size: 1.4rem;
-            border-radius: 5px;
-            cursor: pointer;
-        }
+    &__item {
+      margin-top: 3rem;
+      p {
+        font-size: 1.6rem;
+        color: $second-color;
+      }
+      h3 {
+        text-transform: capitalize;
+        font-size: 2rem;
+        font-weight: 500;
+        padding-top: 1rem;
+      }
     }
+  }
+  &__bottom {
+    @include flex(center, space-between);
+    gap: 0 10px;
+    &__input {
+      width: 80%;
+      p {
+        font-size: 1.3rem;
+        color: $second-color;
+        text-transform: uppercase;
+      }
+    }
+    &__btn {
+      padding: 1.5rem 2rem;
+      background-color: $main-color;
+      color: #fff;
+      font-size: 1.4rem;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  }
+  &__suggest {
+    text-align: center;
+    span {
+      font-size: 1.8rem;
+      cursor: pointer;
+    }
+  }
 }

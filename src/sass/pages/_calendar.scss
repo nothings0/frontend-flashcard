@@ -1,142 +1,144 @@
-.calendar{
-    &__title{
-        margin-bottom: 2rem;
-        input{
-            color: var(--txt-color);
-            font-size: 2.5rem;
-            width: 100%;
-            font-weight: 500;
-        }
+.calendar {
+  &__title {
+    margin-bottom: 2rem;
+    input {
+      color: var(--txt-color);
+      font-size: 2.5rem;
+      width: 100%;
+      font-weight: 500;
     }
-    .smooth-dnd-container{
-        .smooth-dnd-draggable-wrapper{
-            border-radius: 5px;
-        }
+  }
+  .smooth-dnd-container {
+    .smooth-dnd-draggable-wrapper {
+      border-radius: 5px;
+      margin-right: 10px;
     }
-    .horizontal {
-        @include flex(flex-start, unset);
-        overflow-x: auto;
-        gap: 0 2rem;
-        padding-bottom: 1rem;
+  }
+  .horizontal {
+    display: flex !important;
+    align-items: flex-start;
+    overflow-x: auto;
+    gap: 0 2rem;
+    padding-bottom: 1rem;
 
-        &::-webkit-scrollbar{
-            -webkit-appearance: none;
-            background-color: var(--second-bg);
-        }
-        &::-webkit-scrollbar:horizontal{
-            height: 8px
-        }
-        &::-webkit-scrollbar:vertical{
-            display: none;
-        }
-        &::-webkit-scrollbar-thumb{
-            background-color: $main-color;
-            border-radius: 5px;
-        }
+    &::-webkit-scrollbar {
+      -webkit-appearance: none;
+      background-color: var(--second-bg);
     }
+    &::-webkit-scrollbar:horizontal {
+      height: 8px;
+    }
+    &::-webkit-scrollbar:vertical {
+      display: none;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: $main-color;
+      border-radius: 5px;
+    }
+  }
 
-    &__column{
-        border-radius: 10px;
-        background-color: var(--second-bg);
-        padding: 1rem;
-        font-size: 1.6rem;
-        &__top{
-            width: 300px;
-            &__create{
-                margin-top: 1rem;
-                border-radius: 5px;
-                padding: 1.2rem 0;
-                @include flex(center, center);
-                background-color: #e8f1f0;
-                color: $main-color;
-                font-size: 1.6rem;
-                cursor: pointer;
-            }
-            &__header{
-                @include flex(center, space-between);
-                margin-bottom: 1rem;
-                font-size: 2rem;
-                
-                textarea{
-                    width: 80%;
-                    border: none;
-                    margin: 0;
-                    &:focus{
-                        border-bottom: 2px solid $main-color;
-                    }
-                }
-                &__delete{
-                    cursor: pointer;
-                    &>i{
-                        display: none;
-                    }
-                }
-                &:hover &__delete{
-                    & > i{
-                        display: block;
-                    }
-                }
-            }
-            &__form{
-                &__btn{
-                    margin-top: 2rem;
-                    @include flex(center, space-between);
-                    &__add{
-                        background-color: green;
-                        color: var(--main-bg);
-                        padding: 5px 10px;
-                        border-radius: 5px;
-                        cursor: pointer;
-                    }
-                }
-            }
-        }
-        &__wrap{
-            padding-top: 1.5rem;
-            background-color: #f1f4f4;
-            &__item{
-                font-size: 1.4rem;
-                font-weight: 400;
-                letter-spacing: 1px;
-                line-height: 1.5;
-                padding: 1rem;
-                background-color: var(--main-bg);
-                border-radius: 5px;
-            }
-            .vertical{
-                background-color: #f1f4f4;
-            }
-        }
-    }
-    &__define{
+  &__column {
+    border-radius: 10px;
+    background-color: var(--second-bg);
+    padding: 1rem;
+    font-size: 1.6rem;
+    &__top {
+      width: 300px;
+      &__create {
+        margin-top: 1rem;
+        border-radius: 5px;
+        padding: 1.2rem 0;
         @include flex(center, center);
-        height: 80vh;
-        flex-direction: column;
-        padding: 1rem 1.5rem;
-        &__title{
-            font-size: 2.2rem;
+        background-color: #e8f1f0;
+        color: $main-color;
+        font-size: 1.6rem;
+        cursor: pointer;
+      }
+      &__header {
+        @include flex(center, space-between);
+        margin-bottom: 1rem;
+        font-size: 2rem;
+
+        textarea {
+          width: 80%;
+          border: none;
+          margin: 0;
+          &:focus {
+            border-bottom: 2px solid $main-color;
+          }
         }
-        &__form{
-            text-align: center;
-            @include flex(center, center);
-            flex-direction: column;
-            gap: 5rem 0;
-            padding: 0 10%;
-            width: 80%;
-            height: 55%;
-            box-shadow: var(--box-shadow);
-            // textarea{
-            //     width: 100%;
-            // }
-            button{
-                padding: 1rem 1.5rem;
-                font-size: 1.8rem;
-                font-weight: 600;
-                color: #fff;
-                cursor: pointer;
-                background-color: $main-color;
-                border-radius: 10px;
-            }
+        &__delete {
+          cursor: pointer;
+          & > i {
+            display: none;
+          }
         }
+        &:hover &__delete {
+          & > i {
+            display: block;
+          }
+        }
+      }
+      &__form {
+        &__btn {
+          margin-top: 2rem;
+          @include flex(center, space-between);
+          &__add {
+            background-color: green;
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+          }
+        }
+      }
     }
+    &__wrap {
+      padding-top: 1.5rem;
+      background-color: #f1f4f4;
+      &__item {
+        font-size: 1.4rem;
+        font-weight: 400;
+        letter-spacing: 1px;
+        line-height: 1.5;
+        padding: 1rem;
+        background-color: var(--main-bg);
+        border-radius: 5px;
+      }
+      .vertical {
+        background-color: #f1f4f4;
+      }
+    }
+  }
+  &__define {
+    @include flex(center, center);
+    height: 80vh;
+    flex-direction: column;
+    padding: 1rem 1.5rem;
+    &__title {
+      font-size: 2.2rem;
+    }
+    &__form {
+      text-align: center;
+      @include flex(center, center);
+      flex-direction: column;
+      gap: 5rem 0;
+      padding: 0 10%;
+      width: 80%;
+      height: 55%;
+      box-shadow: var(--box-shadow);
+      // textarea{
+      //     width: 100%;
+      // }
+      button {
+        padding: 1rem 1.5rem;
+        font-size: 1.8rem;
+        font-weight: 600;
+        color: #fff;
+        cursor: pointer;
+        background-color: $main-color;
+        border-radius: 10px;
+      }
+    }
+  }
 }
