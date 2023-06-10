@@ -72,6 +72,7 @@ const Write = () => {
     setIsResult(false);
     setIndex(0);
     setModalOpen(false);
+    setMark(0);
   };
 
   const handleReLearn = () => {
@@ -79,6 +80,7 @@ const Write = () => {
     setIsResult(false);
     setIndex(0);
     setModalOpen(false);
+    setMark(0);
   };
 
   return (
