@@ -1,4 +1,4 @@
-.post{
+.post {
   width: 100%;
 }
 .postSk {
@@ -6,27 +6,27 @@
   animation: skeleton 1s ease infinite alternate;
   border-radius: 10px;
   @include grid(20%);
-  @include tablet{
+  @include tablet {
     @include grid(25%);
-    gap: 14px 12px; 
+    gap: 14px 12px;
   }
-  @include mobile{
-      @include grid(48%);
-      gap: 12px 8px;
+  @include mobile {
+    @include grid(48%);
+    gap: 12px 8px;
   }
   gap: 2rem;
-  &__heading{
+  &__heading {
     height: 20px;
     animation: skeleton 1s ease infinite alternate;
     margin-bottom: 15px;
     @include flex(center, space-between);
-    &__left{
+    &__left {
       background-color: #9f9f9f;
       height: 100%;
       border-radius: 5px;
       width: 150px;
     }
-    &__right{
+    &__right {
       background-color: #9f9f9f;
       height: 90%;
       border-radius: 5px;
@@ -72,85 +72,100 @@
 }
 
 .loadSk {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-    // opacity: 0.8;
-    position: fixed;
-    inset: 0;
-    z-index: 10000;
-    overflow: auto;
-    background-color: rgba($color: #000000, $alpha: 0.15);
- }
- 
- .spinner {
-   animation: rotator $duration ease-in-out infinite;
- }
- 
- @keyframes rotator {
-   0% { transform: rotate(0deg); }
-   100% { transform: rotate(270deg); }
- }
- 
- .path {
-   stroke-dasharray: $offset;
-   stroke-dashoffset: 0;
-   transform-origin: center;
-   animation:
-     dash $duration ease-in-out infinite, 
-     colors ($duration*4) ease-in-out infinite;
- }
- 
- @keyframes colors {
-     0% { stroke: #4285F4; }
-     25% { stroke: #DE3E35; }
-     50% { stroke: #F7C223; }
-     75% { stroke: #1B9A59; }
-   100% { stroke: #4285F4; }
- }
- 
- @keyframes dash {
-  0% { stroke-dashoffset: $offset; }
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  // opacity: 0.8;
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  overflow: auto;
+  background-color: rgba($color: #000000, $alpha: 0.15);
+}
+
+.spinner {
+  animation: rotator $duration ease-in-out infinite;
+}
+
+@keyframes rotator {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(270deg);
+  }
+}
+
+.path {
+  stroke-dasharray: $offset;
+  stroke-dashoffset: 0;
+  transform-origin: center;
+  animation: dash $duration ease-in-out infinite,
+    colors ($duration * 4) ease-in-out infinite;
+}
+
+@keyframes colors {
+  0% {
+    stroke: #4285f4;
+  }
+  25% {
+    stroke: #de3e35;
+  }
+  50% {
+    stroke: #f7c223;
+  }
+  75% {
+    stroke: #1b9a59;
+  }
+  100% {
+    stroke: #4285f4;
+  }
+}
+
+@keyframes dash {
+  0% {
+    stroke-dashoffset: $offset;
+  }
   50% {
     stroke-dashoffset: $offset/4;
-    transform:rotate(135deg);
+    transform: rotate(135deg);
   }
   100% {
     stroke-dashoffset: $offset;
-    transform:rotate(450deg);
+    transform: rotate(450deg);
   }
- }
+}
 
-.calendar-ske{
+.calendar-ske {
   @include flex(flex-start, unset);
   gap: 0 2rem;
-  &__item{
+  &__item {
     width: 280px;
     height: 100vh;
-    &__heading{
+    &__heading {
       height: 20px;
       background-color: #9f9f9f;
       animation: skeleton 1s ease infinite alternate;
       margin: 1rem 5px;
       border-radius: 5px;
     }
-    &__add{
+    &__add {
       background-color: #9f9f9f;
       animation: skeleton 1s ease infinite alternate;
       height: 40px;
       margin: 1rem 5px;
       border-radius: 5px;
     }
-    &__task.sm{
+    &__task.sm {
       background-color: #9f9f9f;
       animation: skeleton 1s ease infinite alternate;
       height: 120px;
       margin: 1rem 5px;
       border-radius: 5px;
     }
-    &__task.lg{
+    &__task.lg {
       background-color: #9f9f9f;
       animation: skeleton 1s ease infinite alternate;
       height: 180px;
@@ -160,23 +175,23 @@
   }
 }
 
-.detail-ske{
-  &__heading{
+.detail-ske {
+  &__heading {
     height: 45px;
     width: 300px;
     background-color: #9f9f9f;
     animation: skeleton 1s ease infinite alternate;
-    border-radius: 5px
+    border-radius: 5px;
   }
-  &__container{
+  &__container {
     @include flex(flex-start, unset);
     gap: 0 5rem;
     height: 60vh;
   }
-  &__menu{
+  &__menu {
     width: 25%;
     margin-top: 3rem;
-    &__item{
+    &__item {
       margin: 1.5rem 0;
       height: 35px;
       width: 100%;
@@ -185,7 +200,7 @@
       border-radius: 5px;
     }
   }
-  &__table{
+  &__table {
     margin-top: 4.5rem;
     flex: 1;
     background-color: #9f9f9f;
@@ -193,26 +208,89 @@
     height: 250px;
     border-radius: 5px;
   }
-  &__bottom{
+  &__bottom {
     margin-top: 20px;
     @include flex(center, space-between);
-    &__left{
+    &__left {
       width: 25%;
       height: 35px;
       background-color: #9f9f9f;
       animation: skeleton 1s ease infinite alternate;
     }
-    &__right{
+    &__right {
       width: 25%;
       @include flex(center, flex-end);
       gap: 0 10px;
-      &__item{
+      &__item {
         width: 35px;
         height: 35px;
         border-radius: 50%;
         background-color: #9f9f9f;
         animation: skeleton 1s ease infinite alternate;
       }
+    }
+  }
+}
+.rank-ske {
+  width: 100%;
+  &__item {
+    margin-top: 1.6rem;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 0 10px;
+    &__num {
+      background-color: #9f9f9f;
+      animation: skeleton 1s ease infinite alternate;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+    }
+    &__text {
+      background-color: #9f9f9f;
+      animation: skeleton 1s ease infinite alternate;
+      flex: 1;
+      height: 35px;
+      border-radius: 5px;
+    }
+  }
+}
+.chart-ske {
+  width: 100%;
+  height: 300px;
+  padding: 10px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-around;
+  &__item {
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: column;
+    gap: 10px 0;
+    width: 60px;
+    height: 100%;
+    @keyframes counter {
+      0% {
+        flex: 0;
+      }
+      100% {
+        flex: 1;
+      }
+    }
+    &__text {
+      height: 16px;
+      background-color: #9f9f9f;
+      animation: skeleton 1s ease infinite alternate;
+      border-radius: 5px;
+    }
+    &__column {
+      background-color: #9f9f9f;
+      animation: skeleton 1s ease infinite alternate,
+        counter 1.5s ease-in-out infinite alternate;
+      flex: 1;
+      width: 100%;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
     }
   }
 }

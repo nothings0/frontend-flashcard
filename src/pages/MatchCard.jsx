@@ -11,6 +11,7 @@ import {
 } from "../redux/apiRequest";
 import Skeleton from "../components/Skeleton";
 import HeaderPrimary from "../components/HeaderPrimary";
+import { play } from "../redux/audioSlice";
 
 const MatchCard = () => {
   const navigate = useNavigate();
@@ -47,19 +48,18 @@ const MatchCard = () => {
     setTerms(res.terms);
   };
 
+  const handleClick = (e) => {
+    dispatch(play());
+    flipCard(e, setModalType, setModalOpen, handleUpdate, dispatch);
+  };
+
   return (
     <Helmet title="Ghép thẻ | Flux">
       <div className="match">
         <HeaderPrimary round={round} title="Ghép thẻ" />
         <div className="cards">
           {terms?.map((item, index) => (
-            <div
-              className="cardz"
-              key={index}
-              onClick={(e) =>
-                flipCard(e, setModalType, setModalOpen, handleUpdate)
-              }
-            >
+            <div className="cardz" key={index} onClick={(e) => handleClick(e)}>
               <div className="view front-view">
                 <i className="fa-solid fa-question"></i>
               </div>

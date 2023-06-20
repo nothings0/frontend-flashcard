@@ -7,6 +7,7 @@ import WriteCpn from "../components/WriteCpn";
 import Helmet from "../components/Helmet";
 import Skeleton from "../components/Skeleton";
 import HeaderPrimary from "../components/HeaderPrimary";
+import { play } from "../redux/audioSlice";
 
 const Write = () => {
   const { cardId } = useParams();
@@ -42,6 +43,7 @@ const Write = () => {
   }, [cardId]);
 
   const handleIndex = () => {
+    dispatch(play());
     let nextIndex = index + 1;
     if (nextIndex < data.length) {
       setIndex(nextIndex);

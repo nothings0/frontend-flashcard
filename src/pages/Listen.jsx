@@ -8,6 +8,7 @@ import ListenCpn from "../components/ListenCpn";
 import Helmet from "../components/Helmet";
 import Skeleton from "../components/Skeleton";
 import HeaderPrimary from "../components/HeaderPrimary";
+import { play } from "../redux/audioSlice";
 
 const Listen = () => {
   const { cardId } = useParams();
@@ -44,6 +45,7 @@ const Listen = () => {
   }, [cardId]);
 
   const handleIndex = () => {
+    dispatch(play());
     let nextIndex = index + 1;
     if (nextIndex < data.length) {
       setIndex(nextIndex);

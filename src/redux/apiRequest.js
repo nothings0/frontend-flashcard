@@ -3,6 +3,7 @@ import axiosJWT, { genURL } from "./axiosConfig";
 import { loginSuccess, logoutSuccess } from "./userSlice";
 import { handleLoading, handleRemove } from "./middleSlice";
 import { showToast } from "./toastSlice";
+import { play } from "./audioSlice";
 
 axios.defaults.withCredentials = true;
 export const registerUser = async (user, navigate, dispatch, setErrorMsg) => {
@@ -211,6 +212,8 @@ export const DeleteCard = async (cardId, userId, accessToken, dispatch) => {
 
 export const GetQuestion = async (dispatch, cardId, limit) => {
   try {
+    dispatch(play());
+
     dispatch(handleLoading());
     const res = await axios.get(
       `${genURL(`/v1/card/question/${cardId}`, { limit: limit })}`
@@ -223,6 +226,7 @@ export const GetQuestion = async (dispatch, cardId, limit) => {
 };
 export const GetLearn = async (dispatch, cardId, user, limit) => {
   try {
+    dispatch(play());
     dispatch(handleLoading());
     const res = await axios.get(
       `${genURL(`/v1/card/learn/${cardId}`, { limit: limit })}`,
@@ -238,6 +242,8 @@ export const GetLearn = async (dispatch, cardId, user, limit) => {
 export const GetMarkLearn = async (dispatch, cardId, ques, user) => {
   try {
     dispatch(handleLoading());
+    dispatch(play());
+
     const res = await axios.post(`${genURL(`/v1/card/learn/${cardId}`)}`, {
       ques,
       user,
@@ -251,6 +257,7 @@ export const GetMarkLearn = async (dispatch, cardId, ques, user) => {
 
 export const GetFlashCard = async (dispatch, cardId) => {
   try {
+    dispatch(play());
     dispatch(handleLoading());
     const res = await axios.get(`${genURL(`/v1/card/flashcard/${cardId}`)}`);
     dispatch(handleRemove());
@@ -262,6 +269,7 @@ export const GetFlashCard = async (dispatch, cardId) => {
 
 export const GetListen = async (dispatch, cardId, user, limit) => {
   try {
+    dispatch(play());
     dispatch(handleLoading());
     const res = await axios.get(
       `${genURL(`/v1/card/listen/${cardId}`, { limit: limit })}`,
@@ -276,6 +284,8 @@ export const GetListen = async (dispatch, cardId, user, limit) => {
 
 export const GetMarkListen = async (dispatch, cardId, ques, user) => {
   try {
+    dispatch(play());
+
     dispatch(handleLoading());
     const res = await axios.post(`${genURL(`/v1/card/listen/${cardId}`)}`, {
       ques,
@@ -289,6 +299,7 @@ export const GetMarkListen = async (dispatch, cardId, ques, user) => {
 };
 export const GetWrite = async (dispatch, cardId, user, limit) => {
   try {
+    dispatch(play());
     dispatch(handleLoading());
     const res = await axios.get(
       `${genURL(`/v1/card/write/${cardId}`, { limit: limit })}`,
@@ -304,6 +315,8 @@ export const GetWrite = async (dispatch, cardId, user, limit) => {
 export const GetMarkWrite = async (dispatch, cardId, ques, user) => {
   try {
     dispatch(handleLoading());
+    dispatch(play());
+
     const res = await axios.post(`${genURL(`/v1/card/write/${cardId}`)}`, {
       ques,
       user,
@@ -317,6 +330,7 @@ export const GetMarkWrite = async (dispatch, cardId, ques, user) => {
 
 export const GetMatchCard = async (dispatch, cardId, user, limit) => {
   try {
+    dispatch(play());
     dispatch(handleLoading());
     const res = await axios.get(
       `${genURL(`/v1/card/match/${cardId}`, { limit: limit })}`,
@@ -350,6 +364,7 @@ export const UpdateAndGetMatch = async (cardId, user, terms, limit) => {
 
 export const GetTest = async (dispatch, cardId, user, limit) => {
   try {
+    dispatch(play());
     dispatch(handleLoading());
     const res = await axios.get(
       `${genURL(`/v1/card/test/${cardId}`, { limit: limit })}`,
@@ -361,11 +376,29 @@ export const GetTest = async (dispatch, cardId, user, limit) => {
     dispatch(handleRemove());
   }
 };
+export const GetTestSpaceRep = async (dispatch, accessToken, limit) => {
+  try {
+    dispatch(play());
+    dispatch(handleLoading());
+    const res = await axiosJWT.get(
+      `${genURL("/v1/card/test/repettion", { limit: limit })}`,
+      {
+        headers: { token: `Bearer ${accessToken}` },
+      }
+    );
+    dispatch(handleRemove());
+    return res.data;
+  } catch (error) {
+    dispatch(handleRemove());
+  }
+};
 
-export const GetMarkTest = async (dispatch, cardId, ques, user) => {
+export const GetMarkTest = async (dispatch, ques, user) => {
   try {
     dispatch(handleLoading());
-    const res = await axios.post(`${genURL(`/v1/card/test/${cardId}`)}`, {
+    dispatch(play());
+
+    const res = await axios.post(`${genURL(`/v1/card/test/${ques[0].card}`)}`, {
       ques,
       user,
     });
@@ -595,6 +628,25 @@ export const CreateMultipleNotifi = async (dispatch, accessToken, data) => {
 export const GetUsage = async (prompt) => {
   try {
     const res = await axios.post(`${genURL("/v1/openai")}`, { prompt });
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const GetActive = async (accessToken) => {
+  try {
+    const res = await axiosJWT.get(`${genURL("/v1/active")}`, {
+      headers: { token: `Bearer ${accessToken}` },
+    });
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const GetRank = async (type) => {
+  try {
+    const res = await axios.get(`${genURL(`/v1/active/${type}`)}`);
     return res.data;
   } catch (error) {
     console.log(error);

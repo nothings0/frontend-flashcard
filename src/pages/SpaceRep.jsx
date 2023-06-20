@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { GetTest, GetMarkTest } from "../redux/apiRequest";
+import { GetTestSpaceRep, GetMarkTest } from "../redux/apiRequest";
 import Modal, { ModalBody, ModalFooter, ModalTitle } from "../components/Modal";
 import LearnCpn from "../components/LearnCpn";
 import ListenCpn from "../components/ListenCpn";
@@ -11,11 +11,11 @@ import Skeleton from "../components/Skeleton";
 import HeaderPrimary from "../components/HeaderPrimary";
 import { play } from "../redux/audioSlice";
 
-const Test = () => {
+const SpaceRep = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { cardId } = useParams();
   const { loading } = useSelector((state) => state.middle);
+  const { accessToken } = useSelector((state) => state.user.currentUser);
   const user = useSelector((state) => state.user.currentUser?.user._id);
   //   mang cau hoi
   const [question, setQuestion] = useState([]);
@@ -28,8 +28,8 @@ const Test = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [round, setRound] = useState(0);
 
-  const getQuestion = async (cardId) => {
-    const res = await GetTest(dispatch, cardId, user, 10);
+  const getQuestion = async () => {
+    const res = await GetTestSpaceRep(dispatch, accessToken, 10);
     if (res.question.length === 0) {
       setModalOpen(true);
     } else {
@@ -49,8 +49,8 @@ const Test = () => {
     }
   };
   useEffect(() => {
-    getQuestion(cardId);
-  }, [cardId]);
+    getQuestion();
+  }, []);
 
   const handleIndex = () => {
     dispatch(play());
@@ -65,7 +65,9 @@ const Test = () => {
   const handleQues = (e) => {
     const newArr = [...answerArr];
     newArr[index].answer =
-      question[index].type === 1 ? e.target.innerHTML : answer;
+      question[index].type === 1 || question[index].type === "learn"
+        ? e.target.innerHTML
+        : answer;
     newArr[index].type = question[index].type;
     setAnswerArr(newArr);
     let nextIndex = index + 1;
@@ -92,7 +94,7 @@ const Test = () => {
     }
   };
   const handleNextQuestion = () => {
-    getQuestion(cardId);
+    getQuestion();
     setResult({});
     setIsResult(false);
     setIndex(0);
@@ -155,10 +157,10 @@ const Test = () => {
         {modalOpen && (
           <Modal modalOpen={modalOpen}>
             <ModalTitle setModalOpen={setModalOpen}>
-              <h4>Chúc mừng</h4>
+              <h4>Đã ôn tập hết</h4>
             </ModalTitle>
             <ModalBody>
-              <p>Chúc mừng bạn đã hoàn thành học phần này</p>
+              <p>Bạn đã ôn tập hết học phần này, hãy quay lại sau</p>
             </ModalBody>
             <ModalFooter>
               <button className="ok-btn" onClick={() => navigate(-1)}>
@@ -186,7 +188,7 @@ const TestContainer = ({
   index,
 }) => {
   if (isSubmit) {
-    if (question?.type === 1) {
+    if (question?.type === "learn") {
       return (
         <LearnCpn
           handleQues={handleQues}
@@ -195,7 +197,7 @@ const TestContainer = ({
           result={result}
         />
       );
-    } else if (question?.type === 2) {
+    } else if (question?.type === "listen") {
       return (
         <ListenCpn
           handleQues={handleQues}
@@ -221,7 +223,7 @@ const TestContainer = ({
       );
     }
   } else {
-    if (question?.type === 1) {
+    if (question?.type === "learn") {
       return (
         <LearnCpn
           handleQues={handleQues}
@@ -230,7 +232,7 @@ const TestContainer = ({
           answerArr={answerArr[index]}
         />
       );
-    } else if (question?.type === 2) {
+    } else if (question?.type === "listen") {
       return (
         <ListenCpn
           subType={true}
@@ -254,4 +256,4 @@ const TestContainer = ({
   }
 };
 
-export default Test;
+export default SpaceRep;

@@ -6,6 +6,9 @@ import List from "../components/List";
 import { GetHome } from "../redux/apiRequest";
 import Skeleton from "../components/Skeleton";
 import Footer from "../components/Footer";
+import Chart from "../components/Chart";
+import Rank from "../components/Rank";
+import HomeTop from "../components/HomeTop";
 // import GoogleAds from '../components/GoogleAds';
 
 const Home = () => {
@@ -34,6 +37,7 @@ const Home = () => {
     <Helmet title="Trang chủ | Flux">
       <div className="home">
         <Search />
+        <HomeTop />
         <div className="home__left">
           <List
             title={data.populateCards?.title}

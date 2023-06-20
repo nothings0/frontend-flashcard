@@ -7,6 +7,7 @@ import LearnCpn from "../components/LearnCpn";
 import Helmet from "../components/Helmet";
 import Skeleton from "../components/Skeleton";
 import HeaderPrimary from "../components/HeaderPrimary";
+import { play } from "../redux/audioSlice";
 
 const Learn = () => {
   const navigate = useNavigate();
@@ -41,6 +42,7 @@ const Learn = () => {
   }, [cardId]);
 
   const handleIndex = () => {
+    dispatch(play());
     let nextIndex = index + 1;
     if (nextIndex < question.length) {
       setIndex(nextIndex);

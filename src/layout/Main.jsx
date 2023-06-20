@@ -20,6 +20,7 @@ import AllList from "../pages/AllList";
 import NotFound from "../pages/NotFound";
 import LyricTraining from "../pages/LyricTraining";
 import LyricMain from "../pages/LyricMain";
+import SpaceRep from "../pages/SpaceRep";
 
 const Main = () => {
   return (
@@ -39,6 +40,7 @@ const Main = () => {
         <Route path="/write/:cardId" element={<Write />} />
         <Route path="/listen/:cardId" element={<Listen />} />
         <Route path="/match/:cardId" element={<MatchCard />} />
+        <Route path="/test/space-repetition" element={<SpaceRep />} />
         <Route path="/test/:cardId" element={<Test />} />
         <Route path="/lyric" element={<LyricTraining />} />
         <Route path="/lyric/:slug" element={<LyricMain />} />

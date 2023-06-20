@@ -1,0 +1,85 @@
+.chart {
+  width: 60%;
+  padding: 10px;
+  box-shadow: 1px 1px 3px 1px #ccc;
+  @include mobile {
+    width: 100%;
+  }
+  @keyframes counter {
+    0% {
+      height: 0%;
+    }
+    100% {
+      height: var(--height);
+    }
+  }
+  &__container {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-around;
+    height: 300px;
+  }
+  &__item {
+    width: 60px;
+    color: #fff;
+    text-align: center;
+  }
+  &__wrap {
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: column;
+    height: 100%;
+    align-items: center;
+    gap: 10px 0;
+  }
+  &__column__wrap {
+    width: 60px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+  &__column {
+    position: relative;
+    background-color: $main-color;
+    width: 100%;
+    animation: counter 1s ease-in;
+    height: var(--height);
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  }
+  &__text {
+    font-size: 1.4rem;
+  }
+  &__number {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 10px;
+    color: #fff;
+  }
+  &__bottom {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2rem;
+  }
+  &__btn {
+    padding: 8px 20px;
+    font-size: 1.4rem;
+    background-color: $main-color;
+    color: #fff;
+    border-radius: 5px;
+  }
+}
+.chart__wrap:nth-child(1) {
+  .chart__column {
+    background-color: #ff3333;
+  }
+}
+.chart__wrap:nth-child(3) {
+  .chart__column {
+    background-color: #5df25c;
+  }
+}

@@ -6,6 +6,7 @@ import themeSlice from "./themeSlice";
 import middleSlice from "./middleSlice";
 import storage from "redux-persist/lib/storage";
 import toastSlice from "./toastSlice";
+import audioSlice from "./audioSlice";
 
 const persistConfig = {
   key: "root",
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   theme: themeSlice,
   middle: middleSlice,
   toast: toastSlice,
+  audio: audioSlice,
 });
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 

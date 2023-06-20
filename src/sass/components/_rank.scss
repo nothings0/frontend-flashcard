@@ -1,0 +1,75 @@
+.rank {
+  padding: 10px;
+  flex: 1;
+  box-shadow: 1px 1px 3px 1px #ccc;
+  h3 {
+    font-size: 2rem;
+    text-align: center;
+  }
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 2rem 0 1.8rem 0;
+    gap: 0 15px;
+    &__item {
+      padding: 5px 10px;
+      font-size: 12px;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 100%;
+      text-align: center;
+      border: 1px solid $main-color;
+      &.active {
+        background-color: $main-color;
+        color: #fff;
+      }
+    }
+  }
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: 0 20px;
+    & ~ & {
+      margin-top: 1.4rem;
+    }
+    &__num {
+      padding: 5px;
+      font-size: 1.8rem;
+    }
+    &__user {
+      display: flex;
+      flex-direction: column;
+      gap: 5px 0;
+      font-size: 1.2rem;
+      span:nth-child(1) {
+        font-size: 1.4rem;
+        text-transform: capitalize;
+      }
+    }
+  }
+  &__item:nth-child(1) {
+    .rank__item__num {
+      color: #fbb525;
+    }
+  }
+  &__item:nth-child(2) {
+    .rank__item__num {
+      color: #c9dbf9;
+    }
+  }
+  &__item:nth-child(3) {
+    .rank__item__num {
+      color: #e5a982;
+    }
+  }
+}
+.home__top {
+  display: flex;
+  gap: 2rem 3rem;
+  margin-bottom: 2.6rem;
+  justify-content: space-between;
+  @include mobile {
+    flex-direction: column;
+  }
+}
