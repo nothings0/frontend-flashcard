@@ -15,9 +15,10 @@ import DetailIcon from "../components/DetailIcon";
 import Skeleton from "../components/Skeleton";
 import TermWrap from "../components/TermWrap";
 import List from "../components/List";
-// import { handleLoading, handleRemove } from "../redux/middleSlice"
 import { add } from "../redux/cardSlice";
+// import { handleLoading, handleRemove } from "../redux/middleSlice"
 // import GoogleAds from "../components/GoogleAds"
+import Joyride, { ACTIONS, EVENTS, STATUS } from "react-joyride";
 
 const Detail = () => {
   const navigate = useNavigate();
@@ -31,6 +32,10 @@ const Detail = () => {
   const [modalType, setModalType] = useState(1);
   const [rateNum, setRateNum] = useState(1);
   const [terms, setTerms] = useState([]);
+  const [run, setRun] = useState({
+    isRun: true,
+    stepIndex: 1,
+  });
 
   const { cardId } = useParams();
   const accessToken = useSelector(
@@ -41,24 +46,59 @@ const Detail = () => {
   const topRef = useRef();
   const menuRef = useRef();
 
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        const res = await GetListCard(dispatch, "suggest", 1, 8);
-        setListSuggest(res);
-      } catch (err) {}
-    };
-    getData();
-  }, [page]);
+  const steps = [
+    {
+      target: ".item_0",
+      content: "This is my awesome feature! 1",
+      placement: "right",
+    },
+    {
+      target: ".item_1",
+      content: "Xem qua và luyện ghi nhớ từ vựng",
+      placement: "right",
+    },
+    {
+      target: ".item_2",
+      content: "Phương pháp làm trắc nghiệm giúp ghi nhớ từ vựng",
+      placement: "right",
+    },
+    {
+      target: ".item_3",
+      content: "Luyện viết từ vựng",
+      placement: "right",
+    },
+    {
+      target: ".item_4",
+      content: "Luyện nghe từ vựng",
+      placement: "right",
+    },
+    {
+      target: ".item_5",
+      content: "Kiểm tra ghi nhớ thông qua minigame ghép thẻ",
+      placement: "right",
+    },
+    {
+      target: ".item_6",
+      content:
+        "Cuối cùng! Kiểm tra lại toàn bộ quá trình ghi nhớ từ vựng của bạn",
+      placement: "right",
+    },
+  ];
 
   useEffect(() => {
     const getData = async () => {
-      const res = await getCardById(dispatch, cardId, page, 50);
-      setTerms((terms) => [...terms, ...res.terms]);
-      dispatch(add(res.terms));
+      const res = await GetListCard(dispatch, "suggest", 1, 8);
+      setListSuggest(res);
     };
-    page > 1 && getData();
+    getData();
+    const getData1 = async () => {
+      const res1 = await getCardById(dispatch, cardId, page, 50);
+      setTerms((terms) => [...terms, ...res1.terms]);
+      dispatch(add(res1.terms));
+    };
+    page > 1 && getData1();
   }, [page]);
+
   useEffect(() => {
     const getData = async () => {
       setPage(1);
@@ -70,10 +110,24 @@ const Detail = () => {
   }, [cardId]);
 
   useEffect(() => {
+    let isNew = localStorage.getItem("isNew");
+    if (isNew) isNew = JSON.parse(isNew);
+    else {
+      const setNew = {
+        detailPage: false,
+        homePage: false,
+      };
+      isNew = setNew;
+      localStorage.setItem("isNew", JSON.stringify(setNew));
+    }
+    if (isNew.detailPage) {
+      setRun((state) => ({ ...state, isRun: false }));
+    }
+
     window.addEventListener("scroll", () => {
       if (
-        document.body.scrollTop >= 60 ||
-        document.documentElement.scrollTop >= 60
+        document.body.scrollTop >= 300 ||
+        document.documentElement.scrollTop >= 300
       ) {
         topRef?.current?.classList.add("shrink");
       } else {
@@ -83,6 +137,11 @@ const Detail = () => {
     });
     return () => {
       window.removeEventListener("scroll", null);
+      const setNew = {
+        detailPage: true,
+        homePage: false,
+      };
+      localStorage.setItem("isNew", JSON.stringify(setNew));
     };
   }, []);
 
@@ -119,6 +178,25 @@ const Detail = () => {
 
   const handleLoadMore = () => {
     setPage(page + 1);
+  };
+
+  const handleJoyrideCallback = (data) => {
+    const { action, index, status, type } = data;
+    setRun((state) => ({ ...state, isRun: true }));
+    if ([EVENTS.STEP_AFTER, EVENTS.TARGET_NOT_FOUND].includes(type)) {
+      // Update state to advance the tour
+      setRun((state) => ({
+        ...state,
+        stepIndex: index + (action === ACTIONS.PREV ? -1 : 1),
+      }));
+    } else if ([STATUS.FINISHED, STATUS.SKIPPED].includes(status)) {
+      setRun((state) => ({ ...state, isRun: false }));
+      const setNew = {
+        detailPage: true,
+        homePage: false,
+      };
+      localStorage.setItem("isNew", JSON.stringify(setNew));
+    }
   };
 
   return (
@@ -199,30 +277,48 @@ const Detail = () => {
                 <div className="card-detail__top">
                   <div className="card-detail__left">
                     <Link to={`/flashcard/${cardId}`}>
-                      <div className="card-detail__left__item">Thẻ ghi nhớ</div>
+                      <div className="card-detail__left__item item_1">
+                        Thẻ ghi nhớ
+                      </div>
                     </Link>
                     <Link to={`/learn/${cardId}`}>
-                      <div className="card-detail__left__item">Học</div>
+                      <div className="card-detail__left__item item_2">Học</div>
                     </Link>
                     <Link to={`/write/${cardId}`}>
-                      <div className="card-detail__left__item">Viết</div>
+                      <div className="card-detail__left__item item_3">Viết</div>
                     </Link>
                     <Link to={`/listen/${cardId}`}>
-                      <div className="card-detail__left__item">Nghe</div>
+                      <div className="card-detail__left__item item_4">Nghe</div>
                     </Link>
                     <Link to={`/match/${cardId}`}>
-                      <div className="card-detail__left__item">Ghép thẻ</div>
+                      <div className="card-detail__left__item item_5">
+                        Ghép thẻ
+                      </div>
                     </Link>
                     <Link to={`/test/${cardId}`}>
-                      <div className="card-detail__left__item">Kiểm tra</div>
+                      <div className="card-detail__left__item item_6">
+                        Kiểm tra
+                      </div>
                     </Link>
+                    <Joyride
+                      run={run.isRun}
+                      steps={steps}
+                      stepIndex={run.stepIndex}
+                      continuous
+                      // disableScrolling
+                      scrollOffset={80}
+                      hideBackButton
+                      locale={{ last: "Ok" }}
+                      beaconComponent={React.forwardRef(() => null)}
+                      callback={(data) => handleJoyrideCallback(data)}
+                    />
                   </div>
                   <div className="card-detail__right">
                     <FlipCard data={terms} isVolume={false} isOpenAI={false} />
                   </div>
                 </div>
                 <div className="card-detail__info">
-                  <p className="card-detail__info__user">
+                  <p className="card-detail__info__user item_0">
                     Tạo bởi
                     <span>
                       <Link to={`/user/${data?.cards?.user.username}`}>

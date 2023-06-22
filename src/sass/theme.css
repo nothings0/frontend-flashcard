@@ -7,6 +7,7 @@
   --icon-light: rgba(22, 25, 35, 0.25);
   --icon-light-2: rgba(22, 25, 35, 0.75);
   --color-sub-light: #ffefbf;
+  --bg-search-light: rgba(255, 255, 255, 0.9);
 
   --main-bg-dark: #2d2d2d;
   --second-bg-dark: #202020;
@@ -16,9 +17,11 @@
   --icon-dark: rgba(215, 215, 215, 0.4);
   --icon-dark-2: rgba(215, 215, 215, 0.95);
   --color-sub-dark: #464646;
+  --bg-search-dark: rgba(255, 255, 255, 0.9);
 }
 .theme-mode-light {
   --main-bg: var(--main-bg-light);
+  --bg-search: var(--bg-search-light);
   --second-bg: var(--second-bg-light);
   --txt-color: var(--txt-color-light);
   --box-shadow: var(--box-shadow-light);
@@ -30,6 +33,7 @@
 
 .theme-mode-dark {
   --main-bg: var(--main-bg-dark);
+  --bg-search: var(--bg-search-dark);
   --second-bg: var(--second-bg-dark);
   --txt-color: var(--txt-color-dark);
   --box-shadow: var(--box-shadow-dark);

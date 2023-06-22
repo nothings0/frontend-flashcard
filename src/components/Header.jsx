@@ -96,7 +96,7 @@ const Header = () => {
       </div>
       <div className="header__link">
         <div className="header__link__mode">
-          {isDark ? (
+          {!isDark ? (
             <i className="fa-solid fa-moon" onClick={handleTheme}></i>
           ) : (
             <i className="fa-solid fa-sun" onClick={handleTheme}></i>

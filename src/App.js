@@ -5,15 +5,17 @@ import { store, persistor } from "./redux/store";
 // import ReactGA from "react-ga4"
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import Audio from "./components/Audio";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { ReactQueryDevtools } from "react-query/devtools";
 
 // ReactGA.initialize("G-QL0WF8XH3D")
-import { QueryClient, QueryClientProvider } from "react-query";
-
 const queryClient = new QueryClient();
 
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
+      <ReactQueryDevtools initialIsOpen={false} />
+
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <GoogleOAuthProvider clientId="243463811299-mr91tfd76l5k134ehddk5q8btej0rj2t.apps.googleusercontent.com">

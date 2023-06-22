@@ -1,30 +1,72 @@
 import React, { useRef, useState, useEffect } from "react";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { GetNotifi, ReadNotifi } from "../redux/apiRequest";
 import moment from "moment-timezone";
 import { useSelector } from "react-redux";
 const logo = require("../assets/Logo.png");
 
 const Notifi = () => {
+  const queryClient = useQueryClient();
   const [isNotifiActive, setIsNotifiActive] = useState(false);
-  const [notifis, setNotifis] = useState([]);
   const notifiRef = useRef();
   const accessToken = useSelector(
     (state) => state.user.currentUser?.accessToken
   );
 
+  const {
+    data: notifis,
+    isLoading,
+    isFetching,
+  } = useQuery({
+    queryFn: () => GetNotifi(accessToken),
+    queryKey: "notification",
+    staleTime: 3 * 60 * 1000,
+    refetchInterval: 3 * 60 * 1000,
+  });
+
+  const { mutate } = useMutation({
+    mutationFn: (notifiId) => ReadNotifi(notifiId, accessToken),
+  });
+
   useEffect(() => {
-    const getNotifi = async () => {
-      const res = await GetNotifi(accessToken);
-      setNotifis(res);
-      localStorage.setItem("notification", JSON.stringify(res));
-    };
-    const notifi = JSON.parse(localStorage.getItem("notification"));
-    if (notifi?.length > 0 || notifi) {
-      setNotifis(notifi);
+    const permis = localStorage.getItem("permis");
+    if (!permis) {
+      Notification.requestPermission()
+        .then((perm) => {
+          if (permis === "denied") {
+            localStorage.setItem("permis", perm);
+            return;
+          }
+          const date = new Date(new Date() - 3 * 60000);
+          const noti = notifis.find(
+            (item) => item.updatedAt > date && !item.idRead
+          );
+          if (noti) {
+            new Notification("Thông báo từ fluxquiz", {
+              body: "Show more",
+              data: `${noti.content}`,
+            });
+          }
+          localStorage.setItem("permis", perm);
+        })
+        .catch((err) => console.log(err));
+    } else if (permis === "denied") {
+      return;
     } else {
-      getNotifi();
+      const currentDatetime = new Date();
+      const date = new Date(currentDatetime - 3 * 60000);
+
+      const noti = notifis?.find(
+        (item) => !item.isRead && date.toISOString() < item.updatedAt
+      );
+      if (noti) {
+        new Notification("Thông báo từ fluxquiz", {
+          body: "Show more",
+          data: `${noti.content}`,
+        });
+      }
     }
-  }, [accessToken]);
+  }, [isFetching]);
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -39,17 +81,20 @@ const Notifi = () => {
       };
     }
   }, [isNotifiActive]);
-  const ReadedNotifi = async (notifiId, isRead, position) => {
+
+  const ReadedNotifi = async (notifiId, isRead) => {
     if (!isRead) {
-      const res = await ReadNotifi(notifiId, accessToken);
-      let newNotifi = [...notifis];
-      newNotifi.splice(position, 1, res);
-      setNotifis(newNotifi);
+      mutate(notifiId, {
+        onSuccess: () => {
+          queryClient.invalidateQueries(["notification"]);
+        },
+      });
     }
   };
   const handleNotifiActive = () => {
     setIsNotifiActive(!isNotifiActive);
   };
+  if (isLoading) return <p>Loading....</p>;
 
   return (
     <div
@@ -63,23 +108,29 @@ const Notifi = () => {
         ref={notifiRef}
       >
         <div className="searching__ava__list__heading">Thông báo</div>
-        {notifis?.map((item, index) => (
-          <div
-            className={`searching__ava__notifi__wrap ${
-              item?.isRead ? "read" : ""
-            }`}
-            onClick={() => ReadedNotifi(item._id, item.isRead, index)}
-            key={item?._id}
-          >
-            <div className="searching__ava__notifi__img">
-              <img src={logo} alt="Logo FLuxquiz" />
-            </div>
-            <div className="searching__ava__notifi__content">
-              <p>{item.content}</p>
-              <span>{moment(item.createdAt, "YYYYMMDD").fromNow()}</span>
-            </div>
-          </div>
-        ))}
+        {isLoading ? (
+          <p>Loading...</p>
+        ) : (
+          <>
+            {notifis?.map((item) => (
+              <div
+                className={`searching__ava__notifi__wrap ${
+                  item?.isRead ? "read" : ""
+                }`}
+                onClick={() => ReadedNotifi(item._id, item.isRead)}
+                key={item?._id}
+              >
+                <div className="searching__ava__notifi__img">
+                  <img src={logo} alt="Logo FLuxquiz" />
+                </div>
+                <div className="searching__ava__notifi__content">
+                  <p>{item.content}</p>
+                  <span>{moment(item.createdAt, "YYYYMMDD").fromNow()}</span>
+                </div>
+              </div>
+            ))}
+          </>
+        )}
       </div>
     </div>
   );
