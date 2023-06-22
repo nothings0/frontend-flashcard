@@ -43,9 +43,12 @@ const Task = ({ data, index, handleDelete }) => {
       e.target.blur();
     }
   };
-
+  const date = new Date();
+  console.log(date.toISOString() > data.updatedAt);
   return (
-    <div className="task__item">
+    <div
+      className={`task__item ${date.toISOString() > data.time ? "stale" : ""}`}
+    >
       <div className="task__item__selector"></div>
       <div
         className="task__item__delete"
@@ -59,6 +62,7 @@ const Task = ({ data, index, handleDelete }) => {
           value={taskTime}
           onChange={(e) => setTaskTime(e)}
           onAccept={handleUpdate}
+          className="date-time"
         />
       </LocalizationProvider>
       <TextareaAutosize

@@ -5,6 +5,10 @@
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   position: relative;
+  &.stale {
+    // background-color: rgb(192, 49, 49, 0.5);
+    border: 1px solid rgba(255, 0, 0);
+  }
   &__selector {
     padding: 10px;
     width: 100%;
@@ -54,10 +58,10 @@
     transition: transform 0.18s ease-in-out;
     transform: rotateZ(0deg);
   }
-  .css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root {
+  .date-time .MuiOutlinedInput-root {
     font-size: 16px;
   }
-  .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input {
+  .date-time .MuiOutlinedInput-root input {
     padding: 8px 14px;
   }
 }
