@@ -17,7 +17,7 @@
   --icon-dark: rgba(215, 215, 215, 0.4);
   --icon-dark-2: rgba(215, 215, 215, 0.95);
   --color-sub-dark: #464646;
-  --bg-search-dark: rgba(255, 255, 255, 0.9);
+  --bg-search-dark: rgba(45, 45, 45, 0.9);
 }
 .theme-mode-light {
   --main-bg: var(--main-bg-light);
