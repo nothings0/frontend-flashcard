@@ -218,8 +218,8 @@
       position: relative;
       &__wrap {
         @include flex(center, unset);
-        gap: 10px;
-        padding: 5px;
+        gap: 6px;
+        padding: 5px 0;
         border-radius: 5px;
         cursor: pointer;
         background-color: var(--hover);
@@ -244,11 +244,17 @@
         }
       }
       &__content {
+        flex: 1;
         font-size: 1.4rem;
         p {
-          line-height: 14px;
+          line-height: 18px;
           font-weight: 500;
           margin-bottom: 8px;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+          text-overflow: ellipsis;
         }
         span {
           color: $main-color;

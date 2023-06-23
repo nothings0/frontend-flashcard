@@ -1,21 +1,16 @@
 import axiosJWT, { genURL } from "../axiosConfig";
 import { handleLoading, handleRemove } from "../middleSlice";
 
-export const GetBoard = async (accessToken, dispatch) => {
-  dispatch(handleLoading());
+export const GetBoard = async (accessToken) => {
   try {
     const res = await axiosJWT.get(`${genURL("/v1/board/")}`, {
       headers: { token: `Bearer ${accessToken}` },
     });
-    dispatch(handleRemove());
     return res.data;
-  } catch (error) {
-    dispatch(handleRemove());
-  }
+  } catch (error) {}
 };
-export const CreateBoard = async (data, accessToken, dispatch) => {
+export const CreateBoard = async (data, accessToken) => {
   try {
-    dispatch(handleLoading());
     const res = await axiosJWT.post(
       `${genURL("/v1/board/")}`,
       { data },
@@ -23,11 +18,8 @@ export const CreateBoard = async (data, accessToken, dispatch) => {
         headers: { token: `Bearer ${accessToken}` },
       }
     );
-    dispatch(handleRemove());
     return res.data;
-  } catch (error) {
-    dispatch(handleRemove());
-  }
+  } catch (error) {}
 };
 
 export const UpdateBoard = async (title, boardId, accessToken) => {

@@ -5,8 +5,10 @@ import { DateTimePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { TextareaAutosize } from "@mui/base";
 import dayjs from "dayjs";
+import { useMutation, useQueryClient } from "react-query";
 
 const Task = ({ data, index, handleDelete }) => {
+  const queryClient = useQueryClient();
   const accessToken = useSelector(
     (state) => state.user.currentUser?.accessToken
   );
@@ -22,6 +24,10 @@ const Task = ({ data, index, handleDelete }) => {
     setTaskTime(dayjs(data.time));
   }, []);
 
+  const { mutate: mutateUpdate } = useMutation({
+    mutationFn: (data, dataList) => UpdateTask(data._id, dataList, accessToken),
+  });
+
   const handleSelect = (e) => {
     e.target.focus();
     e.target.select();
@@ -34,7 +40,11 @@ const Task = ({ data, index, handleDelete }) => {
     };
     clearTimeout(timer);
     timer = setTimeout(() => {
-      UpdateTask(data._id, dataList, accessToken);
+      mutateUpdate((data, dataList), {
+        onSuccess: () => {
+          queryClient.invalidateQueries(["board"]);
+        },
+      });
     }, timeOut);
   };
 
@@ -44,7 +54,7 @@ const Task = ({ data, index, handleDelete }) => {
     }
   };
   const date = new Date();
-  console.log(date.toISOString() > data.updatedAt);
+  // console.log(date.toISOString() > data.time.toISOString());
   return (
     <div
       className={`task__item ${date.toISOString() > data.time ? "stale" : ""}`}

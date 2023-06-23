@@ -7,49 +7,66 @@ import {
 } from "../../redux/calendarApi/sectionApi";
 import { CreateTask, DeleteTask } from "../../redux/calendarApi/taskApi";
 import Task from "./Task";
-import { sortOrder } from "../../util/index";
-import { TextField } from "@mui/material";
+import { useMutation, useQueryClient } from "react-query";
 
 const Section = ({ data, onTaskDrop, handleDeleteSection, index, boardId }) => {
+  const queryClient = useQueryClient();
   let timer;
   const timeOut = 500;
-  // const dispatch = useDispatch()
   const accessToken = useSelector(
     (state) => state.user.currentUser?.accessToken
   );
 
+  const tasks = data?.tasks;
+
   const [isOpenFormAdd, setOpenFormAdd] = useState(false);
-  const [tasks, setTasks] = useState([]);
-  const [taskTitle, setTaskTitle] = useState("");
-  const [taskContent, setTaskContent] = useState("");
   const [sectionTitle, setSectionTitle] = useState("");
+  const [taskContent, setTaskContent] = useState("");
 
   useEffect(() => {
     setSectionTitle(data.title);
-    setTasks(sortOrder(data.tasks, data.taskOrder, "_id") || []);
-  }, [data.tasks, data.taskOrder]);
+  }, [data]);
+
+  const { mutate: mutateCreate } = useMutation({
+    mutationFn: (dataTask) => CreateTask(dataTask, accessToken),
+  });
+  const { mutate: mutateDelete } = useMutation({
+    mutationFn: (taskId) => DeleteTask(taskId, accessToken),
+  });
+  const { mutate: mutateCreateSection } = useMutation({
+    mutationFn: (sectionTitle, boardId) =>
+      CreateSection(sectionTitle, boardId, accessToken),
+  });
+  const { mutate: mutateUpdateSection } = useMutation({
+    mutationFn: (sectionTitle) => UpdateSection(sectionTitle, accessToken),
+  });
+  const { mutate: mutateDeleteSection } = useMutation({
+    mutationFn: (data, index) =>
+      handleDeleteSection(data._id, accessToken, index),
+  });
 
   const handleCreateTask = async (accessToken) => {
     const dataTask = {
       taskContent,
-      taskTitle,
       sectionId: data._id,
     };
-    const res = await CreateTask(dataTask, accessToken);
-    const newTasks = [...tasks, res.task];
-    setTasks(newTasks);
+    mutateCreate((dataTask, accessToken), {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["board"]);
+      },
+    });
     setOpenFormAdd(false);
     setTaskContent("");
-    setTaskTitle("");
   };
 
-  const handleDelete = (taskId, accessToken, i) => {
-    let newTasks = [...tasks];
-    newTasks.splice(i, 1);
-    setTasks(newTasks);
+  const handleDelete = (taskId) => {
     clearTimeout(timer);
     timer = setTimeout(() => {
-      DeleteTask(taskId, accessToken);
+      mutateDelete(taskId, {
+        onSuccess: () => {
+          queryClient.invalidateQueries(["board"]);
+        },
+      });
     }, timeOut);
   };
 
@@ -60,11 +77,19 @@ const Section = ({ data, onTaskDrop, handleDeleteSection, index, boardId }) => {
 
   const handleUpdateSection = () => {
     if (data.board === "board-1") {
-      CreateSection(sectionTitle, boardId, accessToken);
+      mutateCreateSection((sectionTitle, boardId), {
+        onSuccess: () => {
+          queryClient.invalidateQueries(["board"]);
+        },
+      });
     } else {
       clearTimeout(timer);
       timer = setTimeout(() => {
-        UpdateSection(sectionTitle, accessToken);
+        mutateUpdateSection(sectionTitle, {
+          onSuccess: () => {
+            queryClient.invalidateQueries(["board"]);
+          },
+        });
       }, timeOut);
     }
   };
@@ -88,14 +113,15 @@ const Section = ({ data, onTaskDrop, handleDeleteSection, index, boardId }) => {
           onClick={handleSelect}
           onKeyDown={handleKeyDown}
         />
-        {/* <TextField value={sectionTitle} 
-            onChange={e => setSectionTitle(e.target.value)}
-            onBlur={handleUpdateSection}
-            onClick={handleSelect}
-            onKeyDown={handleKeyDown}/> */}
         <div
           className="section__title__delete"
-          onClick={() => handleDeleteSection(data._id, accessToken, index)}
+          onClick={() =>
+            mutateDeleteSection((data, index), {
+              onSuccess: () => {
+                queryClient.invalidateQueries(["board"]);
+              },
+            })
+          }
         >
           <i className="fa-solid fa-xmark"></i>
         </div>
@@ -103,12 +129,6 @@ const Section = ({ data, onTaskDrop, handleDeleteSection, index, boardId }) => {
       <div className="section__top">
         {isOpenFormAdd ? (
           <div className="section__top__form">
-            <textarea
-              maxLength="30"
-              placeholder="United"
-              value={taskTitle}
-              onChange={(e) => setTaskTitle(e.target.value)}
-            />
             <textarea
               maxLength="250"
               placeholder="United"
