@@ -23,12 +23,12 @@
     @include mobile {
       display: none;
     }
-    & > a {
-      width: 30%;
-      @include tablet {
-        width: 50%;
-      }
-    }
+    // & > a {
+    //   width: 30%;
+    //   @include tablet {
+    //     width: 50%;
+    //   }
+    // }
     img {
       width: 100%;
       border-radius: 10px;
