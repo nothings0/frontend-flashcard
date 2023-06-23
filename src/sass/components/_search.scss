@@ -23,8 +23,14 @@
     @include mobile {
       display: none;
     }
+    & > a {
+      width: 30%;
+      @include tablet {
+        width: 50%;
+      }
+    }
     img {
-      width: 80%;
+      width: 100%;
       border-radius: 10px;
     }
     h4 {
