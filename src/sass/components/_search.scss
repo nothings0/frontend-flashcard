@@ -8,7 +8,7 @@
   height: $top-height;
   padding: 0 2.8rem;
   background: var(--bg-search);
-  backdrop-filter: blur(8px);
+  // backdrop-filter: blur(8px);
   color: var(--txt-color);
   z-index: 101;
   transition: left 0.3s ease;
@@ -23,12 +23,12 @@
     @include mobile {
       display: none;
     }
-    // & > a {
-    //   width: 30%;
-    //   @include tablet {
-    //     width: 50%;
-    //   }
-    // }
+    & > a {
+      width: 30%;
+      @include tablet {
+        width: 50%;
+      }
+    }
     img {
       width: 100%;
       border-radius: 10px;
