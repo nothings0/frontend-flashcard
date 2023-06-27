@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Search from "../components/Search";
 import Helmet from "../components/Helmet";
 import Section from "../components/calendar/Section";
 import { Container, Draggable } from "react-smooth-dnd";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { applyDrag } from "../util/index";
 import {
   GetBoard,
@@ -16,74 +16,61 @@ import {
   DeleteSection,
 } from "../redux/calendarApi/sectionApi";
 import { UpdatePositionTask } from "../redux/calendarApi/taskApi";
+import { sortOrder } from "../util/index";
 import { calendarData } from "../FakeDta/calendarData";
 import Skeleton from "../components/Skeleton";
-import { useQuery, useQueryClient, useMutation } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 
 const Calendar = () => {
-  // const [board, setBoard] = useState({});
-  // const [sections, setSections] = useState([]);
+  const [board, setBoard] = useState({});
+  const [sections, setSections] = useState([]);
   const [boardTitle, setBoardTitle] = useState("Sắp xếp thời gian học tập");
   const [sectionTitle, setSectionTitle] = useState("");
   const [isOpenFormAdd, setOpenFormAdd] = useState(false);
-  const queryClient = useQueryClient();
 
+  const dispatch = useDispatch();
+  const queryClient = useQueryClient();
   const accessToken = useSelector(
     (state) => state.user.currentUser?.accessToken
   );
   let timer;
   const timeOut = 500;
 
-  const { data: boardData, isLoading } = useQuery({
-    queryFn: () => GetBoard(accessToken),
+  const { mutate: mutateCreate } = useMutation({
+    mutationFn: ({ calendarData: data }) => CreateBoard(data, accessToken),
+  });
+
+  const { isLoading, isFetching } = useQuery({
+    queryFn: () => GetBoard(accessToken, dispatch),
     queryKey: "board",
     staleTime: 3 * 60 * 1000,
+    onSettled: (data) => {
+      if (data?.status === 200) {
+        setBoard(data.board);
+        setBoardTitle(data.board.title);
+        if (data.board.cardOrder.length > 0) {
+          setSections(sortOrder(data.sections, data.board.cardOrder, "_id"));
+        } else {
+          setSections(
+            sortOrder(
+              calendarData.sections,
+              calendarData.board.cardOrder,
+              "_id"
+            )
+          );
+        }
+      } else {
+        mutateCreate(
+          { calendarData },
+          {
+            onSuccess: () => {
+              queryClient.invalidateQueries(["board"]);
+            },
+          }
+        );
+      }
+    },
   });
-
-  const { mutate: mutateSection } = useMutation({
-    mutationFn: (newBoard) =>
-      UpdatePositionSection(newBoard.cardOrder, accessToken),
-  });
-  const { mutate: mutateCreateBoard, isLoading: isLoadingMutate } = useMutation(
-    {
-      mutationFn: () => CreateBoard(calendarData, accessToken),
-    }
-  );
-  const { mutate: mutateCreateSection } = useMutation({
-    mutationFn: (sectionTitle, board) =>
-      CreateSection(sectionTitle, board._id, accessToken),
-  });
-  const { mutate: mutateUpdate } = useMutation({
-    mutationFn: (boardTitle, board) =>
-      UpdateBoard(boardTitle, board._id, accessToken),
-  });
-  const { mutate: mutateTask } = useMutation({
-    mutationFn: ({ currentSection, sectionIdAdded, result }) =>
-      UpdatePositionTask(
-        currentSection.taskOrder,
-        currentSection._id,
-        sectionIdAdded,
-        result.payload._id,
-        accessToken
-      ),
-  });
-
-  const board = boardData?.board;
-  const sections = boardData?.sections;
-
-  useEffect(() => {
-    if (boardData) {
-      // if (board.cardOrder.length > 0) {
-      //   sections = sortOrder(sections, board.cardOrder, "_id");
-      // }
-      return;
-    }
-    mutateCreateBoard({
-      onSuccess: () => {
-        queryClient.invalidateQueries(["board"]);
-      },
-    });
-  }, [boardData]);
 
   const onCardDrop = (result) => {
     if (result.removedIndex || result.addedIndex) {
@@ -94,48 +81,46 @@ const Calendar = () => {
         newBoard.cardOrder = newSections.map((colume) => colume._id);
         clearTimeout(timer);
         timer = setTimeout(() => {
-          mutateSection(newBoard, {
-            onSuccess: () => {
-              queryClient.invalidateQueries(["board"]);
-            },
-          });
+          UpdatePositionSection(newBoard.cardOrder, accessToken);
         }, timeOut);
+        setBoard(newBoard);
+        setSections(newSections);
       }
     }
   };
 
   const onTaskDrop = (result, columnId) => {
-    if (result.removedIndex || result.addedIndex) {
+    if (!isNaN(result.removedIndex) || !isNaN(result.addedIndex)) {
       if (result.removedIndex !== result.addedIndex) {
         let newSections = [...sections];
         let currentSection = newSections.find((item) => item._id === columnId);
         currentSection.tasks = applyDrag(currentSection.tasks, result);
         currentSection.taskOrder = currentSection.tasks.map((task) => task._id);
         let sectionIdAdded;
-        if (currentSection._id !== result.payload.section) {
-          sectionIdAdded = currentSection._id;
+        console.log(columnId);
+        if (result.removedIndex === null) {
+          sectionIdAdded = columnId;
+          clearTimeout(timer);
+          timer = setTimeout(() => {
+            UpdatePositionTask(
+              currentSection.taskOrder,
+              result.payload.section,
+              sectionIdAdded,
+              result.payload._id,
+              accessToken
+            );
+          }, timeOut);
+          setSections(newSections);
         }
-        clearTimeout(timer);
-        timer = setTimeout(() => {
-          mutateTask(
-            { currentSection, sectionIdAdded, result },
-            {
-              onSuccess: () => {
-                queryClient.invalidateQueries(["board"]);
-              },
-            }
-          );
-        }, timeOut);
+        console.log(sectionIdAdded);
       }
     }
   };
 
   const handleCreateSection = async () => {
-    mutateCreateSection((sectionTitle, board), {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["board"]);
-      },
-    });
+    const res = await CreateSection(sectionTitle, board._id, accessToken);
+    const newSections = [...sections, res.section];
+    setSections(newSections);
     setOpenFormAdd(false);
   };
 
@@ -143,6 +128,7 @@ const Calendar = () => {
     clearTimeout(timer);
     let newSections = [...sections];
     newSections.splice(i, 1);
+    setSections(newSections);
     timer = setTimeout(() => {
       DeleteSection(sectionId, accessToken);
     }, timeOut);
@@ -151,37 +137,26 @@ const Calendar = () => {
   const handleUpdateBoard = () => {
     clearTimeout(timer);
     timer = setTimeout(() => {
-      mutateUpdate((boardTitle, board), {
-        onSuccess: () => {
-          queryClient.invalidateQueries(["board"]);
-        },
-      });
+      UpdateBoard(boardTitle, board._id, accessToken);
     }, timeOut);
-  };
-
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter") {
-      e.target.blur();
-    }
   };
 
   return (
     <Helmet title="Calendar | Flux">
       <div className="calendar">
         <Search />
-        {isLoading || isLoadingMutate ? (
+        {isLoading || isFetching ? (
           <Skeleton type="calendar" />
         ) : (
           <>
-            {board && Object.keys(board).length !== 0 && (
+            {Object.keys(board).length !== 0 && (
               <>
                 <div className="calendar__title">
                   <input
                     type="text"
-                    value={board.title}
+                    value={boardTitle}
                     onChange={(e) => setBoardTitle(e.target.value)}
-                    onBlur={handleUpdateBoard}
-                    onKeyDown={handleKeyDown}
+                    onKeyDown={handleUpdateBoard}
                   />
                 </div>
                 <Container

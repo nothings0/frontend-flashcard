@@ -1,5 +1,4 @@
 import axiosJWT, { genURL } from "../axiosConfig";
-import { handleLoading, handleRemove } from "../middleSlice";
 
 export const GetBoard = async (accessToken) => {
   try {

@@ -1,11 +1,35 @@
 .calendar {
+  .date-time .MuiOutlinedInput-root {
+    font-size: 16px;
+  }
+  .date-time .MuiOutlinedInput-root input {
+    padding: 8px 14px;
+    color: var(--txt-color);
+  }
+
   &__title {
     margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0 10px;
     input {
+      width: 60%;
       color: var(--txt-color);
       font-size: 2.5rem;
-      width: 100%;
       font-weight: 500;
+      border: 1px solid #ccc;
+      padding: 8px;
+      border-radius: 5px;
+    }
+    &__btn {
+      // width: 20px;
+      padding: 8px 16px;
+      background-color: $main-color;
+      font-size: 16px;
+      color: #fff;
+      border-radius: 5px;
+      cursor: pointer;
     }
   }
   .smooth-dnd-container {
@@ -140,4 +164,9 @@
       }
     }
   }
+}
+.css-rhmlg1-MuiTypography-root-MuiDayCalendar-weekDayLabel,
+.css-qa7bje-MuiButtonBase-root-MuiPickersDay-root,
+.css-53ccts-MuiClockNumber-root {
+  font-size: 15px !important;
 }

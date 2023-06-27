@@ -8,11 +8,16 @@ import {
 import { CreateTask, DeleteTask } from "../../redux/calendarApi/taskApi";
 import Task from "./Task";
 import { useMutation, useQueryClient } from "react-query";
+import { DateTimePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import dayjs from "dayjs";
+import { renderTimeViewClock } from "@mui/x-date-pickers/timeViewRenderers";
 
-const Section = ({ data, onTaskDrop, handleDeleteSection, index, boardId }) => {
+let timer;
+const timeOut = 500;
+
+const Section = ({ data, onTaskDrop, handleDeleteSection, boardId }) => {
   const queryClient = useQueryClient();
-  let timer;
-  const timeOut = 500;
   const accessToken = useSelector(
     (state) => state.user.currentUser?.accessToken
   );
@@ -22,51 +27,56 @@ const Section = ({ data, onTaskDrop, handleDeleteSection, index, boardId }) => {
   const [isOpenFormAdd, setOpenFormAdd] = useState(false);
   const [sectionTitle, setSectionTitle] = useState("");
   const [taskContent, setTaskContent] = useState("");
+  const [time, setTime] = useState("");
 
   useEffect(() => {
     setSectionTitle(data.title);
   }, [data]);
 
   const { mutate: mutateCreate } = useMutation({
-    mutationFn: (dataTask) => CreateTask(dataTask, accessToken),
+    mutationFn: ({ dataTask }) => CreateTask(dataTask, accessToken),
   });
   const { mutate: mutateDelete } = useMutation({
-    mutationFn: (taskId) => DeleteTask(taskId, accessToken),
+    mutationFn: ({ taskId, sectionId }) =>
+      DeleteTask(taskId, sectionId, accessToken),
   });
   const { mutate: mutateCreateSection } = useMutation({
-    mutationFn: (sectionTitle, boardId) =>
+    mutationFn: ({ sectionTitle, boardId }) =>
       CreateSection(sectionTitle, boardId, accessToken),
   });
   const { mutate: mutateUpdateSection } = useMutation({
-    mutationFn: (sectionTitle) => UpdateSection(sectionTitle, accessToken),
-  });
-  const { mutate: mutateDeleteSection } = useMutation({
-    mutationFn: (data, index) =>
-      handleDeleteSection(data._id, accessToken, index),
+    mutationFn: ({ sectionTitle }) => UpdateSection(sectionTitle, accessToken),
   });
 
-  const handleCreateTask = async (accessToken) => {
+  const handleCreateTask = async () => {
     const dataTask = {
       taskContent,
       sectionId: data._id,
+      time: dayjs(time, "HH:mm DD/MM/YYYY"),
     };
-    mutateCreate((dataTask, accessToken), {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["board"]);
-      },
-    });
+    mutateCreate(
+      { dataTask },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries(["board"]);
+        },
+      }
+    );
     setOpenFormAdd(false);
     setTaskContent("");
   };
 
-  const handleDelete = (taskId) => {
+  const handleDelete = (taskId, sectionId) => {
     clearTimeout(timer);
     timer = setTimeout(() => {
-      mutateDelete(taskId, {
-        onSuccess: () => {
-          queryClient.invalidateQueries(["board"]);
-        },
-      });
+      mutateDelete(
+        { taskId, sectionId },
+        {
+          onSuccess: () => {
+            queryClient.invalidateQueries(["board"]);
+          },
+        }
+      );
     }, timeOut);
   };
 
@@ -77,26 +87,26 @@ const Section = ({ data, onTaskDrop, handleDeleteSection, index, boardId }) => {
 
   const handleUpdateSection = () => {
     if (data.board === "board-1") {
-      mutateCreateSection((sectionTitle, boardId), {
-        onSuccess: () => {
-          queryClient.invalidateQueries(["board"]);
-        },
-      });
-    } else {
-      clearTimeout(timer);
-      timer = setTimeout(() => {
-        mutateUpdateSection(sectionTitle, {
+      mutateCreateSection(
+        { sectionTitle, boardId },
+        {
           onSuccess: () => {
             queryClient.invalidateQueries(["board"]);
           },
-        });
+        }
+      );
+    } else {
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        mutateUpdateSection(
+          { sectionTitle },
+          {
+            onSuccess: () => {
+              queryClient.invalidateQueries(["board"]);
+            },
+          }
+        );
       }, timeOut);
-    }
-  };
-
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter") {
-      e.target.blur();
     }
   };
 
@@ -109,19 +119,12 @@ const Section = ({ data, onTaskDrop, handleDeleteSection, index, boardId }) => {
           placeholder="United"
           value={sectionTitle}
           onChange={(e) => setSectionTitle(e.target.value)}
-          onBlur={handleUpdateSection}
           onClick={handleSelect}
-          onKeyDown={handleKeyDown}
+          onKeyDown={handleUpdateSection}
         />
         <div
           className="section__title__delete"
-          onClick={() =>
-            mutateDeleteSection((data, index), {
-              onSuccess: () => {
-                queryClient.invalidateQueries(["board"]);
-              },
-            })
-          }
+          onClick={() => handleDeleteSection(data._id)}
         >
           <i className="fa-solid fa-xmark"></i>
         </div>
@@ -136,18 +139,33 @@ const Section = ({ data, onTaskDrop, handleDeleteSection, index, boardId }) => {
               value={taskContent}
               onChange={(e) => setTaskContent(e.target.value)}
             />
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DateTimePicker
+                viewRenderers={{
+                  hours: renderTimeViewClock,
+                  minutes: renderTimeViewClock,
+                  seconds: renderTimeViewClock,
+                }}
+                format="HH:mm DD/MM/YYYY"
+                value={time}
+                onChange={(e) => setTime(e)}
+                className="date-time"
+                ampm={false}
+                minDateTime={dayjs(new Date())}
+              />
+            </LocalizationProvider>
             <div className="section__top__form__btn">
-              <div
-                className="section__top__form__btn__add"
-                onClick={() => handleCreateTask(accessToken)}
-              >
-                Add
-              </div>
               <div
                 className="section__top__form__btn__cancel"
                 onClick={() => setOpenFormAdd(false)}
               >
                 Cancel
+              </div>
+              <div
+                className="section__top__form__btn__add"
+                onClick={() => handleCreateTask(accessToken)}
+              >
+                Add
               </div>
             </div>
           </div>
@@ -177,7 +195,11 @@ const Section = ({ data, onTaskDrop, handleDeleteSection, index, boardId }) => {
         >
           {tasks.map((item, idx) => (
             <Draggable key={item._id}>
-              <Task data={item} handleDelete={handleDelete} index={idx} />
+              <Task
+                data={item}
+                handleDelete={() => handleDelete(item._id, data._id)}
+                index={idx}
+              />
             </Draggable>
           ))}
         </Container>

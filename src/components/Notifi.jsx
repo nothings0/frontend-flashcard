@@ -43,8 +43,7 @@ const Notifi = () => {
           );
           if (noti) {
             new Notification("Thông báo từ fluxquiz", {
-              body: "Show more",
-              data: `${noti.content}`,
+              body: `${noti.content}`,
             });
           }
           localStorage.setItem("permis", perm);
@@ -61,7 +60,6 @@ const Notifi = () => {
       );
       if (noti) {
         new Notification("Thông báo từ fluxquiz", {
-          body: "Show more",
           data: `${noti.content}`,
         });
       }
