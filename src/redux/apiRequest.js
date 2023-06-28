@@ -131,7 +131,7 @@ export const savedCard = async (dispatch, cardId, accessToken) => {
         headers: { token: `Bearer ${accessToken}` },
       }
     );
-    dispatch(showToast({ msg: res.data.msg, success: false }));
+    dispatch(showToast({ msg: res.data.msg, success: true }));
     return res.data;
   } catch (error) {
     dispatch(showToast({ msg: error.response.data.msg, success: false }));
@@ -480,17 +480,13 @@ export const createCardAdmin = async (accessToken, data) => {
   } catch (error) {}
 };
 
-export const GetHome = async (dispatch, limit, userId) => {
+export const GetHome = async (limit, userId) => {
   try {
-    dispatch(handleLoading());
     const res = await axios.get(`${genURL("/v1/card", { limit: limit })}`, {
       params: { userId },
     });
-    dispatch(handleRemove());
     return res.data;
-  } catch (error) {
-    dispatch(handleRemove());
-  }
+  } catch (error) {}
 };
 
 export const GetAllUser = async (accessToken) => {

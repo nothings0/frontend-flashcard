@@ -1,6 +1,6 @@
-import React from 'react'
-import {Link} from 'react-router-dom'
-import Search from '../components/Search'
+import React from "react";
+import { Link } from "react-router-dom";
+import Search from "../components/Search";
 
 const NotFound = () => {
   return (
@@ -10,12 +10,12 @@ const NotFound = () => {
         <h2>404</h2>
         <h3>Đường dẫn này không hoạt động</h3>
         <Link to="/">
-        <i class="fa-solid fa-angle-left"></i>
+          <i className="fa-solid fa-angle-left"></i>
           Quay lại trang chủ
         </Link>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default NotFound
+export default NotFound;

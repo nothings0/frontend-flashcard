@@ -305,7 +305,8 @@ const Detail = () => {
                       steps={steps}
                       stepIndex={run.stepIndex}
                       continuous
-                      // disableScrolling
+                      disableOverlayClose
+                      disableCloseOnEsc
                       scrollOffset={80}
                       hideBackButton
                       locale={{ last: "Ok" }}
@@ -392,7 +393,7 @@ const Detail = () => {
                   checked={rateNum === 5 ? true : false}
                 />
                 <label
-                  for="rate-5"
+                  htmlFor="rate-5"
                   className="fas fa-star"
                   onClick={() => setRateNum(5)}
                 ></label>
@@ -403,7 +404,7 @@ const Detail = () => {
                   checked={rateNum === 4 ? true : false}
                 />
                 <label
-                  for="rate-4"
+                  htmlFor="rate-4"
                   className="fas fa-star"
                   onClick={() => setRateNum(4)}
                 ></label>
@@ -414,7 +415,7 @@ const Detail = () => {
                   checked={rateNum === 3 ? true : false}
                 />
                 <label
-                  for="rate-3"
+                  htmlFor="rate-3"
                   className="fas fa-star"
                   onClick={() => setRateNum(3)}
                 ></label>
@@ -425,7 +426,7 @@ const Detail = () => {
                   checked={rateNum === 2 ? true : false}
                 />
                 <label
-                  for="rate-2"
+                  htmlFor="rate-2"
                   className="fas fa-star"
                   onClick={() => setRateNum(2)}
                 ></label>
@@ -436,7 +437,7 @@ const Detail = () => {
                   checked={rateNum === 1 ? true : false}
                 />
                 <label
-                  for="rate-1"
+                  htmlFor="rate-1"
                   className="fas fa-star"
                   onClick={() => setRateNum(1)}
                 ></label>

@@ -112,7 +112,7 @@ const Listen = () => {
           <Modal modalOpen={modalOpen}>
             <ModalTitle>
               <h4>Kết quả</h4>
-              <i class="fa-solid fa-xmark"></i>
+              <i className="fa-solid fa-xmark"></i>
             </ModalTitle>
             <ModalBody>
               <p>

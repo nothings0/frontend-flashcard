@@ -22,7 +22,7 @@ const Toast = () => {
         {success ? (
           <i className="fa-solid fa-check"></i>
         ) : (
-          <i class="fa-solid fa-exclamation"></i>
+          <i className="fa-solid fa-exclamation"></i>
         )}
       </div>
       <div className="toast__txt">

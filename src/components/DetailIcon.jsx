@@ -126,7 +126,7 @@ const DetailIcon = ({ setModalOpen, iUsername }) => {
           onClick={() => setModalOpen(true)}
           ref={menuRef}
         >
-          <span>
+          <span className={`${username !== iUsername && "disable"}`}>
             <i className="fa-solid fa-trash-can"></i> xóa
           </span>
         </div>

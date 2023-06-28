@@ -50,10 +50,10 @@ const Banner = () => {
         ))}
       </div>
       <div className="banner__btn next" onClick={() => handleIndex(index + 1)}>
-        <i class="fa-solid fa-chevron-right"></i>
+        <i className="fa-solid fa-chevron-right"></i>
       </div>
       <div className="banner__btn prev" onClick={() => handleIndex(index - 1)}>
-        <i class="fa-solid fa-chevron-left"></i>
+        <i className="fa-solid fa-chevron-left"></i>
       </div>
     </div>
   );
