@@ -1,23 +1,18 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React from "react";
+import PropTypes from "prop-types";
 
-const Helmet = props => {
+const Helmet = (props) => {
+  document.title = props.title;
 
-    document.title = props.title
+  React.useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
-    React.useEffect(() => {
-        window.scrollTo(0,0)
-    }, [props.title])
-
-    return (
-        <>
-            {props.children}
-        </>
-    )
-}
+  return <>{props.children}</>;
+};
 
 Helmet.propTypes = {
-    title: PropTypes.string.isRequired
-}
+  title: PropTypes.string.isRequired,
+};
 
-export default Helmet
+export default Helmet;
