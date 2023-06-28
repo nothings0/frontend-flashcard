@@ -184,7 +184,6 @@ export const UpdateCard = async (
         headers: { token: `Bearer ${accessToken}` },
       }
     );
-    dispatch(showToast({ msg: "Update thành công", success: true }));
     return res.data;
   } catch (error) {
     dispatch(showToast(error.response.data.msg));

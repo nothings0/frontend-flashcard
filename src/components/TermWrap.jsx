@@ -5,52 +5,55 @@ import { handleSpeech } from "../util/speech";
 import { applyDrag } from "../util/index";
 import { useParams } from "react-router-dom";
 import { UpdateCard } from "../redux/apiRequest";
+import { showToast } from "../redux/toastSlice";
 
-const TermWrap = ({terms, setTerms, iUsername, type}) => {
-  
-  const dispatch = useDispatch()
+const TermWrap = ({ terms, setTerms, iUsername, type }) => {
+  const dispatch = useDispatch();
   const { cardId } = useParams();
   const accessToken = useSelector(
     (state) => state.user.currentUser?.accessToken
-  )
-  const userId = useSelector((state) => state.user.currentUser?.user._id)
-  const username = useSelector((state) => state.user.currentUser?.user.username)
+  );
+  const userId = useSelector((state) => state.user.currentUser?.user._id);
+  const username = useSelector(
+    (state) => state.user.currentUser?.user.username
+  );
 
   const handleCardChange = (e, index) => {
     const { name, value } = e.target;
     let termArr = [...terms];
     termArr[index] = { ...termArr[index], [name]: value };
     setTerms(termArr);
-  }
+  };
 
   const handleSelect = (e) => {
     e.target.focus();
     e.target.select();
-  }
+  };
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       e.target.blur();
     }
-  }
+  };
 
   const handleCardDelete = (i) => {
-    let updatedTerms = [...terms]
-    updatedTerms.splice(i, 1)
-    setTerms(updatedTerms)
-    UpdateCard({term: updatedTerms}, cardId, accessToken, userId, dispatch)
-  }
+    let updatedTerms = [...terms];
+    updatedTerms.splice(i, 1);
+    setTerms(updatedTerms);
+    UpdateCard({ term: updatedTerms }, cardId, accessToken, userId, dispatch);
+    dispatch(showToast({ msg: "Xóa thành công", success: true }));
+  };
 
   const onCardDrop = (result) => {
-    if(result.addedIndex === result.removedIndex) return;
+    if (result.addedIndex === result.removedIndex) return;
     let newTerms = [...terms];
     newTerms = applyDrag(newTerms, result);
     let newCard = {
       ...terms,
       term: newTerms,
     };
-    setTerms(newTerms)
-    UpdateCard(newCard, cardId, accessToken, userId, dispatch)
+    setTerms(newTerms);
+    UpdateCard(newCard, cardId, accessToken, userId, dispatch);
   };
 
   return (
@@ -70,12 +73,12 @@ const TermWrap = ({terms, setTerms, iUsername, type}) => {
           }}
           dropPlaceholderAnimationDuration={200}
         >
-          {terms && (
+          {terms &&
             terms.map((_, index) => (
               <Draggable key={index}>
                 <div className="card-detail__des__term__item">
-                  {
-                    type !== "detail" ? <>
+                  {type !== "detail" ? (
+                    <>
                       <div className="card-detail__des__term__prompt prompt">
                         <textarea
                           name="prompt"
@@ -97,16 +100,18 @@ const TermWrap = ({terms, setTerms, iUsername, type}) => {
                           onKeyDown={handleKeyDown}
                           spellCheck="false"
                         ></textarea>
-                      </div>                    
-                    </> : <>
-                    <div className="card-detail__des__term__prompt prompt">
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div className="card-detail__des__term__prompt prompt">
                         <p>{terms[index]?.prompt}</p>
                       </div>
                       <div className="card-detail__des__term__answer">
                         <p>{terms[index]?.answer}</p>
                       </div>
                     </>
-                  }
+                  )}
                   <div className="card-detail__des__term__icon">
                     <i
                       className="fa-solid fa-volume-high"
@@ -118,15 +123,19 @@ const TermWrap = ({terms, setTerms, iUsername, type}) => {
                         )
                       }
                     />
-                    <i className={`${username !== iUsername && 'disable'} fa-solid fa-trash-can`} onClick={() => handleCardDelete(index)}></i>
+                    <i
+                      className={`${
+                        username !== iUsername && "disable"
+                      } fa-solid fa-trash-can`}
+                      onClick={() => handleCardDelete(index)}
+                    ></i>
                   </div>
                   <div className="term-selector">
                     <i className="fa-solid fa-arrows-up-down-left-right"></i>
                   </div>
                 </div>
               </Draggable>
-            ))
-          )}
+            ))}
         </Container>
       </div>
     </div>
