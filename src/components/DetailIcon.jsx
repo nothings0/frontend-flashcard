@@ -78,7 +78,7 @@ const DetailIcon = ({ setModalOpen, iUsername }) => {
           to={`/card/edit/${cardId}`}
           className={`${username !== iUsername && "disable"}`}
         >
-          <i className="fa-solid fa-pencil" title="Lưu và chỉnh sửa"></i>
+          <i className="fa-solid fa-pencil"></i>
         </Link>
       </div>
       <div
