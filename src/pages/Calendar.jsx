@@ -22,25 +22,7 @@ import Skeleton from "../components/Skeleton";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 
 const Calendar = () => {
-  const [board, setBoard] = useState({});
-  const [sections, setSections] = useState([]);
-  const [boardTitle, setBoardTitle] = useState("Sắp xếp thời gian học tập");
-  const [sectionTitle, setSectionTitle] = useState("");
-  const [isOpenFormAdd, setOpenFormAdd] = useState(false);
-
-  const dispatch = useDispatch();
-  const queryClient = useQueryClient();
-  const accessToken = useSelector(
-    (state) => state.user.currentUser?.accessToken
-  );
-  let timer;
-  const timeOut = 500;
-
-  const { mutate: mutateCreate } = useMutation({
-    mutationFn: ({ calendarData: data }) => CreateBoard(data, accessToken),
-  });
-
-  const { isLoading, isFetching } = useQuery({
+  const { data, isLoading, isFetching } = useQuery({
     queryFn: () => GetBoard(accessToken, dispatch),
     queryKey: "board",
     staleTime: 3 * 60 * 1000,
@@ -70,6 +52,26 @@ const Calendar = () => {
         );
       }
     },
+  });
+
+  const [board, setBoard] = useState(data?.board);
+  const [sections, setSections] = useState(
+    sortOrder(data?.sections, data?.board.cardOrder, "_id")
+  );
+  const [boardTitle, setBoardTitle] = useState(data?.board.title);
+  const [sectionTitle, setSectionTitle] = useState("");
+  const [isOpenFormAdd, setOpenFormAdd] = useState(false);
+
+  const dispatch = useDispatch();
+  const queryClient = useQueryClient();
+  const accessToken = useSelector(
+    (state) => state.user.currentUser?.accessToken
+  );
+  let timer;
+  const timeOut = 500;
+
+  const { mutate: mutateCreate } = useMutation({
+    mutationFn: ({ calendarData: data }) => CreateBoard(data, accessToken),
   });
 
   const onCardDrop = (result) => {
