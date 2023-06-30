@@ -8,7 +8,6 @@ const Chart = ({ accessToken }) => {
   const { data, isLoading } = useQuery({
     queryKey: "active",
     queryFn: () => GetActive(accessToken),
-    staleTime: 30 * 1000,
   });
 
   return (

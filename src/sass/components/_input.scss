@@ -1,20 +1,20 @@
 $char-w: 1ch;
-$gap: .5*$char-w;
+$gap: 0.5 * $char-w;
 
 .inputss {
-	// margin: 2em auto;
-	padding: 0;
-	font: 3ch droid sans Roboto, monospace;
-    font-weight: 600;
-	letter-spacing: $gap;
-	color: var(--txt-color);
-	&.true{
-		color: green !important;
-	}
-	&.false{
-		color: rgb(255, 77, 0) !important;
-	}
-	&:focus {
-		color: dodgerblue;
-	}
+  // margin: 2em auto;
+  padding: 0;
+  font: 3ch droid sans Roboto, monospace;
+  font-weight: 600;
+  letter-spacing: $gap;
+  color: var(--txt-color);
+  &.true {
+    color: green !important;
+  }
+  &.false {
+    color: rgb(255, 77, 0) !important;
+  }
+  &:focus {
+    color: dodgerblue;
+  }
 }
