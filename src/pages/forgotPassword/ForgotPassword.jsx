@@ -45,7 +45,7 @@ const ForgotPassword = ({ setForgot }) => {
             <button type="submit">Xác nhận</button>
           </>
         ) : (
-          <p className="result">{result.msg || result}</p>
+          <p className="result">{result?.msg || result}</p>
         )}
         <h4 onClick={() => setForgot(false)}>Quay lại đăng nhập</h4>
       </form>
