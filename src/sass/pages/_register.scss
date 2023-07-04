@@ -1,5 +1,5 @@
 .register {
-  height: calc(100vh - 15rem);
+  height: calc(100vh - 5rem);
   @include flex(center, center);
   padding: 2rem;
   .form {

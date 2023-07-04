@@ -209,6 +209,9 @@
           pointer-events: none;
         }
       }
+      span {
+        cursor: pointer;
+      }
       span.disable {
         opacity: 0.35;
         pointer-events: none;
@@ -230,7 +233,7 @@
         pointer-events: none;
       }
       &__list {
-        cursor: pointer;
+        // cursor: pointer;
         position: absolute;
         top: 140%;
         right: 0;

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import useLyric from "../Hook/useLyric";
@@ -10,7 +10,6 @@ import Skeleton from "../components/Skeleton";
 
 const LyricMain = () => {
   const { slug } = useParams();
-  const res = useLyric(slug);
   const playerRef = useRef();
   const dispatch = useDispatch();
 
@@ -18,14 +17,20 @@ const LyricMain = () => {
 
   const [youtubeId, setYoutubeId] = useState("");
   const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const [durationC, setDurationC] = useState(0);
+  const [time, setTime] = useState(false);
   const [answerArr, setAnswerArr] = useState([]);
   const [resultArr, setResultArr] = useState([]);
   const [isSubmit, setIsSubmit] = useState(false);
   const [isPlaying, setIsPlaying] = useState(true);
 
+  const res = useLyric(slug, time);
+
   useEffect(() => {
     const getVideo = async () => {
       const result = await GetVideoTed(slug, dispatch);
+      setDurationC(JSON.parse(result.video.playerData).duration);
       const youtube = JSON.parse(result.video.playerData).external.code;
       setYoutubeId(youtube);
     };
@@ -44,6 +49,13 @@ const LyricMain = () => {
     }
   }, [slug, res]);
 
+  useEffect(() => {
+    if (Math.abs(durationC - duration) <= 2) {
+      setTime(false);
+    } else {
+      setTime(true);
+    }
+  }, [durationC, duration]);
   const handleAnswer = (e, l, s) => {
     const newArr = [...answerArr];
 
@@ -95,10 +107,10 @@ const LyricMain = () => {
         <>
           <div className="lyric-main__video">
             <ReactPlayer
-              url={`https://www.youtube.com/embed/${youtubeId}?showinfo=0&enablejsapi=1&origin=http://fluxquiz.com`}
+              url={`https://www.youtube.com/embed/${youtubeId}?showinfo=0&enablejsapi=1&origin=http://fluxquiz.netlify.app`}
               config={{
                 youtube: {
-                  playerVars: { cc_load_policy: 0, showinfo: 1 },
+                  playerVars: { cc_load_policy: 0, showinfo: 0 },
                 },
               }}
               onProgress={({ playedSeconds }) => setCurrentTime(playedSeconds)}
@@ -108,6 +120,7 @@ const LyricMain = () => {
               playing={isPlaying}
               controls={true}
               className="react-player-video"
+              onDuration={(du) => setDuration(du)}
             />
           </div>
           <div className="lyric-main__translation">
@@ -189,8 +202,8 @@ const LyricMain = () => {
                 } else {
                   if (e[0].sTime - 5000 <= currentTime * 1000) {
                     if (
-                      e[0].sTime - 2000 <= currentTime * 1000 &&
-                      currentTime * 1000 <= e[e.length - 1].eTime + 2000
+                      e[0].sTime <= currentTime * 1000 &&
+                      currentTime * 1000 <= e[e.length - 1].eTime
                     ) {
                       let lineActive = document.querySelector(
                         ".lyric-main__line.active"
@@ -221,7 +234,7 @@ const LyricMain = () => {
                                   ? "active"
                                   : ""
                               }`}
-                              onClick={() => {
+                              onDoubleClick={() => {
                                 setIsPlaying(true);
                                 playerRef.current.seekTo(item.sTime / 1000);
                               }}

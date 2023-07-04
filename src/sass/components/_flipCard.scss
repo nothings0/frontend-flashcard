@@ -38,10 +38,12 @@
 
       & .front-view {
         background: var(--main-bg);
+        padding: 0 10px;
       }
       & .back-view {
         transform: rotateX(-180deg);
         background: var(--main-bg);
+        padding: 0 10px;
       }
       &.flip .back-view {
         transform: rotateX(0);
@@ -69,6 +71,11 @@
     margin-top: 1rem;
     margin-bottom: 3rem;
     font-size: 1.6rem;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
     span {
       padding: 0 2rem;
     }

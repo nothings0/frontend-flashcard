@@ -208,7 +208,7 @@
     flex: 1 1;
     @include tablet {
       flex: unset;
-      width: 28%;
+      width: 32%;
       gap: 0 20px;
     }
     @include mobile {

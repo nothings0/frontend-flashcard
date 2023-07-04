@@ -22,11 +22,13 @@ const Register = () => {
         username: "",
         password: "",
         confirmedPassword: "",
+        name: "",
       },
       validationSchema: Yup.object({
         username: Yup.string()
           .required("Bắt buộc")
           .min(6, "Tên đăng nhập phải có nhiều hơn 6 kí tự"),
+        name: Yup.string().required("Bắt buộc"),
         email: Yup.string()
           .required("Bắt buộc")
           .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Nhập email hợp lệ"),
@@ -45,6 +47,7 @@ const Register = () => {
           username: values.username,
           email: values.email,
           password: values.password,
+          name: values.name,
         };
         registerUser(newUser, navigate, dispatch, setErrorMsg);
       },
@@ -57,6 +60,18 @@ const Register = () => {
         <form className="form" onSubmit={handleSubmit}>
           <h3>Đăng ký</h3>
           <div className="form__item">
+            <input
+              type="text"
+              name="name"
+              placeholder="Nhập họ và tên"
+              className="box"
+              value={values.name}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+            {errors.name && touched.name && (
+              <p className="errorMsg"> {errors.name} </p>
+            )}
             <input
               type="text"
               name="username"

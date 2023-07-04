@@ -151,82 +151,84 @@ const Calendar = () => {
           <Skeleton type="calendar" />
         ) : (
           <>
-            {Object.keys(board).length !== 0 && (
-              <>
-                <div className="calendar__title">
-                  <input
-                    type="text"
-                    value={boardTitle}
-                    onChange={(e) => setBoardTitle(e.target.value)}
-                    onKeyDown={handleUpdateBoard}
-                  />
-                </div>
-                <Container
-                  groupName="section"
-                  orientation="horizontal"
-                  onDrop={onCardDrop}
-                  getChildPayload={(index) => sections[index]}
-                  dragClass="section-ghost"
-                  dropClass="section-ghost-drop"
-                  dragHandleSelector=".section__selector"
-                  dropPlaceholder={{
-                    animationDuration: 150,
-                    showOnTop: true,
-                    className: "section__drop-preview",
-                  }}
-                  dropPlaceholderAnimationDuration={200}
-                >
-                  {sections?.map((item, index) => (
-                    <Draggable key={item._id}>
-                      <Section
-                        data={item}
-                        boardId={board?._id}
-                        onTaskDrop={onTaskDrop}
-                        handleDeleteSection={handleDeleteSection}
-                        index={index}
-                      />
-                    </Draggable>
-                  ))}
-                  <div className="calendar__column">
-                    <div className="calendar__column__top">
-                      {isOpenFormAdd ? (
-                        <div className="calendar__column__top__form">
-                          <textarea
-                            maxLength="50"
-                            placeholder="United"
-                            value={sectionTitle}
-                            onChange={(e) => setSectionTitle(e.target.value)}
-                          />
-                          <div className="calendar__column__top__form__btn">
-                            <div
-                              className="calendar__column__top__form__btn__add"
-                              onClick={() =>
-                                handleCreateSection(sectionTitle, accessToken)
-                              }
-                            >
-                              Add
-                            </div>
-                            <div
-                              className="calendar__column__top__form__btn__cancel"
-                              onClick={() => setOpenFormAdd(false)}
-                            >
-                              Cancel
+            {typeof board === "object" &&
+              board !== null &&
+              Object.keys(board).length !== 0 && (
+                <>
+                  <div className="calendar__title">
+                    <input
+                      type="text"
+                      value={boardTitle}
+                      onChange={(e) => setBoardTitle(e.target.value)}
+                      onKeyDown={handleUpdateBoard}
+                    />
+                  </div>
+                  <Container
+                    groupName="section"
+                    orientation="horizontal"
+                    onDrop={onCardDrop}
+                    getChildPayload={(index) => sections[index]}
+                    dragClass="section-ghost"
+                    dropClass="section-ghost-drop"
+                    dragHandleSelector=".section__selector"
+                    dropPlaceholder={{
+                      animationDuration: 150,
+                      showOnTop: true,
+                      className: "section__drop-preview",
+                    }}
+                    dropPlaceholderAnimationDuration={200}
+                  >
+                    {sections?.map((item, index) => (
+                      <Draggable key={item._id}>
+                        <Section
+                          data={item}
+                          boardId={board?._id}
+                          onTaskDrop={onTaskDrop}
+                          handleDeleteSection={handleDeleteSection}
+                          index={index}
+                        />
+                      </Draggable>
+                    ))}
+                    <div className="calendar__column">
+                      <div className="calendar__column__top">
+                        {isOpenFormAdd ? (
+                          <div className="calendar__column__top__form">
+                            <textarea
+                              maxLength="50"
+                              placeholder="United"
+                              value={sectionTitle}
+                              onChange={(e) => setSectionTitle(e.target.value)}
+                            />
+                            <div className="calendar__column__top__form__btn">
+                              <div
+                                className="calendar__column__top__form__btn__add"
+                                onClick={() =>
+                                  handleCreateSection(sectionTitle, accessToken)
+                                }
+                              >
+                                Add
+                              </div>
+                              <div
+                                className="calendar__column__top__form__btn__cancel"
+                                onClick={() => setOpenFormAdd(false)}
+                              >
+                                Cancel
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      ) : (
-                        <div
-                          className="calendar__column__top__create"
-                          onClick={() => setOpenFormAdd(true)}
-                        >
-                          Add new colume <i className="fa-solid fa-plus"></i>
-                        </div>
-                      )}
+                        ) : (
+                          <div
+                            className="calendar__column__top__create"
+                            onClick={() => setOpenFormAdd(true)}
+                          >
+                            Add new colume <i className="fa-solid fa-plus"></i>
+                          </div>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                </Container>
-              </>
-            )}
+                  </Container>
+                </>
+              )}
           </>
         )}
       </div>

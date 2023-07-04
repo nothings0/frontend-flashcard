@@ -123,10 +123,12 @@ const DetailIcon = ({ setModalOpen, iUsername }) => {
               ? "card-detail__info__menu__list active"
               : "card-detail__info__menu__list"
           }`}
-          onClick={() => setModalOpen(true)}
           ref={menuRef}
         >
-          <span className={`${username !== iUsername && "disable"}`}>
+          <span
+            className={`${username !== iUsername && "disable"}`}
+            onClick={() => setModalOpen(true)}
+          >
             <i className="fa-solid fa-trash-can"></i> xóa
           </span>
         </div>

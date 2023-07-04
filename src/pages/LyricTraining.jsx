@@ -1,40 +1,25 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Search from "../components/Search";
 import { GetListTed } from "../redux/lyricApi";
-import { useDispatch, useSelector } from "react-redux";
 import Skeleton from "../components/Skeleton";
+import { useQuery } from "react-query";
 const LyricItem = React.lazy(() => import("./LyricItem"));
 
 const LyricTraining = () => {
-  const { loading } = useSelector((state) => state.middle);
-  const [listData, setListData] = useState([]);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    const listTraining = localStorage.getItem("listTraining");
-    if (listTraining) {
-      setListData(JSON.parse(listTraining));
-      return;
-    }
-    const getData = async () => {
-      const res = await GetListTed(dispatch);
-      setListData(res.topic.videos.nodes);
-      localStorage.setItem(
-        "listTraining",
-        JSON.stringify(res.topic.videos.nodes)
-      );
-    };
-    getData();
-  }, []);
+  const { data: listData, isLoading } = useQuery({
+    queryFn: () => GetListTed(),
+    queryKey: "list-training",
+    staleTime: 24 * 60 * 60 * 1000,
+  });
 
   return (
     <div className="lyric-training">
       <Search />
-      {loading ? (
+      {isLoading ? (
         <Skeleton />
       ) : (
         <div className="lyric-training__container">
-          {listData?.map((item, index) => (
+          {listData?.topic.videos.nodes.map((item, index) => (
             <LyricItem item={item} key={index} />
           ))}
         </div>
