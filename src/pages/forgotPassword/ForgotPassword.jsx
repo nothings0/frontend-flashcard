@@ -18,7 +18,7 @@ const ForgotPassword = ({ setForgot }) => {
       };
       try {
         const res = await ForgotPasswordAPI(user);
-        setResult(res.data);
+        setResult(res);
       } catch (err) {
         console.log(err);
       }
