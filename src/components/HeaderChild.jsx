@@ -1,43 +1,50 @@
-import {useRef, useEffect, useState} from "react";
-import { Link, useParams } from "react-router-dom"
+import { useRef, useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 
 const HeaderChild = () => {
-  const [topActive, setTopActive] = useState(false)
-  const menuRef = useRef()
-  const { cardId } = useParams()
+  const [topActive, setTopActive] = useState(false);
+  const menuRef = useRef();
+  const { cardId } = useParams();
 
   const handleTopRef = () => {
-    setTopActive(!topActive)
-  }
+    setTopActive(!topActive);
+  };
 
   useEffect(() => {
     function handleClickOutside(event) {
       if (menuRef.current && !menuRef.current.contains(event.target)) {
-        setTopActive(false)
+        setTopActive(false);
       }
     }
     if (topActive) {
-      document.addEventListener("mousedown", handleClickOutside)
+      document.addEventListener("mousedown", handleClickOutside);
       return () => {
-        document.removeEventListener("mousedown", handleClickOutside)
-      }
+        document.removeEventListener("mousedown", handleClickOutside);
+      };
     }
-  }, [topActive])
+  }, [topActive]);
 
   return (
-    
     <div className="card-detail__header__title__btn" ref={menuRef}>
-    <div
-      className="card-detail__header__title__btn__in"
-      onClick={handleTopRef}
-    >
-      Học <i className="fa-solid fa-angle-down"></i>
-    </div>
-      <div className={`card-detail__header__title__btn__menu left ${topActive ? 'active' : ''}`} ref={menuRef}>
+      <div
+        className="card-detail__header__title__btn__in"
+        onClick={handleTopRef}
+      >
+        Học{" "}
+        {topActive ? (
+          <i className="fa-solid fa-angle-up"></i>
+        ) : (
+          <i className="fa-solid fa-angle-down"></i>
+        )}
+      </div>
+      <div
+        className={`card-detail__header__title__btn__menu left ${
+          topActive ? "active" : ""
+        }`}
+        ref={menuRef}
+      >
         <Link to={`/flashcard/${cardId}`}>
-          <div className="card-detail__left__item">
-            Thẻ ghi nhớ
-          </div>
+          <div className="card-detail__left__item">Thẻ ghi nhớ</div>
         </Link>
         <Link to={`/learn/${cardId}`}>
           <div className="card-detail__left__item">Học</div>
@@ -55,7 +62,7 @@ const HeaderChild = () => {
           <div className="card-detail__left__item">Kiểm tra</div>
         </Link>
       </div>
-  </div>
+    </div>
   );
 };
 

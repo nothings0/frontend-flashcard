@@ -39,13 +39,14 @@
   }
 }
 .lyric-main {
-  user-select: auto;
-
   @include flex(flex-start, space-around);
   gap: 0 2rem;
   @include tablet {
     flex-direction: column;
     gap: 20px 0;
+  }
+  & * {
+    user-select: auto;
   }
   &__video {
     position: sticky;
@@ -92,6 +93,7 @@
       align-items: center;
       justify-content: flex-start;
       flex-wrap: wrap;
+
       &.active {
         background-color: var(--color-sub);
       }

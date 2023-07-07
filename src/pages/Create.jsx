@@ -112,7 +112,8 @@ const Create = () => {
     const { name, value } = e.target;
     if (name === "prompt") {
       let termArr = [...terms];
-      termArr[index] = { ...termArr[index], [name]: value };
+      termArr[index] = { ...termArr[index], prompt: value };
+      // setTerms(termArr);
       clearTimeout(timer);
       timer = setTimeout(async () => {
         const res = await GetTranslate(value);
@@ -257,7 +258,7 @@ const Create = () => {
                       name="prompt"
                       maxLength="255"
                       onChange={(e) => handleCardChange(e, index)}
-                      value={terms[index].promp}
+                      value={terms[index].prompt}
                     ></textarea>
                     <p>thuật ngữ</p>
                   </div>

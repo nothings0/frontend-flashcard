@@ -8,13 +8,32 @@
   margin: 0;
   box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;
-  // user-select: none;
+  user-select: none;
   // overflow-x: hidden;
   border: none;
   outline: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   text-overflow: ellipsis;
+}
+
+::-webkit-scrollbar {
+  width: 0.5rem;
+}
+
+/* background */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* scrollBar on hover */
+::-webkit-scrollbar-thumb {
+  background: #7fc1ff;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
 }
 
 a {

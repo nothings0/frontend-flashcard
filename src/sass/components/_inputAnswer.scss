@@ -1,0 +1,17 @@
+.input-answer {
+  position: relative;
+  &__layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    color: #adadad;
+  }
+  input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: transparent;
+    z-index: 2;
+  }
+}

@@ -1,5 +1,7 @@
 @import "./variables";
 @import "./mixin";
+@import "./theme.css";
+@import "./base";
 @import "./layout";
 @import "./components/header";
 @import "./components/list";
@@ -21,6 +23,7 @@
 @import "./components/lineProgress";
 @import "./components/headerPrimary";
 @import "./components/footer";
+@import "./components/inputAnswer";
 @import "./pages/login";
 @import "./pages/register";
 @import "./pages/create";
@@ -41,6 +44,5 @@
 @import "./pages/notFound";
 @import "./pages/lyrictraining";
 @import "./pages/_otherPage/header";
-@import "./theme.css";
-@import "./base";
+
 @import "../Admin/scss/index";

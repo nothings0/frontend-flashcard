@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { GetSuggestWord } from "../redux/apiRequest";
+import InputAnswer from "./InputAnswer";
 
 const WriteCpn = ({
   handleQues,
@@ -18,9 +19,29 @@ const WriteCpn = ({
     const res = await GetSuggestWord({
       id: data._id,
     });
-
+    setAnswer("");
     setSuggestWord(res.suggest);
     setSuggest(true);
+  };
+
+  const handleChange = (e) => {
+    const inputAnswer = e.target.value;
+    if (!suggestWord) {
+      setAnswer(inputAnswer);
+      return;
+    }
+    const hintChars = suggestWord.split("");
+    if (
+      hintChars[inputAnswer.length - 1] === "_" ||
+      inputAnswer[inputAnswer.length - 1] === undefined
+    ) {
+      setAnswer(inputAnswer);
+    } else if (
+      inputAnswer[inputAnswer.length - 1].toLowerCase() ===
+      hintChars[inputAnswer.length - 1].toLowerCase()
+    ) {
+      setAnswer(inputAnswer);
+    }
   };
 
   const handleEnter = (e) => {
@@ -76,13 +97,13 @@ const WriteCpn = ({
       <div className="write__bottom">
         {!isResult && (
           <div className="write__bottom__input">
-            <textarea
-              name="answer"
-              maxLength="255"
-              onChange={(e) => setAnswer(e.target.value)}
-              value={answer}
-              onKeyDown={handleEnter}
-            ></textarea>
+            <InputAnswer
+              length={data?.l}
+              answer={answer}
+              setAnswer={handleChange}
+              handleEnter={handleEnter}
+              hint={suggestWord}
+            />
             <p>Nhập bằng tiếng anh</p>
           </div>
         )}

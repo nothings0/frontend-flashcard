@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { handleSpeech } from "../util/speech";
+import InputAnswer from "./InputAnswer.jsx";
 
 const ListenCpn = ({
   handleQues,
@@ -73,13 +74,12 @@ const ListenCpn = ({
       <div className="listen__bottom">
         {!isResult && (
           <div className="listen__bottom__input">
-            <textarea
-              name="answer"
-              maxLength="255"
-              onChange={(e) => setAnswer(e.target.value)}
-              value={answer}
-              onKeyDown={handleEnter}
-            ></textarea>
+            <InputAnswer
+              length={data?.l}
+              answer={answer}
+              setAnswer={setAnswer}
+              handleEnter={handleEnter}
+            />
             <p>Nhập bằng tiếng anh</p>
           </div>
         )}

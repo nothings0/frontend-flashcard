@@ -9,7 +9,7 @@ const Rank = () => {
   const [query, setQuery] = useState("achieve");
   const { data, isLoading } = useQuery({
     queryKey: query,
-    queryFn: () => GetRank(query),
+    queryFn: () => GetRank(query, 10),
     staleTime: 60 * 60 * 1000,
   });
 
@@ -46,10 +46,16 @@ const Rank = () => {
                 key={item._id}
                 to={`/user/${item.username}`}
               >
-                <div className="rank__item__num">0{index + 1}</div>
+                <div className="rank__item__num">
+                  {index < 9 ? `0${index + 1}` : index + 1}
+                </div>
                 <div className="rank__item__user">
                   <span>{item.username}</span>
-                  {query === "achieve" && <span>{item.termCount} thẻ</span>}
+                  {query === "achieve" ? (
+                    <span>{item.termCount} contribute</span>
+                  ) : (
+                    <span>{item.termCount} point</span>
+                  )}
                 </div>
               </Link>
             ))}

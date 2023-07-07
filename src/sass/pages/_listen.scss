@@ -76,13 +76,18 @@
   }
   &__bottom {
     @include flex(center, space-between);
-    gap: 0 10px;
+    gap: 20px 10px;
+    @include tablet {
+      flex-direction: column;
+      align-items: flex-start;
+    }
     &__input {
       width: 80%;
       p {
         font-size: 1.3rem;
         color: $second-color;
         text-transform: uppercase;
+        padding-top: 45px;
       }
     }
     &__btn {

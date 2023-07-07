@@ -639,9 +639,13 @@ export const GetActive = async (accessToken) => {
   }
 };
 
-export const GetRank = async (type) => {
+export const GetRank = async (type, limit) => {
   try {
-    const res = await axios.get(`${genURL(`/v1/active/${type}`)}`);
+    const res = await axios.get(
+      `${genURL(`/v1/active/${type}`, {
+        limit: limit,
+      })}`
+    );
     return res.data;
   } catch (error) {
     console.log(error);
