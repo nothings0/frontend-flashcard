@@ -122,10 +122,10 @@ export const getCardById = async (dispatch, card, page, limit) => {
     dispatch(handleRemove());
   }
 };
-export const savedCard = async (dispatch, cardId, accessToken) => {
+export const savedCard = async (dispatch, slug, accessToken) => {
   try {
     const res = await axiosJWT.post(
-      `${genURL(`/v1/card/${cardId}`)}`,
+      `${genURL(`/v1/card/${slug}`)}`,
       {},
       {
         headers: { token: `Bearer ${accessToken}` },
@@ -169,16 +169,10 @@ export const GetTranslate = async (translate) => {
   } catch (error) {}
 };
 
-export const UpdateCard = async (
-  card,
-  cardId,
-  accessToken,
-  userId,
-  dispatch
-) => {
+export const UpdateCard = async (card, slug, accessToken, userId, dispatch) => {
   try {
     const res = await axiosJWT.patch(
-      `${genURL(`/v1/card/${cardId}`)}`,
+      `${genURL(`/v1/card/${slug}`)}`,
       { card, userId },
       {
         headers: { token: `Bearer ${accessToken}` },
@@ -190,10 +184,10 @@ export const UpdateCard = async (
   }
 };
 
-export const DeleteCard = async (cardId, userId, accessToken, dispatch) => {
+export const DeleteCard = async (slug, userId, accessToken, dispatch) => {
   try {
     dispatch(handleLoading());
-    const res = await axiosJWT.delete(`${genURL(`/v1/card/${cardId}`)}`, {
+    const res = await axiosJWT.delete(`${genURL(`/v1/card/${slug}`)}`, {
       headers: { token: `Bearer ${accessToken}` },
       data: {
         userId: userId,
@@ -209,13 +203,13 @@ export const DeleteCard = async (cardId, userId, accessToken, dispatch) => {
   }
 };
 
-export const GetQuestion = async (dispatch, cardId, limit) => {
+export const GetQuestion = async (dispatch, slug, limit) => {
   try {
     dispatch(play());
 
     dispatch(handleLoading());
     const res = await axios.get(
-      `${genURL(`/v1/card/question/${cardId}`, { limit: limit })}`
+      `${genURL(`/v1/card/question/${slug}`, { limit: limit })}`
     );
     dispatch(handleRemove());
     return res.data;
@@ -223,12 +217,12 @@ export const GetQuestion = async (dispatch, cardId, limit) => {
     dispatch(handleRemove());
   }
 };
-export const GetLearn = async (dispatch, cardId, user, limit) => {
+export const GetLearn = async (dispatch, slug, user, limit) => {
   try {
     dispatch(play());
     dispatch(handleLoading());
     const res = await axios.get(
-      `${genURL(`/v1/card/learn/${cardId}`, { limit: limit })}`,
+      `${genURL(`/v1/card/learn/${slug}`, { limit: limit })}`,
       { params: { user } }
     );
     dispatch(handleRemove());
@@ -238,12 +232,12 @@ export const GetLearn = async (dispatch, cardId, user, limit) => {
   }
 };
 
-export const GetMarkLearn = async (dispatch, cardId, ques, user) => {
+export const GetMarkLearn = async (dispatch, slug, ques, user) => {
   try {
     dispatch(handleLoading());
     dispatch(play());
 
-    const res = await axios.post(`${genURL(`/v1/card/learn/${cardId}`)}`, {
+    const res = await axios.post(`${genURL(`/v1/card/learn/${slug}`)}`, {
       ques,
       user,
     });
@@ -254,11 +248,11 @@ export const GetMarkLearn = async (dispatch, cardId, ques, user) => {
   }
 };
 
-export const GetFlashCard = async (dispatch, cardId) => {
+export const GetFlashCard = async (dispatch, slug) => {
   try {
     dispatch(play());
     dispatch(handleLoading());
-    const res = await axios.get(`${genURL(`/v1/card/flashcard/${cardId}`)}`);
+    const res = await axios.get(`${genURL(`/v1/card/flashcard/${slug}`)}`);
     dispatch(handleRemove());
     return res.data;
   } catch (error) {
@@ -266,12 +260,12 @@ export const GetFlashCard = async (dispatch, cardId) => {
   }
 };
 
-export const GetListen = async (dispatch, cardId, user, limit) => {
+export const GetListen = async (dispatch, slug, user, limit) => {
   try {
     dispatch(play());
     dispatch(handleLoading());
     const res = await axios.get(
-      `${genURL(`/v1/card/listen/${cardId}`, { limit: limit })}`,
+      `${genURL(`/v1/card/listen/${slug}`, { limit: limit })}`,
       { params: { user } }
     );
     dispatch(handleRemove());
@@ -281,12 +275,12 @@ export const GetListen = async (dispatch, cardId, user, limit) => {
   }
 };
 
-export const GetMarkListen = async (dispatch, cardId, ques, user) => {
+export const GetMarkListen = async (dispatch, slug, ques, user) => {
   try {
     dispatch(play());
 
     dispatch(handleLoading());
-    const res = await axios.post(`${genURL(`/v1/card/listen/${cardId}`)}`, {
+    const res = await axios.post(`${genURL(`/v1/card/listen/${slug}`)}`, {
       ques,
       user,
     });
@@ -296,12 +290,12 @@ export const GetMarkListen = async (dispatch, cardId, ques, user) => {
     dispatch(handleRemove());
   }
 };
-export const GetWrite = async (dispatch, cardId, user, limit) => {
+export const GetWrite = async (dispatch, slug, user, limit) => {
   try {
     dispatch(play());
     dispatch(handleLoading());
     const res = await axios.get(
-      `${genURL(`/v1/card/write/${cardId}`, { limit: limit })}`,
+      `${genURL(`/v1/card/write/${slug}`, { limit: limit })}`,
       { params: { user } }
     );
     dispatch(handleRemove());
@@ -311,12 +305,12 @@ export const GetWrite = async (dispatch, cardId, user, limit) => {
   }
 };
 
-export const GetMarkWrite = async (dispatch, cardId, ques, user) => {
+export const GetMarkWrite = async (dispatch, slug, ques, user) => {
   try {
     dispatch(handleLoading());
     dispatch(play());
 
-    const res = await axios.post(`${genURL(`/v1/card/write/${cardId}`)}`, {
+    const res = await axios.post(`${genURL(`/v1/card/write/${slug}`)}`, {
       ques,
       user,
     });
@@ -327,12 +321,12 @@ export const GetMarkWrite = async (dispatch, cardId, ques, user) => {
   }
 };
 
-export const GetMatchCard = async (dispatch, cardId, user, limit) => {
+export const GetMatchCard = async (dispatch, slug, user, limit) => {
   try {
     dispatch(play());
     dispatch(handleLoading());
     const res = await axios.get(
-      `${genURL(`/v1/card/match/${cardId}`, { limit: limit })}`,
+      `${genURL(`/v1/card/match/${slug}`, { limit: limit })}`,
       { params: { user } }
     );
     dispatch(handleRemove());
@@ -342,31 +336,31 @@ export const GetMatchCard = async (dispatch, cardId, user, limit) => {
   }
 };
 
-export const UpdateMardMatchCard = async (cardId, user, terms) => {
+export const UpdateMardMatchCard = async (slug, user, terms) => {
   try {
-    const res = await axiosJWT.put(`${genURL(`/v1/card/match/${cardId}`)}`, {
+    const res = await axiosJWT.put(`${genURL(`/v1/card/match/${slug}`)}`, {
       user,
       terms,
     });
     return res.data;
   } catch (error) {}
 };
-export const UpdateAndGetMatch = async (cardId, user, terms, limit) => {
+export const UpdateAndGetMatch = async (slug, user, terms, limit) => {
   try {
     const res = await axios.post(
-      `${genURL(`/v1/card/match/${cardId}`, { limit: limit })}`,
+      `${genURL(`/v1/card/match/${slug}`, { limit: limit })}`,
       { user, terms }
     );
     return res.data;
   } catch (error) {}
 };
 
-export const GetTest = async (dispatch, cardId, user, limit) => {
+export const GetTest = async (dispatch, slug, user, limit) => {
   try {
     dispatch(play());
     dispatch(handleLoading());
     const res = await axios.get(
-      `${genURL(`/v1/card/test/${cardId}`, { limit: limit })}`,
+      `${genURL(`/v1/card/test/${slug}`, { limit: limit })}`,
       { params: { user } }
     );
     dispatch(handleRemove());
@@ -410,9 +404,9 @@ export const GetMarkTest = async (dispatch, ques, user) => {
 
 /* board api */
 
-export const AddView = async (cardId) => {
+export const AddView = async (slug) => {
   try {
-    const res = await axios.put(`${genURL(`/v1/card/view/${cardId}`)}`);
+    const res = await axios.put(`${genURL(`/v1/card/view/${slug}`)}`);
     return res.data;
   } catch (error) {}
 };
@@ -424,10 +418,10 @@ export const SearchCard = async (q) => {
   } catch (error) {}
 };
 
-export const RateCard = async (cardId, rateNum, accessToken, dispatch) => {
+export const RateCard = async (slug, rateNum, accessToken, dispatch) => {
   try {
     const res = await axiosJWT.post(
-      `${genURL(`/v1/card/rate/${cardId}`)}`,
+      `${genURL(`/v1/card/rate/${slug}`)}`,
       { rateNum },
       {
         headers: { token: `Bearer ${accessToken}` },
@@ -646,6 +640,16 @@ export const GetRank = async (type, limit) => {
         limit: limit,
       })}`
     );
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const GetProLearn = async (slug, accessToken) => {
+  try {
+    const res = await axiosJWT.get(`${genURL(`/v1/card/test/pro2/${slug}`)}`, {
+      headers: { token: `Bearer ${accessToken}` },
+    });
     return res.data;
   } catch (error) {
     console.log(error);

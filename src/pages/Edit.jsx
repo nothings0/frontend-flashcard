@@ -41,7 +41,7 @@ const Edit = () => {
   );
   const userId = useSelector((state) => state.user.currentUser?.user._id);
   const { loading } = useSelector((state) => state.middle);
-  const { cardId } = useParams();
+  const { slug } = useParams();
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -64,7 +64,7 @@ const Edit = () => {
       return;
     } else {
       const getData = async () => {
-        const res = await getCardById(dispatch, cardId, page, 50);
+        const res = await getCardById(dispatch, slug, page, 50);
         if (res.cards.user._id !== userId) {
           navigate("/");
         }
@@ -80,7 +80,7 @@ const Edit = () => {
       };
       getData();
     }
-  }, [cardId, page]);
+  }, [slug, page]);
 
   useEffect(() => {
     window.addEventListener("scroll", () => {
@@ -121,13 +121,13 @@ const Edit = () => {
     } else {
       const res = await UpdateCard(
         newCard,
-        cardId,
+        slug,
         accessToken,
         userId,
         dispatch
       );
       if (res.type === "failure") return;
-      navigate(`/card/${cardId}`);
+      navigate(`/card/${slug}`);
     }
   };
 

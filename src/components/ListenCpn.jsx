@@ -18,6 +18,9 @@ const ListenCpn = ({
       handleQues();
     }
   };
+  const handleChange = (e) => {
+    setAnswer(e.target.value);
+  };
   return (
     <div className="listen__container">
       <div className="listen__top">
@@ -77,7 +80,7 @@ const ListenCpn = ({
             <InputAnswer
               length={data?.l}
               answer={answer}
-              setAnswer={setAnswer}
+              setAnswer={handleChange}
               handleEnter={handleEnter}
             />
             <p>Nhập bằng tiếng anh</p>

@@ -106,9 +106,7 @@ const Notifi = () => {
         ref={notifiRef}
       >
         <div className="searching__ava__list__heading">Thông báo</div>
-        {isLoading ? (
-          <p>Loading...</p>
-        ) : (
+        {!isLoading && (
           <>
             {notifis?.map((item) => (
               <div

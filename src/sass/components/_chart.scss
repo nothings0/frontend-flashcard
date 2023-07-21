@@ -78,6 +78,11 @@
     background-color: #ff3333;
   }
 }
+.chart__wrap:nth-child(2) {
+  .chart__column {
+    background-color: #ff8833;
+  }
+}
 .chart__wrap:nth-child(3) {
   .chart__column {
     background-color: #5df25c;

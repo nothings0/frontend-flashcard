@@ -20,13 +20,13 @@ const Card = ({ data, flex }) => {
   };
 
   const addView = () => {
-    AddView(data._id);
+    AddView(data.slug);
     Recent();
   };
 
   return (
     <div className={`card ${flex ? "flex" : ""}`} onClick={addView}>
-      <Link to={`/card/${data?._id}`}>
+      <Link to={`/card/${data?.slug}`}>
         <div
           className="card__des"
           style={{ background: `${data?.background}` }}
@@ -37,7 +37,7 @@ const Card = ({ data, flex }) => {
         </div>
       </Link>
       <div className="card__txt">
-        <Link to={`/card/${data?._id}`}>
+        <Link to={`/card/${data?.slug}`}>
           <div className="card__title">{data?.title}</div>
         </Link>
         <div className="card__info">

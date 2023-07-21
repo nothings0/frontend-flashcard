@@ -37,7 +37,7 @@ const Detail = () => {
     stepIndex: 1,
   });
 
-  const { cardId } = useParams();
+  const { slug } = useParams();
   const accessToken = useSelector(
     (state) => state.user.currentUser?.accessToken
   );
@@ -92,7 +92,7 @@ const Detail = () => {
     };
     getData();
     const getData1 = async () => {
-      const res1 = await getCardById(dispatch, cardId, page, 50);
+      const res1 = await getCardById(dispatch, slug, page, 50);
       setTerms((terms) => [...terms, ...res1.terms]);
       dispatch(add(res1.terms));
     };
@@ -102,12 +102,12 @@ const Detail = () => {
   useEffect(() => {
     const getData = async () => {
       setPage(1);
-      const res = await getCardById(dispatch, cardId, 1, 50);
+      const res = await getCardById(dispatch, slug, 1, 50);
       setData(res);
       setTerms(res.terms);
     };
     getData();
-  }, [cardId]);
+  }, [slug]);
 
   useEffect(() => {
     let isNew = localStorage.getItem("isNew");
@@ -164,7 +164,7 @@ const Detail = () => {
   }, [topActive]);
 
   const handleDelete = async () => {
-    const res = await DeleteCard(cardId, userId, accessToken, dispatch);
+    const res = await DeleteCard(slug, userId, accessToken, dispatch);
     setModalOpen(false);
     if (res.type === "success") {
       navigate(-1);
@@ -173,7 +173,7 @@ const Detail = () => {
 
   const handleRate = (x) => {
     setRateNum(x);
-    RateCard(data.cards._id, x, accessToken, dispatch);
+    RateCard(data.cards.slug, x, accessToken, dispatch);
   };
 
   const handleLoadMore = () => {
@@ -230,26 +230,26 @@ const Detail = () => {
                         }`}
                         ref={menuRef}
                       >
-                        <Link to={`/flashcard/${cardId}`}>
+                        <Link to={`/flashcard/${slug}`}>
                           <div className="card-detail__left__item">
                             Thẻ ghi nhớ
                           </div>
                         </Link>
-                        <Link to={`/learn/${cardId}`}>
+                        <Link to={`/learn/${slug}`}>
                           <div className="card-detail__left__item">Học</div>
                         </Link>
-                        <Link to={`/write/${cardId}`}>
+                        <Link to={`/write/${slug}`}>
                           <div className="card-detail__left__item">Viết</div>
                         </Link>
-                        <Link to={`/listen/${cardId}`}>
+                        <Link to={`/listen/${slug}`}>
                           <div className="card-detail__left__item">Nghe</div>
                         </Link>
-                        <Link to={`/match/${cardId}`}>
+                        <Link to={`/match/${slug}`}>
                           <div className="card-detail__left__item">
                             Ghép thẻ
                           </div>
                         </Link>
-                        <Link to={`/test/${cardId}`}>
+                        <Link to={`/test/${slug}`}>
                           <div className="card-detail__left__item">
                             Kiểm tra
                           </div>
@@ -276,26 +276,26 @@ const Detail = () => {
                 </div>
                 <div className="card-detail__top">
                   <div className="card-detail__left">
-                    <Link to={`/flashcard/${cardId}`}>
+                    <Link to={`/flashcard/${slug}`}>
                       <div className="card-detail__left__item item_1">
                         Thẻ ghi nhớ
                       </div>
                     </Link>
-                    <Link to={`/learn/${cardId}`}>
+                    <Link to={`/learn/${slug}`}>
                       <div className="card-detail__left__item item_2">Học</div>
                     </Link>
-                    <Link to={`/write/${cardId}`}>
+                    <Link to={`/write/${slug}`}>
                       <div className="card-detail__left__item item_3">Viết</div>
                     </Link>
-                    <Link to={`/listen/${cardId}`}>
+                    <Link to={`/listen/${slug}`}>
                       <div className="card-detail__left__item item_4">Nghe</div>
                     </Link>
-                    <Link to={`/match/${cardId}`}>
+                    <Link to={`/match/${slug}`}>
                       <div className="card-detail__left__item item_5">
                         Ghép thẻ
                       </div>
                     </Link>
-                    <Link to={`/test/${cardId}`}>
+                    <Link to={`/test/${slug}`}>
                       <div className="card-detail__left__item item_6">
                         Kiểm tra
                       </div>

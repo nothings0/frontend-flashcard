@@ -12,16 +12,16 @@ const FlashCard = () => {
   const [data, setData] = useState([]);
   const dispatch = useDispatch();
 
-  const { cardId } = useParams();
+  const { slug } = useParams();
   const { loading } = useSelector((state) => state.middle);
 
   useEffect(() => {
     const getData = async () => {
-      const res = await GetFlashCard(dispatch, cardId);
+      const res = await GetFlashCard(dispatch, slug);
       setData(res);
     };
     getData();
-  }, [cardId]);
+  }, [slug]);
 
   return (
     <Helmet title="Thẻ ghi nhớ | Flux">

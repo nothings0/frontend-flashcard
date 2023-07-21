@@ -17,7 +17,7 @@ const MatchCard = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { cardId } = useParams();
+  const { slug } = useParams();
   const { loading } = useSelector((state) => state.middle);
   const user = useSelector((state) => state.user.currentUser?.user._id);
 
@@ -27,8 +27,8 @@ const MatchCard = () => {
   const [modalType, setModalType] = useState(1);
   const [round, setRound] = useState(0);
 
-  const getData = async (cardId) => {
-    const res = await GetMatchCard(dispatch, cardId, user, 8);
+  const getData = async (slug) => {
+    const res = await GetMatchCard(dispatch, slug, user, 8);
     setData(res);
     setTerms(res.terms);
     if (res?.terms.length < 8) {
@@ -37,14 +37,14 @@ const MatchCard = () => {
     }
   };
   useEffect(() => {
-    getData(cardId);
-  }, [cardId]);
+    getData(slug);
+  }, [slug]);
 
   const handleUpdate = () => {
-    UpdateMardMatchCard(cardId, user, terms);
+    UpdateMardMatchCard(slug, user, terms);
   };
   const handleUpdateAndGet = async () => {
-    const res = await UpdateAndGetMatch(cardId, user, terms, 8);
+    const res = await UpdateAndGetMatch(slug, user, terms, 8);
     setTerms(res.terms);
   };
 
@@ -93,7 +93,7 @@ const MatchCard = () => {
               <button
                 className="ok-btn"
                 onClick={() => {
-                  navigate(`/card/edit/${cardId}`);
+                  navigate(`/card/edit/${slug}`);
                 }}
               >
                 Thêm thuật ngữ

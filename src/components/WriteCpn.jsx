@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { GetSuggestWord } from "../redux/apiRequest";
 import InputAnswer from "./InputAnswer";
 
@@ -14,6 +14,11 @@ const WriteCpn = ({
 }) => {
   const [suggestWord, setSuggestWord] = useState("");
   const [isSuggest, setSuggest] = useState(false);
+
+  useEffect(() => {
+    setSuggest(false);
+    setSuggestWord("");
+  }, [data]);
 
   const getSuggestWord = async () => {
     const res = await GetSuggestWord({

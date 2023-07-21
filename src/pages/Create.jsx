@@ -93,7 +93,6 @@ const Create = () => {
       window.removeEventListener("scroll", null);
     };
   }, []);
-
   useEffect(() => {
     if (!accessToken) {
       navigate("/login");
@@ -107,27 +106,27 @@ const Create = () => {
       setTerms(termArr);
     }
   }, [accessToken]);
-
   const handleCardChange = (e, index) => {
     const { name, value } = e.target;
     if (name === "prompt") {
-      let termArr = [...terms];
+      const termArr = [...terms];
       termArr[index] = { ...termArr[index], prompt: value };
-      // setTerms(termArr);
+      setTerms(termArr);
       clearTimeout(timer);
       timer = setTimeout(async () => {
         const res = await GetTranslate(value);
         const translate = res.matches.sort(
           (a, b) => b["usage-count"] - a["usage-count"]
         );
-        termArr[index] = {
-          ...termArr[index],
+        const termArr1 = [...terms];
+        termArr1[index] = {
+          prompt: value,
           answer: translate[0].translation,
         };
-        setTerms(termArr);
+        setTerms(termArr1);
       }, 600);
     } else {
-      if (value === "") return;
+      // if (value === "") return;
       let termArr = [...terms];
       termArr[index] = { ...termArr[index], answer: value };
       setTerms(termArr);
@@ -241,39 +240,41 @@ const Create = () => {
         </div>
         <div className="create__term">
           {terms &&
-            terms?.map((item, index) => (
-              <div className="term" key={index}>
-                <div className="term__header">
-                  <div className="term__header__count">{index + 1}</div>
-                  <div
-                    className="term__header__control"
-                    onClick={() => handleCardDelete(index)}
-                  >
-                    <i className="fa-solid fa-trash-can"></i>
+            terms.map((item, index) => {
+              return (
+                <div className="term" key={index}>
+                  <div className="term__header">
+                    <div className="term__header__count">{index + 1}</div>
+                    <div
+                      className="term__header__control"
+                      onClick={() => handleCardDelete(index)}
+                    >
+                      <i className="fa-solid fa-trash-can"></i>
+                    </div>
+                  </div>
+                  <div className="term__content">
+                    <div className="term__content__input">
+                      <textarea
+                        name="prompt"
+                        maxLength="255"
+                        onChange={(e) => handleCardChange(e, index)}
+                        value={item.prompt}
+                      ></textarea>
+                      <p>thuật ngữ</p>
+                    </div>
+                    <div className="term__content__input">
+                      <textarea
+                        name="answer"
+                        maxLength="255"
+                        onChange={(e) => handleCardChange(e, index)}
+                        value={item.answer}
+                      ></textarea>
+                      <p>định nghĩa</p>
+                    </div>
                   </div>
                 </div>
-                <div className="term__content">
-                  <div className="term__content__input">
-                    <textarea
-                      name="prompt"
-                      maxLength="255"
-                      onChange={(e) => handleCardChange(e, index)}
-                      value={terms[index].prompt}
-                    ></textarea>
-                    <p>thuật ngữ</p>
-                  </div>
-                  <div className="term__content__input">
-                    <textarea
-                      name="answer"
-                      maxLength="255"
-                      onChange={(e) => handleCardChange(e, index)}
-                      value={terms[index].answer}
-                    ></textarea>
-                    <p>định nghĩa</p>
-                  </div>
-                </div>
-              </div>
-            ))}
+              );
+            })}
         </div>
         <div className="create__btn" onClick={handleView}>
           <div className="create__btn__wrap">

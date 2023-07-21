@@ -12,7 +12,7 @@ import { play } from "../redux/audioSlice";
 const Learn = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { cardId } = useParams();
+  const { slug } = useParams();
   //   mang cau hoi
   const [question, setQuestion] = useState([]);
 
@@ -27,8 +27,8 @@ const Learn = () => {
   const [modalType, setModalType] = useState(1);
   const [round, setRound] = useState(0);
 
-  const getQuestion = async (cardId) => {
-    const res = await GetLearn(dispatch, cardId, user, 10);
+  const getQuestion = async (slug) => {
+    const res = await GetLearn(dispatch, slug, user, 10);
     if (res.question?.length === 0) {
       setModalType(2);
       setModalOpen(true);
@@ -38,8 +38,8 @@ const Learn = () => {
     }
   };
   useEffect(() => {
-    getQuestion(cardId);
-  }, [cardId]);
+    getQuestion(slug);
+  }, [slug]);
 
   const handleIndex = () => {
     dispatch(play());
@@ -59,7 +59,7 @@ const Learn = () => {
       answer: e.target.innerHTML,
       id: question[index]._id,
     };
-    const res = await GetMarkLearn(dispatch, cardId, ques, user);
+    const res = await GetMarkLearn(dispatch, slug, ques, user);
     setResult(res);
     setIsResult(true);
     if (res.check === true) {
@@ -69,7 +69,7 @@ const Learn = () => {
   };
 
   const handleNextQuestion = () => {
-    getQuestion(cardId);
+    getQuestion(slug);
     setResult({});
     setIsResult(false);
     setIndex(0);

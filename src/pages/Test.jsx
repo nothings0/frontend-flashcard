@@ -14,7 +14,7 @@ import { play } from "../redux/audioSlice";
 const Test = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { cardId } = useParams();
+  const { slug } = useParams();
   const { loading } = useSelector((state) => state.middle);
   const user = useSelector((state) => state.user.currentUser?.user._id);
   //   mang cau hoi
@@ -28,8 +28,8 @@ const Test = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [round, setRound] = useState(0);
 
-  const getQuestion = async (cardId) => {
-    const res = await GetTest(dispatch, cardId, user, 10);
+  const getQuestion = async (slug) => {
+    const res = await GetTest(dispatch, slug, user, 10);
     if (res.question.length === 0) {
       setModalOpen(true);
     } else {
@@ -49,8 +49,8 @@ const Test = () => {
     }
   };
   useEffect(() => {
-    getQuestion(cardId);
-  }, [cardId]);
+    getQuestion(slug);
+  }, [slug]);
 
   const handleIndex = () => {
     dispatch(play());
@@ -92,7 +92,7 @@ const Test = () => {
     }
   };
   const handleNextQuestion = () => {
-    getQuestion(cardId);
+    getQuestion(slug);
     setResult({});
     setIsResult(false);
     setIndex(0);

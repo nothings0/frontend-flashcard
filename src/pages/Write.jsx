@@ -10,7 +10,7 @@ import HeaderPrimary from "../components/HeaderPrimary";
 import { play } from "../redux/audioSlice";
 
 const Write = () => {
-  const { cardId } = useParams();
+  const { slug } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -28,8 +28,8 @@ const Write = () => {
   const [modalType, setModalType] = useState(1);
   const [round, setRound] = useState(0);
 
-  const getData = async (cardId) => {
-    const res = await GetWrite(dispatch, cardId, user, 10);
+  const getData = async (slug) => {
+    const res = await GetWrite(dispatch, slug, user, 10);
     if (res?.length === 0) {
       setModalType(2);
       setModalOpen(true);
@@ -39,8 +39,8 @@ const Write = () => {
     }
   };
   useEffect(() => {
-    getData(cardId);
-  }, [cardId]);
+    getData(slug);
+  }, [slug]);
 
   const handleIndex = () => {
     dispatch(play());
@@ -60,7 +60,7 @@ const Write = () => {
       id: data[index]._id,
     };
 
-    const res = await GetMarkWrite(dispatch, cardId, ques, user);
+    const res = await GetMarkWrite(dispatch, slug, ques, user);
     setResult(res);
     setIsResult(true);
     if (res.check === true) {
@@ -69,7 +69,7 @@ const Write = () => {
     }
   };
   const handleNextQuestion = () => {
-    getData(cardId);
+    getData(slug);
     setResult({});
     setIsResult(false);
     setIndex(0);

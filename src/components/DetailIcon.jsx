@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { savedCard } from "../redux/apiRequest";
 
 const DetailIcon = ({ setModalOpen, iUsername }) => {
-  const { cardId } = useParams();
+  const { slug } = useParams();
   const accessToken = useSelector(
     (state) => state.user.currentUser?.accessToken
   );
@@ -54,7 +54,7 @@ const DetailIcon = ({ setModalOpen, iUsername }) => {
     setShareActive(!isShareActive);
   };
   const handleSavedCard = () => {
-    savedCard(dispatch, cardId, accessToken);
+    savedCard(dispatch, slug, accessToken);
   };
 
   return (
@@ -75,7 +75,7 @@ const DetailIcon = ({ setModalOpen, iUsername }) => {
         data-c-tooltip="Chỉnh sửa"
       >
         <Link
-          to={`/card/edit/${cardId}`}
+          to={`/card/edit/${slug}`}
           className={`${username !== iUsername && "disable"}`}
         >
           <i className="fa-solid fa-pencil"></i>
@@ -97,14 +97,14 @@ const DetailIcon = ({ setModalOpen, iUsername }) => {
           ref={shareRef}
         >
           <a
-            href={`https://www.facebook.com/sharer.php?u=https://fluxquiz.netlify.app/card/${cardId}`}
+            href={`https://www.facebook.com/sharer.php?u=https://fluxquiz.netlify.app/card/${slug}`}
             target="_blank"
           >
             <i className="fa-brands fa-facebook" rel="noopener noreferrer"></i>{" "}
             Facebook
           </a>
           <a
-            href={`https://twitter.com/intent/tweet?refer_source=https://fluxquiz.netlify.app/card/${cardId}`}
+            href={`https://twitter.com/intent/tweet?refer_source=https://fluxquiz.netlify.app/card/${slug}`}
             target="_blank"
           >
             <i className="fa-brands fa-twitter" rel="noopener noreferrer"></i>{" "}

@@ -15,7 +15,7 @@ const FlipCard = ({ data, isVolume, isOpenAI = true }) => {
   const [usage, setUsage] = useState([]);
   const length = data?.length;
 
-  const { cardId } = useParams();
+  const { slug } = useParams();
 
   useEffect(() => {
     let index = current > length ? 1 : current;
@@ -134,7 +134,7 @@ const FlipCard = ({ data, isVolume, isOpenAI = true }) => {
           <i className="fa-solid fa-chevron-right" onClick={nextSlide}></i>
         </div>
         <div className="flip-card__control__right">
-          <Link to={`/flashcard/${cardId}`}>
+          <Link to={`/flashcard/${slug}`}>
             <i className="fas fa-expand"></i>
           </Link>
         </div>

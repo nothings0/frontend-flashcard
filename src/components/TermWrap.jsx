@@ -9,7 +9,7 @@ import { showToast } from "../redux/toastSlice";
 
 const TermWrap = ({ terms, setTerms, iUsername, type }) => {
   const dispatch = useDispatch();
-  const { cardId } = useParams();
+  const { slug } = useParams();
   const accessToken = useSelector(
     (state) => state.user.currentUser?.accessToken
   );
@@ -40,7 +40,7 @@ const TermWrap = ({ terms, setTerms, iUsername, type }) => {
     let updatedTerms = [...terms];
     updatedTerms.splice(i, 1);
     setTerms(updatedTerms);
-    UpdateCard({ term: updatedTerms }, cardId, accessToken, userId, dispatch);
+    UpdateCard({ term: updatedTerms }, slug, accessToken, userId, dispatch);
     dispatch(showToast({ msg: "Xóa thành công", success: true }));
   };
 
@@ -53,7 +53,7 @@ const TermWrap = ({ terms, setTerms, iUsername, type }) => {
       term: newTerms,
     };
     setTerms(newTerms);
-    UpdateCard(newCard, cardId, accessToken, userId, dispatch);
+    UpdateCard(newCard, slug, accessToken, userId, dispatch);
   };
 
   return (

@@ -11,7 +11,7 @@ import HeaderPrimary from "../components/HeaderPrimary";
 import { play } from "../redux/audioSlice";
 
 const Listen = () => {
-  const { cardId } = useParams();
+  const { slug } = useParams();
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -30,8 +30,8 @@ const Listen = () => {
   const [modalType, setModalType] = useState(1);
   const [round, setRound] = useState(0);
 
-  const getData = async (cardId) => {
-    const res = await GetListen(dispatch, cardId, user, 10);
+  const getData = async (slug) => {
+    const res = await GetListen(dispatch, slug, user, 10);
     if (res?.length === 0) {
       setModalType(2);
       setModalOpen(true);
@@ -41,8 +41,8 @@ const Listen = () => {
     }
   };
   useEffect(() => {
-    getData(cardId);
-  }, [cardId]);
+    getData(slug);
+  }, [slug]);
 
   const handleIndex = () => {
     dispatch(play());
@@ -62,7 +62,7 @@ const Listen = () => {
       id: data[index]._id,
     };
 
-    const res = await GetMarkListen(dispatch, cardId, ques, user);
+    const res = await GetMarkListen(dispatch, slug, ques, user);
     setResult(res);
     setIsResult(true);
     if (res.check === true) {
@@ -72,7 +72,7 @@ const Listen = () => {
   };
 
   const handleNextQuestion = () => {
-    getData(cardId);
+    getData(slug);
     setResult({});
     setIsResult(false);
     setIndex(0);

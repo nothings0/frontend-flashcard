@@ -21,6 +21,7 @@ import NotFound from "../pages/NotFound";
 import LyricTraining from "../pages/LyricTraining";
 import LyricMain from "../pages/LyricMain";
 import SpaceRep from "../pages/SpaceRep";
+// import ProLearn from "../pages/proLearn/ProLearn";
 
 const Main = () => {
   return (
@@ -32,16 +33,17 @@ const Main = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/card/create" element={<Create />} />
-        <Route path="/card/edit/:cardId" element={<Edit />} />
-        <Route path="/card/:cardId" element={<Detail />} />
+        <Route path="/card/edit/:slug" element={<Edit />} />
+        {/* <Route path="/card/p/:slug" element={<ProLearn />} /> */}
+        <Route path="/card/:slug" element={<Detail />} />
         <Route path="/mylibrary" element={<Library />} />
-        <Route path="/flashcard/:cardId" element={<FlashCard />} />
-        <Route path="/learn/:cardId" element={<Learn />} />
-        <Route path="/write/:cardId" element={<Write />} />
-        <Route path="/listen/:cardId" element={<Listen />} />
-        <Route path="/match/:cardId" element={<MatchCard />} />
+        <Route path="/flashcard/:slug" element={<FlashCard />} />
+        <Route path="/learn/:slug" element={<Learn />} />
+        <Route path="/write/:slug" element={<Write />} />
+        <Route path="/listen/:slug" element={<Listen />} />
+        <Route path="/match/:slug" element={<MatchCard />} />
         <Route path="/test/space-repetition" element={<SpaceRep />} />
-        <Route path="/test/:cardId" element={<Test />} />
+        <Route path="/test/:slug" element={<Test />} />
         <Route path="/lyric" element={<LyricTraining />} />
         <Route path="/lyric/:slug" element={<LyricMain />} />
         <Route path="/calendar" element={<Calendar />} />
