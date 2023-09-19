@@ -52,7 +52,7 @@ const Write = ({ data, setStep }) => {
         return;
       }
     } else if (isResult) {
-      setStep(1);
+      handleNew();
     }
   };
   const handleAnswer = (e) => {
