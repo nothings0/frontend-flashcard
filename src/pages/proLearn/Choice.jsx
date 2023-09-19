@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { GetMarkLearn } from "../../redux/apiRequest";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import useOnEnter from "../../Hook/useOnEnter";
 
 const Choice = ({ data, setStep }) => {
   const audioRef = useRef(null);
@@ -24,10 +25,41 @@ const Choice = ({ data, setStep }) => {
     const res = await GetMarkLearn(dispatch, slug, ques, user);
     setResult(res);
     setIsResult(true);
+    // if (res.check) {
+    //   handleConfetti();
+    // }
   };
   const handlePlay = () => {
     audioRef.current.play();
   };
+
+  const handleEnter = () => {
+    if (!isResult) {
+      return;
+    } else if (isResult) {
+      setStep(3);
+    }
+  };
+
+  useOnEnter(() => {
+    handleEnter();
+  });
+
+  // const handleConfetti = async () => {
+  //   await jsConfetti.addConfetti({
+  //     confettiRadius: 4,
+  //     confettiColors: [
+  //       "#00ffc6",
+  //       "#0ffb01",
+  //       "#5801f3",
+  //       "#ff5722",
+  //       "#ff0398",
+  //       "#158eff",
+  //     ],
+  //   });
+  //   console.log("aaa");
+  //   await jsConfetti.clearCanvas();
+  // };
   return (
     <div className="pro-choice">
       <div className="pro-choice__container">
@@ -66,7 +98,11 @@ const Choice = ({ data, setStep }) => {
             className="fa-solid fa-volume-high volumn"
             onClick={handlePlay}
           ></i>
-          <div className="btn-continue" onClick={() => setStep(3)}>
+
+          <div
+            className={`btn-continue ${isResult ? "active" : ""}`}
+            onClick={() => setStep(3)}
+          >
             <i className="fa-solid fa-chevron-right"></i>
             <span>Tiếp</span>
           </div>

@@ -3,6 +3,7 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 import { GetNotifi, ReadNotifi } from "../redux/apiRequest";
 import moment from "moment-timezone";
 import { useSelector } from "react-redux";
+import Skeleton from "./Skeleton";
 const logo = require("../assets/Logo.png");
 
 const Notifi = () => {
@@ -13,11 +14,7 @@ const Notifi = () => {
     (state) => state.user.currentUser?.accessToken
   );
 
-  const {
-    data: notifis,
-    isLoading,
-    isFetching,
-  } = useQuery({
+  const { data: notifis, isLoading } = useQuery({
     queryFn: () => GetNotifi(accessToken),
     queryKey: "notification",
     staleTime: 3 * 60 * 1000,
@@ -27,44 +24,6 @@ const Notifi = () => {
   const { mutate } = useMutation({
     mutationFn: (notifiId) => ReadNotifi(notifiId, accessToken),
   });
-
-  useEffect(() => {
-    const permis = localStorage.getItem("permis");
-    if (!permis) {
-      Notification.requestPermission()
-        .then((perm) => {
-          if (permis === "denied") {
-            localStorage.setItem("permis", perm);
-            return;
-          }
-          const date = new Date(new Date() - 3 * 60000);
-          const noti = notifis.find(
-            (item) => item.updatedAt > date && !item.idRead
-          );
-          if (noti) {
-            new Notification("Thông báo từ fluxquiz", {
-              body: `${noti.content}`,
-            });
-          }
-          localStorage.setItem("permis", perm);
-        })
-        .catch((err) => console.log(err));
-    } else if (permis === "denied") {
-      return;
-    } else {
-      const currentDatetime = new Date();
-      const date = new Date(currentDatetime - 3 * 60000);
-
-      const noti = notifis?.find(
-        (item) => !item.isRead && date.toISOString() < item.updatedAt
-      );
-      if (noti) {
-        new Notification("Thông báo từ fluxquiz", {
-          data: `${noti.content}`,
-        });
-      }
-    }
-  }, [isFetching]);
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -92,7 +51,6 @@ const Notifi = () => {
   const handleNotifiActive = () => {
     setIsNotifiActive(!isNotifiActive);
   };
-  if (isLoading) return <p>Loading....</p>;
 
   return (
     <div
@@ -106,7 +64,7 @@ const Notifi = () => {
         ref={notifiRef}
       >
         <div className="searching__ava__list__heading">Thông báo</div>
-        {!isLoading && (
+        {!isLoading ? (
           <>
             {notifis?.map((item) => (
               <div
@@ -121,11 +79,13 @@ const Notifi = () => {
                 </div>
                 <div className="searching__ava__notifi__content">
                   <p>{item.content}</p>
-                  <span>{moment(item.createdAt, "YYYYMMDD").fromNow()}</span>
+                  <span>{moment(item.createdAt).fromNow()}</span>
                 </div>
               </div>
             ))}
           </>
+        ) : (
+          <Skeleton type="loading" />
         )}
       </div>
     </div>

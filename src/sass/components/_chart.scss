@@ -2,6 +2,7 @@
   width: 60%;
   padding: 10px;
   box-shadow: 1px 1px 3px 1px #ccc;
+  border-radius: 5px;
   @include mobile {
     width: 100%;
   }
@@ -45,6 +46,7 @@
     width: 100%;
     animation: counter 1s ease-in;
     height: var(--height);
+    min-height: 20px;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
   }

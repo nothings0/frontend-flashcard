@@ -151,6 +151,18 @@
         background-color: $main-color;
         color: $txt-white;
       }
+      &.disable {
+        opacity: 0.35;
+        pointer-events: none;
+      }
+      &.approval {
+        background-color: rgb(216, 61, 0);
+        color: #fff;
+      }
+      &.pending {
+        background-color: rgb(0, 24, 236);
+        color: #fff;
+      }
       @include mobile {
         font-size: 12px;
         align-items: center;

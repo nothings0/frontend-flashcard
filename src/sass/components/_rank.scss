@@ -4,6 +4,8 @@
   box-shadow: 1px 1px 3px 1px #ccc;
   height: 400px;
   overflow-y: auto;
+  border-radius: 5px;
+  overflow-x: hidden;
   h3 {
     font-size: 2rem;
     text-align: center;

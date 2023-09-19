@@ -21,7 +21,7 @@ import NotFound from "../pages/NotFound";
 import LyricTraining from "../pages/LyricTraining";
 import LyricMain from "../pages/LyricMain";
 import SpaceRep from "../pages/SpaceRep";
-// import ProLearn from "../pages/proLearn/ProLearn";
+import ProLearn from "../pages/proLearn/ProLearn";
 
 const Main = () => {
   return (
@@ -34,7 +34,7 @@ const Main = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/card/create" element={<Create />} />
         <Route path="/card/edit/:slug" element={<Edit />} />
-        {/* <Route path="/card/p/:slug" element={<ProLearn />} /> */}
+        <Route path="/card/p/:slug" element={<ProLearn />} />
         <Route path="/card/:slug" element={<Detail />} />
         <Route path="/mylibrary" element={<Library />} />
         <Route path="/flashcard/:slug" element={<FlashCard />} />

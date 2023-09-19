@@ -1,4 +1,5 @@
 import React, { useRef } from "react";
+import useOnEnter from "../../Hook/useOnEnter";
 
 const Define = ({ data, setStep }) => {
   const audioRef = useRef(null);
@@ -10,18 +11,20 @@ const Define = ({ data, setStep }) => {
   const handlePlay = () => {
     audioRef.current.play();
   };
+
+  useOnEnter(() => {
+    setStep(2);
+  });
+
   return (
     <div className="pro-define">
       <div className="pro-define__main">
         <div className="pro-define__container" onClick={(e) => handleFlip(e)}>
           <div className="pro-define__item front-view">
             <h4>{data.ques.term.prompt}</h4>
-            <span>{data.ques.term.mw}</span>
-            <p>{data.ques.term.answer}</p>
           </div>
           <div className="pro-define__item back-view">
-            <h4>{data.ques.term.def.pt}</h4>
-            <p>{data.ques.term.def.an}</p>
+            <h4>{data.ques.term.answer}</h4>
           </div>
         </div>
         <i className="fa-solid fa-volume-high volumn" onClick={handlePlay}></i>

@@ -6,7 +6,7 @@ import Skeleton from "./Skeleton";
 
 const Rank = () => {
   const [tab, setTab] = useState(0);
-  const [query, setQuery] = useState("achieve");
+  const [query, setQuery] = useState("rank");
   const { data, isLoading } = useQuery({
     queryKey: query,
     queryFn: () => GetRank(query, 10),
@@ -24,15 +24,15 @@ const Rank = () => {
       <div className="rank__header">
         <div
           className={`rank__header__item ${tab === 0 ? "active" : ""} `}
-          onClick={() => handleTap(0, "achieve")}
+          onClick={() => handleTap(0, "rank")}
         >
-          Đóng góp
+          Học tập
         </div>
         <div
           className={`rank__header__item ${tab === 1 ? "active" : ""} `}
-          onClick={() => handleTap(1, "rank")}
+          onClick={() => handleTap(1, "achieve")}
         >
-          Học tập
+          Đóng góp
         </div>
       </div>
       <div className="rank__body">

@@ -99,7 +99,6 @@ const Calendar = () => {
         currentSection.tasks = applyDrag(currentSection.tasks, result);
         currentSection.taskOrder = currentSection.tasks.map((task) => task._id);
         let sectionIdAdded;
-        console.log(columnId);
         if (result.removedIndex === null) {
           sectionIdAdded = columnId;
           clearTimeout(timer);
@@ -114,7 +113,6 @@ const Calendar = () => {
           }, timeOut);
           setSections(newSections);
         }
-        console.log(sectionIdAdded);
       }
     }
   };

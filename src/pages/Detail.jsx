@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Modal, { ModalBody, ModalFooter, ModalTitle } from "../components/Modal";
 import {
+  approvalCard,
   DeleteCard,
   getCardById,
   GetListCard,
@@ -16,8 +17,6 @@ import Skeleton from "../components/Skeleton";
 import TermWrap from "../components/TermWrap";
 import List from "../components/List";
 import { add } from "../redux/cardSlice";
-// import { handleLoading, handleRemove } from "../redux/middleSlice"
-// import GoogleAds from "../components/GoogleAds"
 import Joyride, { ACTIONS, EVENTS, STATUS } from "react-joyride";
 
 const Detail = () => {
@@ -199,6 +198,11 @@ const Detail = () => {
     }
   };
 
+  const handleApproval = () => {
+    approvalCard(slug, accessToken);
+    window.location.reload();
+  };
+
   return (
     <Helmet title={`${data?.cards?.title || "Loading"} | Flux`}>
       <div className="card-detail">
@@ -230,11 +234,6 @@ const Detail = () => {
                         }`}
                         ref={menuRef}
                       >
-                        <Link to={`/flashcard/${slug}`}>
-                          <div className="card-detail__left__item">
-                            Thẻ ghi nhớ
-                          </div>
-                        </Link>
                         <Link to={`/learn/${slug}`}>
                           <div className="card-detail__left__item">Học</div>
                         </Link>
@@ -254,6 +253,36 @@ const Detail = () => {
                             Kiểm tra
                           </div>
                         </Link>
+                        {data?.cards?.type === "premium" ? (
+                          <Link to={`/card/p/${slug}`}>
+                            <div
+                              className={`card-detail__left__item ${
+                                userId ? "" : "disable"
+                              }`}
+                            >
+                              Advance
+                            </div>
+                          </Link>
+                        ) : (
+                          <>
+                            {data?.cards?.user._id === userId && (
+                              <>
+                                {data?.cards?.type === "pending" ? (
+                                  <div className="card-detail__left__item pending disable">
+                                    Pending
+                                  </div>
+                                ) : (
+                                  <div
+                                    className="card-detail__left__item approval"
+                                    onClick={handleApproval}
+                                  >
+                                    Nâng cấp
+                                  </div>
+                                )}
+                              </>
+                            )}
+                          </>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -276,11 +305,6 @@ const Detail = () => {
                 </div>
                 <div className="card-detail__top">
                   <div className="card-detail__left">
-                    <Link to={`/flashcard/${slug}`}>
-                      <div className="card-detail__left__item item_1">
-                        Thẻ ghi nhớ
-                      </div>
-                    </Link>
                     <Link to={`/learn/${slug}`}>
                       <div className="card-detail__left__item item_2">Học</div>
                     </Link>
@@ -300,6 +324,36 @@ const Detail = () => {
                         Kiểm tra
                       </div>
                     </Link>
+                    {data?.cards?.type === "premium" ? (
+                      <Link to={`/card/p/${slug}`}>
+                        <div
+                          className={`card-detail__left__item ${
+                            userId ? "" : "disable"
+                          }`}
+                        >
+                          Advance
+                        </div>
+                      </Link>
+                    ) : (
+                      <>
+                        {data?.cards?.user._id === userId && (
+                          <>
+                            {data?.cards?.type === "pending" ? (
+                              <div className="card-detail__left__item pending disable">
+                                Pending
+                              </div>
+                            ) : (
+                              <div
+                                className="card-detail__left__item approval"
+                                onClick={handleApproval}
+                              >
+                                Nâng cấp
+                              </div>
+                            )}
+                          </>
+                        )}
+                      </>
+                    )}
                     <Joyride
                       run={run.isRun}
                       steps={steps}

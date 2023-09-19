@@ -4,7 +4,7 @@ import { Container, Draggable } from "react-smooth-dnd";
 import { handleSpeech } from "../util/speech";
 import { applyDrag } from "../util/index";
 import { useParams } from "react-router-dom";
-import { UpdateCard } from "../redux/apiRequest";
+import { DeleteTerm, UpdateCard } from "../redux/apiRequest";
 import { showToast } from "../redux/toastSlice";
 
 const TermWrap = ({ terms, setTerms, iUsername, type }) => {
@@ -40,8 +40,10 @@ const TermWrap = ({ terms, setTerms, iUsername, type }) => {
     let updatedTerms = [...terms];
     updatedTerms.splice(i, 1);
     setTerms(updatedTerms);
-    UpdateCard({ term: updatedTerms }, slug, accessToken, userId, dispatch);
-    dispatch(showToast({ msg: "Xóa thành công", success: true }));
+    if (terms[i]._id) {
+      DeleteTerm(accessToken, terms[i]._id);
+      dispatch(showToast({ msg: "Xóa thành công", success: true }));
+    }
   };
 
   const onCardDrop = (result) => {

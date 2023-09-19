@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { checkTokenExp } from "../../util/checkToken";
 // import Search from '../components/Search'
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 // import { useDispatch } from 'react-redux'
@@ -21,7 +21,7 @@ const MiddleForgot = () => {
       }
     };
     handleToken();
-  }, []);
+  }, [slug]);
   const [eyeActive, setEyeActive] = useState(false);
   const [eyeActive_1, setEyeActive_1] = useState(false);
 

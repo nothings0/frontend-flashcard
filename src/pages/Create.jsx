@@ -52,6 +52,7 @@ const Create = () => {
   const [background, setBackground] = useState(colors[0].css);
   const [share, setShare] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
+  const [matches, setMatches] = useState([]);
   const topRef = useRef(null);
   const { loading } = useSelector((state) => state.middle);
   const { success, toast } = useSelector((state) => state.card);
@@ -93,6 +94,7 @@ const Create = () => {
       window.removeEventListener("scroll", null);
     };
   }, []);
+
   useEffect(() => {
     if (!accessToken) {
       navigate("/login");
@@ -106,40 +108,46 @@ const Create = () => {
       setTerms(termArr);
     }
   }, [accessToken]);
+
   const handleCardChange = (e, index) => {
     const { name, value } = e.target;
+
     if (name === "prompt") {
       const termArr = [...terms];
       termArr[index] = { ...termArr[index], prompt: value };
       setTerms(termArr);
       clearTimeout(timer);
       timer = setTimeout(async () => {
+        if (value === "") return;
         const res = await GetTranslate(value);
+        setMatches(res.matches);
         const translate = res.matches.sort(
           (a, b) => b["usage-count"] - a["usage-count"]
         );
-        const termArr1 = [...terms];
+        let termArr1 = [...terms];
         termArr1[index] = {
           prompt: value,
           answer: translate[0].translation,
         };
         setTerms(termArr1);
-      }, 600);
+      }, 250);
+      // clearTimeout(timer);
     } else {
-      // if (value === "") return;
       let termArr = [...terms];
       termArr[index] = { ...termArr[index], answer: value };
       setTerms(termArr);
     }
   };
-
   const handleAdd = async (title) => {
+    const newTerms = terms.filter(
+      (term) => term.prompt.trim() !== "" && term.answer.trim() !== ""
+    );
     const newCard = {
       title,
       description,
       share,
       background,
-      term: terms,
+      term: newTerms,
     };
     if (newCard.term.length < 2) {
       setModalOpen(true);

@@ -143,6 +143,17 @@ export const GetTerm = async () => {
     return res.data;
   } catch (error) {}
 };
+export const DeleteTerm = async (accessToken, termId) => {
+  try {
+    const res = await axiosJWT.delete(
+      `${genURL(`/v1/card/delet-term/${termId}`)}`,
+      {
+        headers: { token: `Bearer ${accessToken}` },
+      }
+    );
+    return res.data;
+  } catch (error) {}
+};
 export const GetLibrary = async (accessToken, dispatch, limit) => {
   try {
     dispatch(handleLoading());
@@ -647,7 +658,45 @@ export const GetRank = async (type, limit) => {
 };
 export const GetProLearn = async (slug, accessToken) => {
   try {
-    const res = await axiosJWT.get(`${genURL(`/v1/card/test/pro2/${slug}`)}`, {
+    const res = await axiosJWT.get(`${genURL(`/v1/card/test/pro/${slug}`)}`, {
+      headers: { token: `Bearer ${accessToken}` },
+    });
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const approvalCard = async (slug, accessToken) => {
+  try {
+    const res = await axiosJWT.post(
+      `${genURL(`/v1/card/approval/${slug}`)}`,
+      {},
+      {
+        headers: { token: `Bearer ${accessToken}` },
+      }
+    );
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const handleUpgrade = async (slug, accessToken, decision) => {
+  try {
+    const res = await axiosJWT.put(
+      `${genURL(`/v1/card/upgrade/${slug}`)}`,
+      { decision },
+      {
+        headers: { token: `Bearer ${accessToken}` },
+      }
+    );
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const getPendingPremium = async (accessToken) => {
+  try {
+    const res = await axiosJWT.get(`${genURL(`/v1/card/getPendingPremium`)}`, {
       headers: { token: `Bearer ${accessToken}` },
     });
     return res.data;

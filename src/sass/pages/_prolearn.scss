@@ -62,7 +62,6 @@
         text-align: center;
         h4 {
           font-size: 20px;
-          margin-bottom: 35px;
         }
         p {
           font-size: 15px;
@@ -108,7 +107,7 @@
   }
   &-choice {
     @include flex(center, center);
-    height: 70vh;
+    padding: 20px 0;
     &__container {
       width: 100%;
       height: 100%;
@@ -176,9 +175,10 @@
         gap: 16px 0;
         padding: 16px;
         color: #fff;
-        background-color: $main-color;
+        background-color: #ccc;
         border-radius: 10px;
-        cursor: pointer;
+        cursor: unset;
+        pointer-events: none;
         box-shadow: 1px 5px 0px #ccc;
         i {
           font-weight: 800;
@@ -187,6 +187,11 @@
         span {
           font-size: 18px;
         }
+        &.active {
+          background-color: $main-color;
+          cursor: pointer;
+          pointer-events: auto;
+        }
       }
     }
   }
@@ -194,13 +199,14 @@
     @include flex(center, center);
     &__wrap {
       padding: 30px;
-      width: 360px;
+      min-width: 360px;
       height: 70vh;
       @include flex(center, space-between);
       flex-direction: column;
       box-shadow: #a5a5a5 0px 3px 5px 2px;
       border-radius: 5px;
     }
+
     .volumn {
       font-size: 2.8rem;
       padding: 12px;
@@ -215,17 +221,23 @@
     .btn-continue {
       @include flex(center, center);
       gap: 0 10px;
-      background-color: $main-color;
-      padding: 8px 18px;
+      background-color: #ccc;
+      cursor: unset;
+      pointer-events: none;
+      padding: 8px 12px;
       border-radius: 8px;
-      cursor: pointer;
       color: #fff;
       span {
-        font-size: 20px;
+        font-size: 18px;
       }
       i {
         font-size: 20px;
         font-weight: 800;
+      }
+      &.active {
+        background-color: $main-color;
+        cursor: pointer;
+        pointer-events: auto;
       }
     }
     &__container {
@@ -234,6 +246,26 @@
       input {
         position: unset;
       }
+      span {
+        font: 5ch consolas, monospace;
+        letter-spacing: 0.5ch;
+        margin-bottom: 10px;
+        color: #58bd2f;
+        &.incorrect {
+          color: red;
+        }
+      }
+
+      p {
+        font: 5ch consolas, monospace;
+        letter-spacing: 0.5ch;
+        margin-bottom: 10px;
+      }
+    }
+    .btn-wrap {
+      width: 100%;
+      @include flex(center, space-between);
+      gap: 0 10px;
     }
   }
 }
