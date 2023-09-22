@@ -26,7 +26,7 @@ const ProLearn = () => {
   const { data, isLoading } = useQuery({
     queryFn: () => GetProLearn(slug, accessToken),
     queryKey: "data-pro",
-    staleTime: 5 * 60 * 1000,
+    staleTime: Infinity,
   });
 
   return (

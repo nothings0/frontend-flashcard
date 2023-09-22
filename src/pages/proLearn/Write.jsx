@@ -80,19 +80,21 @@ const Write = ({ data, setStep }) => {
                 <p>{result.correctAnswer}</p>
               ) : (
                 <>
-                  <p>{result.correctAnswer}</p>
-                  <div>
-                    {answer.split("").map((item, index) => (
+                  <div style={{ textAlign: "center" }}>
+                    {result.actions.str.split("").map((item, index) => (
                       <span
                         key={index}
                         className={`${
-                          result.position.includes(index) ? "incorrect" : ""
+                          result.actions.falsePos.includes(index)
+                            ? "incorrect"
+                            : "correct"
                         }`}
                       >
                         {item}
                       </span>
                     ))}
                   </div>
+                  <p className="wronganswer">{result.wrongAnswer}</p>
                 </>
               )}
             </>

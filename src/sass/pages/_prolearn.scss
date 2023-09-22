@@ -135,12 +135,14 @@
           cursor: pointer;
           transition: 0.2s ease;
           &.success {
-            border: 2px solid green;
-            background-color: var(--second-bg);
+            border: 2px solid rgb(11, 200, 11);
+            background-color: rgba(100, 255, 100, 0.2);
+            color: rgb(11, 200, 11);
           }
           &.faile {
-            border: 2px solid red;
-            background-color: var(--second-bg);
+            border: 2px solid rgb(200, 11, 11);
+            background-color: rgba(255, 100, 100, 0.2);
+            color: rgb(200, 11, 11);
           }
           &:hover {
             background-color: $main-color;
@@ -248,18 +250,45 @@
       }
       span {
         font: 5ch consolas, monospace;
-        letter-spacing: 0.5ch;
+        letter-spacing: 0.25ch;
         margin-bottom: 10px;
         color: #58bd2f;
+        @keyframes fadeOut {
+          0% {
+            opacity: 1;
+          }
+          100% {
+            opacity: 0;
+            display: none;
+          }
+        }
+        @keyframes fadeIn {
+          0% {
+            opacity: 0;
+          }
+          100% {
+            opacity: 1;
+          }
+        }
+
         &.incorrect {
           color: red;
+          animation: fadeOut 1.5s linear forwards;
+        }
+        &.correct {
+          opacity: 0;
+          animation: fadeIn 2s linear forwards;
         }
       }
 
       p {
         font: 5ch consolas, monospace;
-        letter-spacing: 0.5ch;
+        letter-spacing: 0.25ch;
         margin-bottom: 10px;
+        &.wronganswer {
+          color: red;
+          text-decoration: line-through;
+        }
       }
     }
     .btn-wrap {
