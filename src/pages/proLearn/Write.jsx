@@ -77,7 +77,7 @@ const Write = ({ data, setStep }) => {
           {isResult ? (
             <>
               {result.check ? (
-                <p>{result.correctAnswer}</p>
+                <p className="correct">{result.correctAnswer}</p>
               ) : (
                 <>
                   <div style={{ textAlign: "center" }}>

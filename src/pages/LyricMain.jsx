@@ -110,7 +110,11 @@ const LyricMain = () => {
               url={`https://www.youtube.com/embed/${youtubeId}?showinfo=0&enablejsapi=1&origin=http://fluxquiz.netlify.app`}
               config={{
                 youtube: {
-                  playerVars: { cc_load_policy: 0, showinfo: 0 },
+                  playerVars: {
+                    modestbranding: 1, // Ẩn logo YouTube
+                    rel: 0, // Không hiển thị video liên quan khi kết thúc
+                    controls: 0, // Ẩn điều khiển
+                  },
                 },
               }}
               onProgress={({ playedSeconds }) => setCurrentTime(playedSeconds)}
@@ -118,7 +122,7 @@ const LyricMain = () => {
               width={580}
               height={400}
               playing={isPlaying}
-              controls={true}
+              controls={false}
               className="react-player-video"
               onDuration={(du) => setDuration(du)}
             />

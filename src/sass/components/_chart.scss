@@ -73,6 +73,10 @@
     background-color: $main-color;
     color: #fff;
     border-radius: 5px;
+    &.disable {
+      opacity: 0.5;
+      cursor: auto;
+    }
   }
 }
 .chart__wrap:nth-child(1) {

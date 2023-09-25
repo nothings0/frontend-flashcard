@@ -13,7 +13,12 @@ const Define = ({ data, setStep }) => {
   };
 
   useOnEnter(() => {
-    setStep(2);
+    const card = document.querySelector(".pro-define__container");
+    card.classList.toggle("flip");
+    setTimeout(() => {
+      setStep(2);
+    }, 2500);
+    // clearTimeout(timeOut);
   });
 
   return (

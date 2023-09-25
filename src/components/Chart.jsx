@@ -8,6 +8,7 @@ const Chart = ({ accessToken }) => {
   const { data, isLoading } = useQuery({
     queryKey: "active",
     queryFn: () => GetActive(accessToken),
+    staleTime: 3 * 60 * 1000,
   });
 
   return (
@@ -37,7 +38,10 @@ const Chart = ({ accessToken }) => {
         </div>
       )}
       <div className="chart__bottom">
-        <Link to="/test/space-repetition" className="chart__btn">
+        <Link
+          to="/test/space-repetition"
+          className={`chart__btn ${data?.data[0].data === 0 ? "disable" : ""}`}
+        >
           Ôn tập ngay
         </Link>
       </div>
