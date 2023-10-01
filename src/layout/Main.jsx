@@ -47,6 +47,7 @@ const Main = () => {
         <Route path="/lyric" element={<LyricTraining />} />
         <Route path="/lyric/:slug" element={<LyricMain />} />
         <Route path="/calendar" element={<Calendar />} />
+
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>

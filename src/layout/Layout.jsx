@@ -8,6 +8,8 @@ import Main from "./Main";
 import UserRoute from "./UserRoute";
 import OtherRoute from "./OtherRoute";
 import Toast from "../components/Toast";
+import QuizLive from "../pages/QuizLive";
+import QuizRoot from "../pages/QuizRoot";
 
 const Layout = () => {
   const dispatch = useDispatch();
@@ -32,6 +34,9 @@ const Layout = () => {
           <Route path="/admin/*" element={<Admin />} />
           <Route path="/user/*" element={<UserRoute />} />
           <Route path="/info/*" element={<OtherRoute />} />
+          <Route path="/live" element={<QuizLive />} />
+          <Route path="/live/:roomId" element={<QuizLive />} />
+          <Route path="/:slug/live" element={<QuizRoot />} />
           <Route path="/*" element={<Main />} />
         </Routes>
         {toast && <Toast />}
