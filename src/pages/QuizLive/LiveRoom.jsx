@@ -4,7 +4,7 @@ import { play } from "../../redux/audioSlice";
 import Countdown from "../../components/CountDown";
 import RankQuiz from "../QuizRoot/RankQuiz";
 
-const TIME_QUES = 10000;
+const TIME_QUES = 20 * 1000;
 
 const LiveRoot = ({ socket, roomId }) => {
   const [quiz, setQuiz] = useState({});
@@ -47,7 +47,7 @@ const LiveRoot = ({ socket, roomId }) => {
     });
     socket.on("end-quiz", (rank) => {
       setRank(rank);
-      sessionStorage.removeItem("room-live");
+      sessionStorage.removeItem("user-live");
     });
     return () => {
       socket.off("get-quiz");

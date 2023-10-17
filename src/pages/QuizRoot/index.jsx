@@ -4,7 +4,6 @@ import { socket } from "../../socket.js";
 import Helmet from "../../components/Helmet.jsx";
 import Search from "../../components/Search.jsx";
 import QuizUser from "./QuizUser.jsx";
-import LiveRoom from "../QuizLive/LiveRoom.jsx";
 import LiveRoot from "./LiveRoot.jsx";
 
 const QuizRoot = () => {

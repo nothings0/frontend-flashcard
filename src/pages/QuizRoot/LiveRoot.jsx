@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import Countdown from "../../components/CountDown";
 import RankQuiz from "./RankQuiz";
 
-const TIME_QUES = 10000;
+const TIME_QUES = 20 * 1000;
 
 const LiveRoot = ({ socket, roomId }) => {
   const [quiz, setQuiz] = useState({});
