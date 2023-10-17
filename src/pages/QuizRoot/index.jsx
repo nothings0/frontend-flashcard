@@ -86,7 +86,7 @@ const QuizRoot = () => {
               <div className="quiz__join">
                 <div className="quiz__join__link">
                   <div className="quiz__join--title">
-                    fluxquiz.netlify.app/live
+                    fluxquiz.vercel.app/live
                   </div>
                   <div className="quiz__join__link--code">{roomId}</div>
                 </div>
