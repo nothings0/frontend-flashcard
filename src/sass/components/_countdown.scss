@@ -1,0 +1,26 @@
+.count-down {
+  height: calc(100vh - $top-height);
+  width: 100%;
+  @include flex(center, center);
+  .times {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background-color: red;
+    @include flex(center, center);
+    font-size: 3rem;
+    color: #fff;
+    font-weight: 700;
+  }
+  &-head {
+    height: $top-height;
+    width: 100%;
+    @include flex(center, center);
+    background-color: #ccc;
+    .times {
+      font-size: 3rem;
+      color: #fff;
+      font-weight: 700;
+    }
+  }
+}

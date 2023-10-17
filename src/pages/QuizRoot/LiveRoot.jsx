@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { play } from "../../redux/audioSlice";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import Countdown from "../../components/CountDown";
-import RankQuiz from "../QuizRoot/RankQuiz";
+import RankQuiz from "./RankQuiz";
 
 const TIME_QUES = 10000;
 
@@ -13,7 +13,8 @@ const LiveRoot = ({ socket, roomId }) => {
   const [startTime, setStartTime] = useState(0);
   const [rank, setRank] = useState([]);
 
-  const dispatch = useDispatch();
+  const userId = useSelector((state) => state.user.currentUser?.user._id);
+  const { slug } = useParams();
 
   useEffect(() => {
     const handleBeforeUnload = (event) => {
@@ -33,9 +34,7 @@ const LiveRoot = ({ socket, roomId }) => {
   }, [rank]);
 
   useEffect(() => {
-    if (showCountdown) {
-      socket.emit("re-get-quiz", roomId);
-    }
+    socket.emit("get-quiz", { user: userId, slug, roomId, index: 1 });
     socket.on("quiz", ({ ques, startTime }) => {
       const currentTime = Date.now();
       const elapsedTime = currentTime - new Date(startTime).getTime();
@@ -56,7 +55,6 @@ const LiveRoot = ({ socket, roomId }) => {
 
   const handleQues = async (item) => {
     setAnswer(item.answerId);
-    dispatch(play());
     let ques = {
       prompt: quiz.prompt,
       answer: item.answerId,

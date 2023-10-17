@@ -149,7 +149,7 @@
   }
   .live-room {
     &__wrap {
-      height: calc(100vh - 66px);
+      height: calc(100vh - $top-height * 2);
       @include flex(center, center);
     }
     &__container {
@@ -185,6 +185,9 @@
         gap: 2rem;
         flex-wrap: wrap;
         margin-top: 2rem;
+        &.disable {
+          pointer-events: none;
+        }
         &__item {
           width: 45%;
           padding: 1.6rem;
@@ -208,10 +211,77 @@
             color: #fff;
           }
           &.selected {
-            // background-color: var(--icon-2);
+            background-color: $main-color;
             border-width: 3px;
+            color: #fff;
           }
         }
+      }
+    }
+  }
+  .wrap {
+    display: flex;
+    flex-direction: column;
+    opacity: 1;
+    transform: scale(1);
+    transition: opacity 300ms, transform 300ms;
+    visibility: visible;
+    &.hidden {
+      opacity: 0;
+      transform: scale(0.9);
+      visibility: hidden;
+    }
+  }
+  .rank-quiz {
+    min-width: 400px;
+    @include flex(center, space-around);
+    flex-direction: column;
+    height: calc(100vh - $top-height);
+    padding: 2rem 0;
+    &__wrap {
+      width: 100%;
+    }
+    &__item {
+      padding: 1.5rem;
+      border-radius: 5px;
+      @include flex(center, space-between);
+      background-color: #fff;
+      margin-top: 1.5rem;
+    }
+    &__item:nth-child(1) {
+      .rank-quiz__index {
+        color: #fbb525;
+      }
+    }
+    &__item:nth-child(2) {
+      .rank-quiz__index {
+        color: #c9dbf9;
+      }
+    }
+    &__item:nth-child(3) {
+      .rank-quiz__index {
+        color: #e5a982;
+      }
+    }
+    &__index {
+      font-size: 1.8rem;
+    }
+
+    &__name {
+      font-size: 1.6rem;
+    }
+    &__mark {
+      font-size: 1.6rem;
+    }
+    &__btn {
+      @include flex(center, center);
+      a {
+        padding: 1rem 2rem;
+        background-color: $main-color;
+        color: #fff;
+        border-radius: 8px;
+        font-size: 1.8rem;
+        cursor: pointer;
       }
     }
   }

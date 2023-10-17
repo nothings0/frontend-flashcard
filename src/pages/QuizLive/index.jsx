@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Helmet from "../../components/Helmet.jsx";
 import Search from "../../components/Search.jsx";
 import WaitRoom from "./waitRoom.jsx";
+import LiveRoom from "./LiveRoom.jsx";
 
 const QuizLive = () => {
   const { roomId: roomIdParams } = useParams();
@@ -11,7 +12,7 @@ const QuizLive = () => {
   const [roomId, setRoomId] = useState(roomIdParams ? roomIdParams : "");
   const [msg, setMsg] = useState("");
   const [isRedirect, setRedirect] = useState(false);
-  const [socketProps, setSocketProps] = useState(null);
+  const [isLive, setLive] = useState(false);
 
   const navigate = useNavigate();
 
@@ -20,27 +21,41 @@ const QuizLive = () => {
     const userLive = JSON.parse(sessionStorage.getItem("user-live"));
     if (userLive) {
       socket.emit("rejoin-room", userLive.roomId);
+      socket.on("joined-room", (status) => {
+        setRoomId(userLive.roomId);
+        if (status === "navigate") {
+          setLive(true);
+        }
+      });
       navigate(`/live/${userLive.roomId}`);
       setRedirect(true);
     }
-    setSocketProps(socket);
+
+    socket?.on("started", () => {
+      setLive(true);
+    });
+
     return () => {
       socket.disconnect();
+      socket.off("rejoin-room");
+      socket.off("started");
     };
-  }, []);
+  }, [socket]);
 
   const handleJoin = (e) => {
     e.preventDefault();
     socket.emit("join-room", { username, roomId });
-    socket.on("joined-room", ({ success }) => {
-      if (success) {
+    socket.on("joined-room", (status) => {
+      if (status === "success") {
         sessionStorage.setItem(
           "user-live",
           JSON.stringify({ roomId, username })
         );
         navigate(`/live/${roomId}`);
-        setRedirect(true);
+      } else if (status === "navigate") {
+        setLive(true);
       }
+      setRedirect(true);
     });
     socket.on("error", (payload) => {
       setMsg(payload);
@@ -91,7 +106,11 @@ const QuizLive = () => {
             </>
           ) : (
             <>
-              <WaitRoom socket={socketProps} />
+              {isLive ? (
+                <LiveRoom socket={socket} roomId={roomId} />
+              ) : (
+                <WaitRoom socket={socket} />
+              )}
             </>
           )}
         </div>

@@ -4,8 +4,8 @@ import { socket } from "../../socket.js";
 import Helmet from "../../components/Helmet.jsx";
 import Search from "../../components/Search.jsx";
 import QuizUser from "./QuizUser.jsx";
-import { useParams } from "react-router-dom";
 import LiveRoom from "../QuizLive/LiveRoom.jsx";
+import LiveRoot from "./LiveRoot.jsx";
 
 const QuizRoot = () => {
   const [roomId, setRoomId] = useState("");
@@ -13,7 +13,6 @@ const QuizRoot = () => {
   const [isLive, setLive] = useState(false);
 
   const userId = useSelector((state) => state.user.currentUser?.user._id);
-  const { slug } = useParams();
 
   useEffect(() => {
     socket.connect();
@@ -23,9 +22,15 @@ const QuizRoot = () => {
     socket.on("connect", () => {
       if (roomLive) {
         socket.emit("rejoin-room", roomLive.roomId);
-        setRoomId(roomLive.roomId);
-        qrcodeHTML.innerHTML = roomLive.qrcode;
-        socket.emit("get-members", roomLive.roomId);
+        socket.on("joined-room", (status) => {
+          setRoomId(roomLive.roomId);
+          if (status === "success") {
+            qrcodeHTML.innerHTML = roomLive.qrcode;
+            socket.emit("get-members", roomLive.roomId);
+          } else if (status === "navigate") {
+            setLive(true);
+          }
+        });
       } else {
         socket.emit("create-room", userId);
         socket.on("room-created", ({ roomId, qrcode }) => {
@@ -63,9 +68,11 @@ const QuizRoot = () => {
     });
   };
 
-  const createQuiz = () => {
-    socket.emit("create-quiz", { user: userId, slug, roomId });
-    setLive(true);
+  const startQuiz = () => {
+    socket.emit("start", roomId);
+    socket.on("started", () => {
+      setLive(true);
+    });
   };
 
   return (
@@ -74,7 +81,7 @@ const QuizRoot = () => {
       <div className="quiz quiz-root">
         <div className="quiz__container">
           {isLive ? (
-            <LiveRoom socket={socket} roomId={roomId} />
+            <LiveRoot socket={socket} roomId={roomId} />
           ) : (
             <>
               <div className="quiz__join">
@@ -105,7 +112,7 @@ const QuizRoot = () => {
                       : `Có ${members.length} người chơi`}
                   </div>
                   <div className="quiz__lobby__header--btn">
-                    <button onClick={createQuiz}>Tạo trò chơi</button>
+                    <button onClick={startQuiz}>Tạo trò chơi</button>
                   </div>
                 </div>
                 <div className="quiz__lobby__container">
