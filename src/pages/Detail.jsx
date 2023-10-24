@@ -253,6 +253,9 @@ const Detail = () => {
                             Kiểm tra
                           </div>
                         </Link>
+                        <Link to={`/${slug}/live`}>
+                          <div className="card-detail__left__item">Live</div>
+                        </Link>
                         {data?.cards?.type === "premium" ? (
                           <Link to={`/card/p/${slug}`}>
                             <div
@@ -323,6 +326,9 @@ const Detail = () => {
                       <div className="card-detail__left__item item_6">
                         Kiểm tra
                       </div>
+                    </Link>
+                    <Link to={`/${slug}/live`}>
+                      <div className="card-detail__left__item item_6">Live</div>
                     </Link>
                     {data?.cards?.type === "premium" ? (
                       <Link to={`/card/p/${slug}`}>
