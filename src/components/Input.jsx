@@ -19,16 +19,16 @@ const Input = ({
     if (active) inputRef.current.focus();
     else {
       if (answer.length < length && eTime <= currentTime * 1000) {
-        playerRef?.current?.seekTo(sTime / 1000);
-        setIsPlaying(false);
+        // playerRef?.current?.seekTo(sTime / 1000);
+        // setIsPlaying(false);
       }
     }
   }, [active]);
 
   const handlePlay = (e) => {
-    if (e.target.value.length === length) {
-      setIsPlaying(true);
-    }
+    // if (e.target.value.length === length) {
+    // }
+    setIsPlaying(true);
   };
 
   let style = {

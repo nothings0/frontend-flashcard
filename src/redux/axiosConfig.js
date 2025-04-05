@@ -40,8 +40,8 @@ const genSign = (params) => {
 };
 
 export const genURL = (params, query = {}) => {
-  return `https://backend-kfnn.onrender.com${params}${genSign(query)}`;
-  // return `${params}${genSign(query)}`;
+  // return `https://backend-kfnn.onrender.com${params}${genSign(query)}`;
+  return `${params}${genSign(query)}`;
 };
 
 const refreshToken = async () => {
