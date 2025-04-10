@@ -199,8 +199,12 @@ const Detail = () => {
   };
 
   const handleApproval = async () => {
-    await approvalCard(slug, accessToken);
-    window.location.reload();
+    const reps = await approvalCard(slug, accessToken);
+    if(reps.code === 200){
+      window.location.reload();
+    }else{
+      alert(reps.msg);
+    }
   };
 
   return (
