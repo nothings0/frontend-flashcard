@@ -29,7 +29,7 @@ const Card = ({ data, flex }) => {
       <Link to={`/card/${data?.slug}`}>
         <div
           className="card__des"
-          style={{ background: `${data?.background}` }}
+          style={{ background: `${data?.background || "linear-gradient(45deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%)"}` }}
         >
           <h3>{data?.title}</h3>
           <button>Xem học phần</button>

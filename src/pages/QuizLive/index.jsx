@@ -65,7 +65,7 @@ const QuizLive = () => {
   return (
     <Helmet title="Live | Flux">
       <Search />
-      <div className="quiz quiz-live">
+      <div className="quiz quiz-live allow-select">
         <div className="quiz__container">
           {!isRedirect ? (
             <>

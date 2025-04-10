@@ -142,9 +142,15 @@ a {
   width: 100%;
   background-color: $bg-color;
 }
+
 .right-side {
   padding: 3.4rem 2.8rem;
 }
+
+.allow-select {
+  user-select: auto !important;
+}
+
 @include tablet {
   html {
     font-size: 60%;
