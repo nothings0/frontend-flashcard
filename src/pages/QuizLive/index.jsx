@@ -77,6 +77,7 @@ const QuizLive = () => {
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                   />
+                  <div className="error-msg">{msg}</div>
                   <button onClick={handleJoin} type="submit">
                     join room
                   </button>
@@ -97,12 +98,12 @@ const QuizLive = () => {
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                   />
+                  <div className="error-msg">{msg}</div>
                   <button onClick={handleJoin} type="submit">
                     Join
                   </button>
                 </form>
               )}
-              <div>{msg}</div>
             </>
           ) : (
             <>

@@ -60,34 +60,43 @@ textarea {
   text-transform: none;
   font-family: "Roboto", sans-serif;
   font-weight: 500;
+
   &:focus {
     border-bottom-color: $main-color;
   }
+
   &::placeholder {
     color: #939bb4;
   }
+
   &::-webkit-scrollbar {
     display: none;
   }
+
   color: var(--txt-color);
 }
+
 input:disabled {
   background-color: var(--main-bg);
   border: none;
 }
+
 input {
   background-color: var(--main-bg);
   color: var(--txt-color);
 }
+
 .load-more {
   margin-top: 8rem;
   font-size: 1.6rem;
   @include flex(center, center);
+
   span {
     padding: 1rem 1.5rem;
     border-radius: 5px;
     border: 1px solid var(--txt-color);
     cursor: pointer;
+
     &:hover {
       color: $main-color;
       border-color: $main-color;
@@ -149,6 +158,15 @@ a {
 
 .allow-select {
   user-select: auto !important;
+}
+
+.error-msg {
+  text-align: left;
+  font-size: 1.4rem;
+  letter-spacing: 1px;
+  margin-top: 0.5rem;
+  color: #ff571e;
+  height: 1.8rem;
 }
 
 @include tablet {
