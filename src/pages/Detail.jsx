@@ -198,8 +198,8 @@ const Detail = () => {
     }
   };
 
-  const handleApproval = () => {
-    approvalCard(slug, accessToken);
+  const handleApproval = async () => {
+    await approvalCard(slug, accessToken);
     window.location.reload();
   };
 
