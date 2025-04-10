@@ -77,7 +77,7 @@ const QuizRoot = () => {
   return (
     <Helmet title="Live | Flux">
       <Search />
-      <div className="quiz quiz-root">
+      <div className="quiz quiz-root allow-select">
         <div className="quiz__container">
           {isLive ? (
             <LiveRoot socket={socket} roomId={roomId} />
