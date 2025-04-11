@@ -67,7 +67,7 @@ function PaymentPage() {
 
     if (!invoice) return <Skeleton type="loading" />;
 
-    const qrUrl = `https://qr.sepay.vn/img?bank=BIDV&acc=96247FLUXQUIZ&template=compact&amount=${invoice.amount}&addInfo=${invoice.code}&accountName=PHAM VAN NHAN`;
+    const qrUrl = `https://qr.sepay.vn/img?bank=BIDV&acc=96247FLUXQUIZ&template=compact&amount=${invoice.amount}&des=${invoice.code}&accountName=PHAM VAN NHAN`;
 
     return (
         <>
