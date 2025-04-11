@@ -26,7 +26,7 @@ function PaymentPage() {
 
     if (!invoice) return <Skeleton type="loading" />;
 
-    const qrUrl = `https://qr.sepay.vn/img?bank=BIDV&acc=5120925919&template=compact&amount=${invoice.amount}&addInfo=${invoice.refCode}&accountName=PHAM VAN NHAN`;
+    const qrUrl = `https://qr.sepay.vn/img?bank=BIDV&acc=5120925919&template=compact&amount=${invoice.amount}&addInfo=${invoice.code}&accountName=PHAM VAN NHAN`;
 
     return (
         <div className="max-w-4xl mx-auto p-6 border rounded-md shadow-md bg-white mt-10">
@@ -55,9 +55,9 @@ function PaymentPage() {
                         <p><strong>Chủ tài khoản:</strong> PHẠM VĂN NHÂN</p>
                         <p><strong>Số tài khoản:</strong> 5120925919</p>
                         <p><strong>Số tiền:</strong> {invoice.amount.toLocaleString()}đ</p>
-                        <p><strong>Nội dung CK:</strong> <span className="text-red-600 font-semibold">{invoice.refCode}</span></p>
+                        <p><strong>Nội dung CK:</strong> <span className="text-red-600 font-semibold">{invoice.code}</span></p>
                         <p className="text-sm mt-2 text-gray-600">
-                            <strong>Lưu ý:</strong> Vui lòng giữ nguyên nội dung chuyển khoản <strong>{invoice.refCode}</strong> để hệ thống tự động xác nhận thanh toán.
+                            <strong>Lưu ý:</strong> Vui lòng giữ nguyên nội dung chuyển khoản <strong>{invoice.code}</strong> để hệ thống tự động xác nhận thanh toán.
                         </p>
                     </div>
                 </div>
