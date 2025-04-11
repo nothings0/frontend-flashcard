@@ -15,7 +15,7 @@ function PaymentPage() {
         const fetchInvoice = async () => {
             try {
                 const res = await getInvoice({ invoiceId, accessToken })
-                setInvoice(res.invoice);
+                setInvoice(res);
             } catch (err) {
                 console.error("Lỗi load hóa đơn:", err);
             }

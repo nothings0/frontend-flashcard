@@ -41,7 +41,7 @@ const genSign = (params) => {
 
 export const genURL = (params, query = {}) => {
   const URL =
-  process.env.NODE_ENV === "production"
+  process.env.NODE_ENV !== "production"
     ? `https://backend-kfnn.onrender.com${params}${genSign(query)}`
     : `http://localhost:8000${params}${genSign(query)}`;
   return URL;
