@@ -40,7 +40,7 @@ const Rank = () => {
           <Skeleton type="rank" />
         ) : (
           <>
-            {data.map((item, index) => (
+            {Array.isArray(data) && data.map((item, index) => (
               <Link
                 className="rank__item"
                 key={item._id}

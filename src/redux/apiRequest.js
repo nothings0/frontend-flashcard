@@ -489,8 +489,13 @@ export const GetHome = async (limit, userId) => {
     const res = await axios.get(`${genURL("/v1/card", { limit: limit })}`, {
       params: { userId },
     });
+    console.log(res.data);
+    
     return res.data;
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+    
+  }
 };
 
 export const GetAllUser = async (accessToken) => {
@@ -697,6 +702,37 @@ export const handleUpgrade = async (slug, accessToken, decision) => {
 export const getPendingPremium = async (accessToken) => {
   try {
     const res = await axiosJWT.get(`${genURL(`/v1/card/getPendingPremium`)}`, {
+      headers: { token: `Bearer ${accessToken}` },
+    });
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+// pricing api
+export const getPries = async () => {
+  try {
+    const res = await axiosJWT.get(`${genURL(`/v1/pricing`)}`);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// invoice api
+export const createInvoice = async ({ planType, amount, accessToken }) => {
+  try {
+    const res = await axiosJWT.post(`${genURL(`/v1/invoice`)}`, {planType, amount}, {
+      headers: { token: `Bearer ${accessToken}` },
+    });
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const getInvoice = async ({ invoiceId, accessToken }) => {
+  try {
+    const res = await axiosJWT.get(`${genURL(`/v1/invoice/${invoiceId}`)}`, {
       headers: { token: `Bearer ${accessToken}` },
     });
     return res.data;

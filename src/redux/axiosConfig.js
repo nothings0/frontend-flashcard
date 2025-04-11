@@ -4,11 +4,6 @@ import md5 from "md5";
 import { store } from "../redux/store";
 import { loginSuccess, logoutSuccess } from "./userSlice";
 
-const URL =
-  process.env.NODE_ENV === "production"
-    ? "https://backend-kfnn.onrender.com"
-    : "http://localhost:3000";
-
 const axiosJWT = axios.create();
 
 const apiKey = "X5BM3w8N7MKozC0B85o4KMlzLZKhV00y";
@@ -48,7 +43,7 @@ export const genURL = (params, query = {}) => {
   const URL =
   process.env.NODE_ENV === "production"
     ? `https://backend-kfnn.onrender.com${params}${genSign(query)}`
-    : "http://localhost:3000";
+    : `http://localhost:8000${params}${genSign(query)}`;
   return URL;
 };
 

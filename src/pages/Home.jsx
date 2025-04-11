@@ -22,7 +22,8 @@ const Home = () => {
 
   useEffect(() => {
     const suggestList = data?.suggestCards;
-    const recentCard = JSON.parse(localStorage.getItem("recent"));
+    
+    const recentCard = localStorage.getItem("recent") ? JSON.parse(localStorage.getItem("recent")) : [];
     setRecentCard(recentCard);
     // const dataList = {
     //   ...res,
@@ -41,28 +42,33 @@ const Home = () => {
             <Skeleton type="feed" />
           ) : (
             <>
-              <List
-                title={data.populateCards.title}
-                data={data.populateCards.data}
-                type="trend"
-              />
-              <List
-                title={data.suggestCards.title}
-                data={data.suggestCards.data}
-                type="suggest"
-              />
-              <List
-                title={data.rateCards.title}
-                data={data.rateCards.data}
-                type="rate"
-              />
-              {/* <GoogleAds type="ngang" /> */}
-              <List
-                title={data.cardSaveds.title}
-                data={data.cardSaveds.data}
-                type="saved"
-              />
-              <List title="Gần đây" data={recentCard?.data} type="recent" />
+              {
+                data && <>
+
+                  <List
+                    title={data.populateCards.title}
+                    data={data.populateCards.data}
+                    type="trend"
+                  />
+                  <List
+                    title={data.suggestCards.title}
+                    data={data.suggestCards.data}
+                    type="suggest"
+                  />
+                  <List
+                    title={data.rateCards.title}
+                    data={data.rateCards.data}
+                    type="rate"
+                  />
+                  {/* <GoogleAds type="ngang" /> */}
+                  <List
+                    title={data.cardSaveds.title}
+                    data={data.cardSaveds.data}
+                    type="saved"
+                  />
+                  <List title="Gần đây" data={recentCard?.data} type="recent" />
+                </>
+              }
             </>
           )}
           <Footer />

@@ -64,6 +64,5 @@
   },
   "devDependencies": {
     "md5": "^2.3.0"
-  },
-  "proxy": "http://localhost:8000"
+  }
 }

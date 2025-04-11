@@ -21,7 +21,9 @@ import NotFound from "../pages/NotFound";
 import LyricTraining from "../pages/LyricTraining";
 import LyricMain from "../pages/LyricMain";
 import SpaceRep from "../pages/SpaceRep";
+import Pricing from "../pages/Pricing";
 import ProLearn from "../pages/proLearn/ProLearn";
+import PaymentPage from "../pages/Payment";
 
 const Main = () => {
   return (
@@ -47,6 +49,8 @@ const Main = () => {
         <Route path="/lyric" element={<LyricTraining />} />
         <Route path="/lyric/:slug" element={<LyricMain />} />
         <Route path="/calendar" element={<Calendar />} />
+        <Route path="/pricing" element={<Pricing />} />
+        <Route path="/payment/:invoiceId" element={<PaymentPage />} />
 
         <Route path="*" element={<NotFound />} />
       </Routes>
