@@ -133,9 +133,6 @@ const Search = () => {
         </div> : <div className="searching__menu__icon" onClick={() => setActiveMenu(true)}><i className="fa-solid fa-bars"></i></div>
       }
       <SearchInput/>
-      <div>
-        <span>Nâng cấp PLUS</span>
-      </div>
       <SearchAva/>
       {
         currentUser && <div className="searching__right">

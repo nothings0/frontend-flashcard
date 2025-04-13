@@ -1,5 +1,6 @@
 .searching {
   @include flex(center, space-between);
+  gap: 1rem;
   overflow: visible;
   position: fixed;
   top: 0;
@@ -13,57 +14,71 @@
   z-index: 101;
   transition: left 0.3s ease;
   border-bottom: 1px solid var(--icon);
+
   @include tablet {
     padding: 0 14px;
   }
+
   &__logo {
     @include flex(center, flex-start);
     gap: 1rem 0;
-    flex: 1 1;
+    flex: 2;
+
     @include mobile {
       display: none;
     }
-    & > a {
+
+    &>a {
       width: 30%;
+
       @include tablet {
         width: 50%;
       }
     }
+
     img {
       width: 100%;
       border-radius: 10px;
     }
+
     h4 {
       font-size: 1.4rem;
       line-height: 1.15;
       color: var(--txt-color);
       text-transform: capitalize;
+
       @include tablet {
         display: none;
       }
     }
   }
+
   &__control {
     @include flex(center, unset);
     gap: 0 10px;
     font-size: 14px;
     cursor: pointer;
   }
+
+
   &__input {
     position: relative;
     overflow: visible;
-    flex: 1 1;
+    flex: 3;
     padding: 0 5px;
 
     @include tablet {
       flex: unset;
       width: 50%;
     }
+
     @include mobile {
       width: 70%;
     }
+
     &__search {
       position: relative;
+
       input {
         // box-shadow: var(--box-shadow);
         border: 2px solid var(--icon);
@@ -73,21 +88,26 @@
         border-radius: 50px;
         background-color: var(--main-bg);
         color: var(--txt-color);
+
         @include mobile {
           padding: 5px 28px 5px 10px;
           border-radius: 10px;
         }
+
         &::placeholder {
           color: var(--txt-color);
         }
-        &:not(:placeholder-shown) ~ .search__icon {
+
+        &:not(:placeholder-shown)~.search__icon {
           color: var(--icon-2);
           pointer-events: auto;
         }
+
         &:focus {
           border: 2px solid var(--icon-2);
         }
       }
+
       .search__icon {
         position: absolute;
         font-size: 2rem;
@@ -98,6 +118,7 @@
         color: var(--icon);
         padding: 1rem 2rem 1rem 1rem;
         pointer-events: none;
+
         &::after {
           content: "";
           position: absolute;
@@ -108,23 +129,27 @@
           transform: translateY(-50%);
           background-color: var(--icon);
         }
+
         @include mobile {
           font-size: 14px;
           padding: 0 10px;
         }
       }
     }
+
     &__result {
       @keyframes showSearch {
         0% {
           transform: translateY(-60px);
           opacity: 0.8;
         }
+
         100% {
           transform: translateY(0);
           opacity: 1;
         }
       }
+
       position: absolute;
       top: 110%;
       left: 50%;
@@ -133,9 +158,11 @@
       border-radius: 10px;
       overflow: hidden;
       box-shadow: var(--box-shadow);
+
       @include mobile {
         width: 100%;
       }
+
       &__list {
         animation: showSearch linear 0.1s;
         background-color: var(--main-bg);
@@ -143,12 +170,15 @@
         max-height: 30rem;
         overflow-y: auto;
         overflow-x: hidden;
+
         &__li {
           padding: 1.4rem 2rem;
+
           @include mobile {
             padding: 10px;
           }
         }
+
         &__title {
           font-size: 1.4rem;
           margin-bottom: 1rem;
@@ -157,15 +187,18 @@
           border-bottom: 1px solid #333;
           text-transform: uppercase;
         }
+
         &__des {
           font-size: 1.2rem;
           margin-bottom: 1rem;
           margin-bottom: 1.5rem;
-          & > span {
+
+          &>span {
             font-style: italic;
             text-transform: capitalize;
           }
         }
+
         &__item {
           @include flex(center, unset);
           gap: 15px;
@@ -177,24 +210,29 @@
           -webkit-box-orient: vertical;
           -webkit-line-clamp: 2;
           font-weight: 400;
+
           &:hover {
             color: #ffa318;
           }
+
           &__img {
             width: 3.5rem;
             height: 3.5rem;
             border-radius: 5px;
+
             &__img {
               width: 100%;
               height: 100%;
               border-radius: 50%;
             }
+
             img {
               border-radius: 50%;
               width: 100%;
               height: 100%;
             }
           }
+
           &__title {
             width: 70%;
           }
@@ -202,20 +240,25 @@
       }
     }
   }
+
   &__ava {
     @include flex(center, flex-end);
     gap: 0 2.6rem;
-    flex: 1 1;
+    flex: 2;
+
     @include tablet {
       flex: unset;
       width: 25%;
       gap: 0 20px;
     }
+
     @include mobile {
       display: none;
     }
+
     &__notifi {
       position: relative;
+
       &__wrap {
         @include flex(center, unset);
         gap: 6px;
@@ -223,29 +266,36 @@
         border-radius: 5px;
         cursor: pointer;
         background-color: var(--hover);
-        & ~ & {
+
+        &~& {
           margin-top: 1.4rem;
         }
+
         &:hover {
           background-color: var(--second-bg);
         }
+
         &.read {
           background-color: var(--main-bg);
         }
       }
+
       &__img {
         width: 56px;
         height: 28px;
         border-radius: 6px;
         overflow: hidden;
+
         img {
           width: 100%;
           height: 100%;
         }
       }
+
       &__content {
         flex: 1;
         font-size: 1.4rem;
+
         p {
           line-height: 18px;
           font-weight: 500;
@@ -256,44 +306,73 @@
           overflow: hidden;
           text-overflow: ellipsis;
         }
+
         span {
           color: $main-color;
         }
       }
-      & > i {
+
+      &>i {
         text-align: center;
         font-size: 2.8rem;
         cursor: pointer;
         opacity: 0.7;
         color: var(--txt-color);
         border-radius: 50%;
+
         @include mobile {
           font-size: 1.8rem;
         }
       }
     }
+
     &__left {
-      position: relative;
-      & > i {
-        text-align: center;
-        font-size: 2.8rem;
-        cursor: pointer;
-        opacity: 0.8;
-        color: var(--txt-color);
-        border-radius: 50%;
-        @include mobile {
-          font-size: 1.8rem;
+      &__info {
+        position: relative;
+
+        &>i {
+          text-align: center;
+          font-size: 2.8rem;
+          cursor: pointer;
+          opacity: 0.8;
+          color: var(--txt-color);
+          border-radius: 50%;
+
+          @include mobile {
+            font-size: 1.8rem;
+          }
         }
       }
+
+      &__upgrade {
+        text-align: center;
+        background-color: #ffa318;
+        color: #fff;
+        padding: 8px 10px;
+        border-radius: 3rem;
+        font-size: 1.4rem;
+
+        span {
+          margin-right: 1rem;
+
+          @include tablet {
+            display: none
+          }
+        }
+
+      }
     }
+
     &__right {
       &__user {
         @include flex(center, unset);
         gap: 0 2.6rem;
+
         @include tablet {
           gap: 0 20px;
         }
       }
+
       &__img {
         display: block;
         height: 4rem;
@@ -301,10 +380,12 @@
         overflow: visible;
         position: relative;
         @include flex(center, center);
+
         @include mobile {
           height: 2.5rem;
           width: 2.5rem;
         }
+
         img {
           width: 100%;
           height: 100%;
@@ -312,6 +393,7 @@
           object-fit: cover;
           cursor: pointer;
         }
+
         // &__list{
         //     position: absolute;
         //     top: 140%;
@@ -346,28 +428,34 @@
         //     }
         // }
       }
+
       &__btn {
         @include flex(center, center);
         gap: 0 1rem;
         overflow: hidden;
+
         .login__btn {
           background-color: $main-color;
           color: $txt-white;
           border-radius: 10px;
         }
+
         .register__btn {
           border: 1px solid $main-color;
           color: $main-color;
           border-radius: 10px;
         }
+
         a {
           padding: 1.2rem 1rem;
           font-size: 1.4rem;
           font-weight: 500;
           text-align: center;
+
           @include mobile {
             font-size: 1.4rem;
           }
+
           @include tablet {
             padding: 8px 10px;
             font-size: 14px;
@@ -376,17 +464,20 @@
         }
       }
     }
+
     &__list {
       @keyframes showList {
         0% {
           transform: translateY(10px) scale(0.7);
           opacity: 0.7;
         }
+
         100% {
           transform: translateY(0) scale(1);
           opacity: 1;
         }
       }
+
       &__heading {
         font-size: 1.7rem;
         font-weight: 500;
@@ -394,6 +485,7 @@
         padding-bottom: 5px;
         border-bottom: 1px solid var(--hover);
       }
+
       position: absolute;
       top: 140%;
       right: 0;
@@ -405,43 +497,53 @@
       box-shadow: var(--box-shadow);
       max-height: 300px;
       overflow-y: auto;
+
       &.sm {
         width: 22rem;
       }
+
       &.lg {
         width: 40rem;
+
         @include mobile {
           width: 240px;
         }
       }
+
       &.active {
         display: block;
         animation: showList linear 0.1s;
         transform-origin: 100% 0;
       }
+
       &__item {
         font-size: 14px;
         cursor: pointer;
         @include flex(center, space-between);
         gap: 1rem;
         font-weight: 400;
+
         i {
           opacity: 0.65;
           font-size: 1.8rem;
         }
+
         &:hover {
           font-weight: 500;
           color: $main-color;
+
           i {
             opacity: 0.85;
           }
         }
-        & ~ & {
+
+        &~& {
           margin-top: 1.5rem;
         }
       }
     }
   }
+
   &__menu {
     display: none;
     background-color: rgba($color: #000000, $alpha: 0.2);
@@ -453,30 +555,37 @@
     z-index: 101;
     font-size: 16px;
     max-height: 100%;
+
     @keyframes showMenu {
       0% {
         transform: translateX(-100%);
         opacity: 0.8;
       }
+
       100% {
         transform: translateX(0);
         opacity: 1;
       }
     }
+
     &.active {
       display: block;
       animation: showMenu linear 0.2s;
     }
+
     &__icon {
       display: none;
+
       @include mobile {
         display: block;
       }
+
       i {
         font-size: 20px;
         cursor: pointer;
       }
     }
+
     &__wrap {
       padding: 40px 0 0 40px;
       width: 80%;
@@ -487,31 +596,38 @@
       top: 0;
       overflow-y: auto;
     }
+
     &__user {
       margin-bottom: 20px;
       padding-bottom: 20px;
       border-bottom: 3px solid var(--hover);
+
       &__img {
         @include flex(center, unset);
         gap: 15px;
+
         img {
           width: 80px;
           height: 80px;
           border-radius: 50%;
         }
       }
+
       &__login {
         padding: 14px 0 14px 14px;
         border-bottom-left-radius: 10px;
         border-top-left-radius: 10px;
         @include flex(center, unset);
         gap: 0 20px;
+
         &:hover {
           background-color: var(--hover);
         }
       }
+
       &__info {
-        & > h4,
+
+        &>h4,
         a {
           font-weight: 500;
           margin-top: 10px;
@@ -522,25 +638,30 @@
           padding: 14px 0 14px 14px;
           border-bottom-left-radius: 10px;
           border-top-left-radius: 10px;
+
           &:hover {
             background-color: var(--hover);
           }
         }
       }
     }
+
     &__link {
       &__item {
         margin-top: 10px;
         padding: 14px 0 14px 14px;
         border-bottom-left-radius: 10px;
         border-top-left-radius: 10px;
+
         &:hover {
           background-color: var(--hover);
         }
+
         &.active {
           background-color: var(--hover);
         }
-        & > a {
+
+        &>a {
           @include flex(center, unset);
           gap: 0 20px;
           opacity: 0.9;
@@ -548,16 +669,20 @@
       }
     }
   }
+
   &__right {
     display: none;
     gap: 0 20px;
     align-items: center;
+
     @include mobile {
       display: flex;
     }
+
     i {
       font-size: 20px;
     }
+
     &__list {
       background-color: var(--main-bg);
       bottom: 0;
@@ -569,6 +694,7 @@
       font-size: 16px;
       max-height: 100%;
       display: none;
+
       &.active {
         display: block;
       }

@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getInvoice } from "../redux/apiRequest";
 import Skeleton from "../components/Skeleton";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Search from "../components/Search";
+import { syncUserToLocal } from "../util";
 
 function PaymentPage() {
     const { invoiceId } = useParams();
@@ -12,6 +13,7 @@ function PaymentPage() {
     const [showSuccessPopup, setShowSuccessPopup] = useState(false);
     const [countdown, setCountdown] = useState(600); // 600 giây = 10 phút
 
+    const dispatch = useDispatch();
     const accessToken = useSelector(
         (state) => state.user.currentUser?.accessToken
     );
@@ -38,6 +40,7 @@ function PaymentPage() {
                 setInvoice(res.invoice);
                 if (res.invoice.status === "SUCCESS") {
                     setStatus("SUCCESS");
+                    await syncUserToLocal(accessToken, dispatch)
                     setShowSuccessPopup(true);
                     clearInterval(intervalId);
                 }

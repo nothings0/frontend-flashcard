@@ -38,6 +38,14 @@ export const LoginUser = async (user, dispatch) => {
     return error.response.data;
   }
 };
+
+export const getCurrentUser = async (accessToken) => {
+  const res = await axiosJWT.get(`${genURL('/v1/auth/user/me')}`, {
+    headers: { token: `Bearer ${accessToken}` },
+  });
+  return res.data;
+};
+
 export const LoginGoogle = async (id_token, dispatch, navigate) => {
   dispatch(handleLoading());
   try {
@@ -489,7 +497,6 @@ export const GetHome = async (limit, userId) => {
     const res = await axios.get(`${genURL("/v1/card", { limit: limit })}`, {
       params: { userId },
     });
-    console.log(res.data);
     
     return res.data;
   } catch (error) {
@@ -712,7 +719,7 @@ export const getPendingPremium = async (accessToken) => {
 // pricing api
 export const getPries = async () => {
   try {
-    const res = await axiosJWT.get(`${genURL(`/v1/pricing`)}`);
+    const res = await axios.get(`${genURL(`/v1/pricing`)}`);
     return res.data;
   } catch (error) {
     console.log(error);
@@ -722,14 +729,19 @@ export const getPries = async () => {
 // invoice api
 export const createInvoice = async ({ planType, amount, accessToken }) => {
   try {
-    const res = await axiosJWT.post(`${genURL(`/v1/invoice`)}`, {planType, amount}, {
+    const res = await axiosJWT.post(`${genURL(`/v1/invoice`)}`, { planType, amount }, {
       headers: { token: `Bearer ${accessToken}` },
     });
     return res.data;
   } catch (error) {
-    console.log(error);
+    // Ném lại lỗi có data từ response nếu có
+    if (error.response && error.response.data) {
+      throw error.response.data;
+    }
+    throw error;
   }
 };
+
 export const getInvoice = async ({ invoiceId, accessToken }) => {
   try {
     const res = await axiosJWT.get(`${genURL(`/v1/invoice/${invoiceId}`)}`, {

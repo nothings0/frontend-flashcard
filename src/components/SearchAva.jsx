@@ -7,8 +7,8 @@ import Notifi from "./Notifi";
 const ava = require("../assets/ava1.png");
 
 const SearchAva = () => {
-  const username = useSelector(
-    (state) => state.user.currentUser?.user.username
+  const user = useSelector(
+    (state) => state.user.currentUser?.user
   );
   const profile = useSelector(
     (state) => state.user.currentUser?.user.profilePic
@@ -23,6 +23,10 @@ const SearchAva = () => {
 
   const logoutRef = useRef();
   const menuRef = useRef();
+
+  const endDate = new Date(user?.plan.endDate)
+  const now = new Date()
+  const isExpired = endDate < now
 
   const handleLogoutActive = () => {
     setIsLogoutActive(!isLogoutActive);
@@ -66,52 +70,62 @@ const SearchAva = () => {
   return (
     <div className="searching__ava">
       <div
-        className="searching__ava__left"
-        ref={menuRef}
-        onClick={handleMenuActive}
+        className="searching__ava"
       >
-        <i className="fa-solid fa-circle-info"></i>
-        <div
-          className={`searching__ava__list ${isMenuActive ? "active" : ""}`}
-          ref={menuRef}
-        >
-          <div className="searching__ava__list__heading">Thông tin</div>
-          <Link
-            to="/info"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="searching__ava__list__item"
-          >
-            Giới thiệu<i className="fa-solid fa-circle-info"></i>
-          </Link>
-          <Link
-            to="/info/lien-he"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="searching__ava__list__item"
-          >
-            Liên hệ<i className="fa-solid fa-phone"></i>
-          </Link>
-          <Link
-            to="/info/terms-of-service"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="searching__ava__list__item"
-          >
-            Điều khoản dịch vụ<i className="fa-solid fa-file-lines"></i>
-          </Link>
-          <Link
-            to="/info/privacy-policy"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="searching__ava__list__item"
-          >
-            Chính sách bảo mật<i className="fa-solid fa-shield"></i>
-          </Link>
-        </div>
+        {
+          isExpired ?
+            <Link to="/pricing" className='searching__ava__left__upgrade'>
+              <span>Nâng cấp Plus</span>
+              <i class="fas fa-angle-double-up"></i>
+            </Link> :
+            <div className='searching__ava__left__info'
+              ref={menuRef}
+              onClick={handleMenuActive}
+            >
+              <i className="fa-solid fa-circle-info"></i>
+              <div
+                className={`searching__ava__list ${isMenuActive ? "active" : ""}`}
+                ref={menuRef}
+              >
+                <div className="searching__ava__list__heading">Thông tin</div>
+                <Link
+                  to="/info"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="searching__ava__list__item"
+                >
+                  Giới thiệu<i className="fa-solid fa-circle-info"></i>
+                </Link>
+                <Link
+                  to="/info/lien-he"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="searching__ava__list__item"
+                >
+                  Liên hệ<i className="fa-solid fa-phone"></i>
+                </Link>
+                <Link
+                  to="/info/terms-of-service"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="searching__ava__list__item"
+                >
+                  Điều khoản dịch vụ<i className="fa-solid fa-file-lines"></i>
+                </Link>
+                <Link
+                  to="/info/privacy-policy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="searching__ava__list__item"
+                >
+                  Chính sách bảo mật<i className="fa-solid fa-shield"></i>
+                </Link>
+              </div>
+            </div>
+        }
       </div>
       <div className="searching__ava__right">
-        {username ? (
+        {user?.username ? (
           <div className="searching__ava__right__user">
             <Notifi />
             <div
@@ -121,14 +135,13 @@ const SearchAva = () => {
             >
               <img src={profile ? profile : ava} alt="Avatar" />
               <div
-                className={`searching__ava__list sm ${
-                  isLogoutActive ? "active" : ""
-                }`}
+                className={`searching__ava__list sm ${isLogoutActive ? "active" : ""
+                  }`}
                 ref={logoutRef}
               >
                 <div className="searching__ava__list__heading">Tài khoản</div>
                 <Link
-                  to={`/user/${username}`}
+                  to={`/user/${user?.username}`}
                   className="searching__ava__list__item"
                 >
                   Trang cá nhân<i className="fa-solid fa-user"></i>

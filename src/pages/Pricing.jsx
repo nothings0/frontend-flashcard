@@ -3,13 +3,15 @@ import Search from "../components/Search";
 import Helmet from "../components/Helmet";
 import { getPries, createInvoice } from '../redux/apiRequest';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { showToast } from '../redux/toastSlice';
 
 const Pricing = () => {
+    const dispatch = useDispatch();
     const [prices, setPrices] = useState([]);
     const accessToken = useSelector(
         (state) => state.user.currentUser?.accessToken
-      );
+    );
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -26,14 +28,21 @@ const Pricing = () => {
         try {
             const res = await createInvoice({ planType, amount, accessToken });
 
-            const { invoice } = res;
+            const invoice = res?.invoice;
 
             navigate(`/payment/${invoice.id}`);
         } catch (err) {
             console.error("Lỗi tạo invoice:", err);
-            alert("Tạo hóa đơn thất bại!");
+
+            // Nếu server trả về msg và code
+            if (err?.code === 400) {
+                dispatch(showToast({ msg: err?.msg || "Gói hiện tại vẫn còn hiệu lực!", success: false }));
+                return;
+            }
+            dispatch(showToast({ msg: err?.msg || "Tạo hóa đơn thất bại!", success: false }));
         }
     };
+
 
     return (
         <Helmet title="Nâng cấp tài khoản | Flux">
