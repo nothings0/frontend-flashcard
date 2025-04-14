@@ -24,7 +24,7 @@ const SearchAva = () => {
   const logoutRef = useRef();
   const menuRef = useRef();
 
-  const endDate = new Date(user?.plan.endDate)
+  const endDate = new Date(user?.plan?.endDate)
   const now = new Date()
   const isExpired = endDate < now
 
@@ -76,7 +76,7 @@ const SearchAva = () => {
           isExpired ?
             <Link to="/pricing" className='searching__ava__left__upgrade'>
               <span>Nâng cấp Plus</span>
-              <i class="fas fa-angle-double-up"></i>
+              <i className="fas fa-angle-double-up"></i>
             </Link> :
             <div className='searching__ava__left__info'
               ref={menuRef}

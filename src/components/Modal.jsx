@@ -9,7 +9,7 @@ const Modal = ({ modalOpen, setModalOpen, children }) => {
                 setModalOpen(false)
             }
         }
-        if(modalOpen){
+        if (modalOpen) {
             document.addEventListener("mousedown", handleClickOutside);
             return () => {
                 document.removeEventListener("mousedown", handleClickOutside);
@@ -19,13 +19,13 @@ const Modal = ({ modalOpen, setModalOpen, children }) => {
 
     return (
         <div className={`modal ${modalOpen ? 'active' : ''}`}>
-        <div className="modal__container" ref={modalRef}>
-            {children}
+            <div className="modal__container" ref={modalRef}>
+                {children}
+            </div>
         </div>
-    </div>
-  )
+    )
 }
-export const ModalTitle = ({children, fnClose}) => {
+export const ModalTitle = ({ children, fnClose }) => {
     return (
         <div className="title">
             {children}
@@ -34,14 +34,14 @@ export const ModalTitle = ({children, fnClose}) => {
         </div>
     )
 }
-export const ModalBody = ({children}) => {
+export const ModalBody = ({ children }) => {
     return (
         <div className="body">
             {children}
         </div>
     )
 }
-export const ModalFooter = ({children}) => {
+export const ModalFooter = ({ children }) => {
     return (
         <div className="footer">
             {children}

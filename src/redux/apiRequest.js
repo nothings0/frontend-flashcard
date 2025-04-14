@@ -471,16 +471,17 @@ export const GetListCard = async (
   }
 };
 
-export const getAllCard = async (accessToken) => {
+export const GetAllCard = async ({ page = 1, limit = 10, accessToken }) => {
   try {
-    // dispatch(handleLoading())
-    const res = await axios.get(`${genURL("/v1/card/adminall")}`, {
-      headers: { token: `Bearer ${accessToken}` },
-    });
-    // dispatch(handleRemove())
+    const res = await axiosJWT.get(
+      `${genURL(`/v1/card/adminall`, { page: page, limit: limit })}`,
+      {
+        headers: { token: `Bearer ${accessToken}` },
+      }
+    );
     return res.data;
   } catch (error) {
-    // dispatch(handleRemove())
+    return { cards: [], totalItems: 0, totalPages: 1 };
   }
 };
 export const createCardAdmin = async (accessToken, data) => {
@@ -505,14 +506,21 @@ export const GetHome = async (limit, userId) => {
   }
 };
 
-export const GetAllUser = async (accessToken) => {
+export const GetAllUser = async ({ page = 1, limit = 10, accessToken }) => {
   try {
-    const res = await axiosJWT.get(`${genURL("/v1/auth")}`, {
-      headers: { token: `Bearer ${accessToken}` },
-    });
+    const res = await axiosJWT.get(
+      `${genURL(`/v1/auth`, { page: page, limit: limit })}`,
+      {
+        headers: { token: `Bearer ${accessToken}` },
+      }
+    );
     return res.data;
-  } catch (error) {}
+  } catch (error) {
+    console.error("Lỗi khi lấy danh sách user:", error);
+    return { users: [], totalItems: 0, totalPages: 1 };
+  }
 };
+
 
 export const GetUser = async (username) => {
   try {

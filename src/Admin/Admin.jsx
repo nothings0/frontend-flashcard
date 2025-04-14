@@ -1,13 +1,14 @@
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-import SearchInput from "../components/SearchInput";
 import NavBar from "./NavBar";
-import Dashboard from "./Dashboard";
-import SearchAva from "../components/SearchAva";
+import AdminDashboard from "./AdminDashboard";
 import { useSelector } from "react-redux";
 import CreateAdmin from "./CreateAdmin";
 import Service from "./Service";
 import Helmet from "../components/Helmet";
+import Search from "../components/Search";
+import User from "./User";
+import Card from "./Card";
 
 const Admin = () => {
   const isAdmin = useSelector((state) => state.user.currentUser?.user.isAdmin);
@@ -16,15 +17,14 @@ const Admin = () => {
     <Helmet title="Admin">
       <div className="admin">
         <NavBar />
-        <div className="admin__header">
-          <SearchInput />
-          <SearchAva />
-        </div>
+        <Search />
         <Routes>
           <Route
             path="/"
-            element={isAdmin ? <Dashboard /> : <Navigate to="/login" />}
+            element={isAdmin ? <AdminDashboard /> : <Navigate to="/login" />}
           />
+          <Route path="/user" element={<User />} />
+          <Route path="/flashcard" element={<Card />} />
           <Route path="/create" element={<CreateAdmin />} />
           <Route path="/service" element={<Service />} />
         </Routes>

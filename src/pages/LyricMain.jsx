@@ -295,7 +295,7 @@ const LyricMain = () => {
             {isSubmit ? (
               <>
                 <span>Reload</span>
-                <i class="fa-solid fa-rotate-right"></i>
+                <i className="fa-solid fa-rotate-right"></i>
               </>
             ) : (
               <>

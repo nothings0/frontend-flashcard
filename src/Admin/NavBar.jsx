@@ -9,6 +9,16 @@ const mainNav = [
         icon: "fa-solid fa-house"
     },
     {
+        display: "User",
+        path: "/admin/user",
+        icon: "fa-solid fa-users"
+    },
+    {
+        display: "Card",
+        path: "/admin/flashcard",
+        icon: "fa-solid fa-id-card"
+    },
+    {
         display: "Service",
         path: "/admin/service",
         icon: "fa-brands fa-servicestack"
