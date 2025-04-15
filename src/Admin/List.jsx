@@ -5,6 +5,7 @@ const List = ({
     columns,
     onEdit,
     onDelete,
+    onView,
     currentPage = 1,
     limit = 10,
     total = 0,
@@ -30,7 +31,7 @@ const List = ({
     };
 
     return (
-        <div className="list">
+        <div className="admin-list">
             <table>
                 <thead>
                     <tr>
@@ -52,16 +53,21 @@ const List = ({
                                         : getNestedValue(item, key)?.toString()}
                                 </td>
                             ))}
-                            {(onEdit || onDelete) && (
+                            {(onEdit || onDelete || onView) && (
                                 <td>
                                     {onEdit && (
-                                        <button onClick={() => onEdit(item)}>
+                                        <button onClick={() => onEdit(item)} className='edit'>
                                             <i className="fa-solid fa-pen-to-square"></i>
                                         </button>
                                     )}
                                     {onDelete && (
-                                        <button onClick={() => onDelete(item)}>
+                                        <button onClick={() => onDelete(item)} className='delete'>
                                             <i className="fa-solid fa-trash"></i>
+                                        </button>
+                                    )}
+                                    {onView && (
+                                        <button onClick={() => onView({...item, view: true })} className='view'>
+                                            <i className="fa-solid fa-eye"></i>
                                         </button>
                                     )}
                                 </td>

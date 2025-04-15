@@ -12,10 +12,12 @@
   transition: 0.3s ease-in-out;
   text-transform: capitalize;
   @include flex(center, center);
+
   &.active {
     opacity: 1;
     visibility: visible;
   }
+
   &__container {
     background-color: #fff;
     border-radius: 10px;
@@ -24,52 +26,106 @@
     @include flex(unset, space-between);
     flex-direction: column;
     overflow: hidden;
+
     .title {
       @include flex(center, space-between);
       font-size: 2rem;
       padding: 1.4rem 2rem;
       background-color: $main-color;
       color: #fff;
+
       i {
         cursor: pointer;
         padding: 0.8rem 1rem;
         border-radius: 5px;
+
         &:hover {
           background-color: #ff725b;
           color: #fff;
         }
       }
     }
+
     .body {
-      padding: 1.4rem 2rem;
+      padding: 2rem;
       @include flex(center, center);
       font-size: 1.8rem;
-      margin: 3rem 0;
       color: #000;
     }
-    & > .footer {
+
+    .error {
+      color: red;
+      font-size: 1.2rem;
+      margin-top: 4px;
+    }
+
+    .flex {
+      @include flex(start, center);
+      flex-direction: column;
+      width: 100%;
+      gap: 1.2rem;
+      font-size: 1.6rem;
+      color: #000;
+
+      .input-field {
+        width: 100%;
+        margin: 0.5rem 0;
+        padding: 1rem 2rem;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        font-size: 1.6rem;
+
+        &:focus {
+          outline: none;
+          border-color: $main-color;
+        }
+      }
+
+      .select-field {
+        width: 100%;
+        margin: 0.5rem 0;
+        padding: 1rem 2rem;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        font-size: 1.6rem;
+
+        &:focus {
+          outline: none;
+          border-color: $main-color;
+        }
+      }
+
+    }
+
+    .modal-footer {
       margin: 0 !important;
       padding: 1.4rem 2rem;
       @include flex(center, space-between);
       font-size: 1.6rem;
+      border-top: 1px solid #ccc;
+
       button {
         padding: 1rem 1.5rem;
         border-radius: 5px;
         cursor: pointer;
         text-transform: capitalize;
         font-weight: 600;
+
         &:hover {
           transform: scale(1.05);
         }
       }
+
       .cancel-btn {
         background-color: #303545;
         color: #fff;
       }
+
       .delete-btn {
         background-color: #ff725b;
         color: #fff;
       }
+
       .ok-btn {
         background-color: #00ab0b;
         color: #fff;

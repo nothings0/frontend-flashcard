@@ -8,120 +8,171 @@ import {
 } from "../redux/apiRequest";
 import Modal, { ModalBody, ModalFooter, ModalTitle } from "../components/Modal";
 import { useMutation, useQuery, useQueryClient } from "react-query";
+import { Link } from "react-router-dom";
 
 const Service = () => {
   const [contacts, setContacts] = useState([]);
-  const [content, setContent] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
 
+  const [notifiTitle, setNotifiTitle] = useState("");
+  const [notifiContent, setNotifiContent] = useState("");
+  const [notifiUrl, setNotifiUrl] = useState("");
+
+  const dispatch = useDispatch();
   const queryClient = useQueryClient();
 
   const accessToken = useSelector(
     (state) => state.user.currentUser?.accessToken
   );
-  const dispatch = useDispatch();
 
+  // Fetch contact
   useEffect(() => {
-    const getData = async () => {
+    const fetchContacts = async () => {
       const res = await GetContact(accessToken);
-      setContacts(res);
+      setContacts(res?.data || []);
     };
-    getData();
+    fetchContacts();
   }, [accessToken]);
 
-  const handleNotifi = async () => {
-    await CreateMultipleNotifi(dispatch, accessToken, { content });
-  };
-
-  const { data, isLoading } = useQuery({
-    queryFn: () => getPendingPremium(accessToken),
+  // Fetch pending premium
+  const { data: pendingData, isLoading } = useQuery({
     queryKey: "pending-premium",
-    staleTime: 6 * 60 * 60 * 1000,
+    queryFn: () => getPendingPremium(accessToken),
+    staleTime: 1000 * 60 * 60 * 6,
   });
 
-  const mutation = useMutation({
+  // Handle upgrade
+  const upgradeMutation = useMutation({
     mutationFn: ({ slug, decision }) =>
       handleUpgrade(slug, accessToken, decision),
     onSuccess: () => {
-      queryClient.invalidateQueries();
+      queryClient.invalidateQueries("pending-premium");
     },
   });
 
   const handlePremium = (slug, decision) => {
-    mutation.mutate({ slug, decision });
+    upgradeMutation.mutate({ slug, decision });
   };
 
-  if (isLoading) return <p>loading...</p>;
+  const handleCreateNotifi = async () => {
+    await CreateMultipleNotifi(dispatch, accessToken, {
+      title: notifiTitle,
+      content: notifiContent,
+      url: notifiUrl,
+    });
+    setModalOpen(false);
+    setNotifiTitle("");
+    setNotifiContent("");
+    setNotifiUrl("");
+  };
+
+  if (isLoading) return <p className="loading-text">Đang tải...</p>;
 
   return (
     <div className="service">
-      <div className="contact">
-        {contacts?.data?.length > 0 ? (
-          contacts.data.map((item) => (
-            <div className="contact__item">
-              <div className="contact__txt">Tiêu đề: {item.title}</div>
-              <div className="contact__txt">Email: {item.email}</div>
-              <div className="contact__txt">
-                Description: {item.description}
-              </div>
+      {/* Liên hệ */}
+      <div className="service__section service__contacts">
+        <h2 className="service__title">Liên hệ từ người dùng</h2>
+        {contacts.length > 0 ? (
+          contacts.map((item, index) => (
+            <div key={index} className="contact-item">
+              <p><strong>Tiêu đề:</strong> {item.title}</p>
+              <p><strong>Email:</strong> {item.email}</p>
+              <p><strong>Mô tả:</strong> {item.description}</p>
             </div>
           ))
         ) : (
-          <h3>Không có email cần xử lý</h3>
+          <p className="service__empty">Không có email cần xử lý.</p>
         )}
       </div>
-      <div className="service__button">
-        <button onClick={() => setModalOpen(true)}>Tạo thông báo</button>
+
+      {/* Thông báo */}
+      <div className="service__section">
+        <h2 className="service__title">Thông báo</h2>
+        <button
+          onClick={() => setModalOpen(true)}
+          className="service__btn service__btn--primary"
+        >
+          Tạo thông báo
+        </button>
       </div>
-      <div className="service__card">
-        {data.data.map((item) => (
-          <div className="service__card__item">
-            <h4>{item.title}</h4>
-            <p>{item.type}</p>
-            <div className="service__card__item__btn">
-              <button onClick={() => handlePremium(item.slug, "premium")}>
-                Chấp nhận
-              </button>
-              <button
-                className="refuse"
-                onClick={() => handlePremium(item.slug, "regular")}
-              >
-                Từ chối
-              </button>
+
+      {/* Nâng cấp tài khoản */}
+      <div className="service__section service__premium">
+        <h2 className="service__title">Yêu cầu nâng cấp thẻ</h2>
+        <div className="premium-grid">
+          {pendingData?.data?.map((item) => (
+            <div key={item.slug} className="premium-card">
+              <Link className="premium-card__info" to={`/card/${item.slug}`}>
+                <h4>{item.title}</h4>
+                <p>Loại: {item.type}</p>
+              </Link>
+              <div className="premium-card__actions">
+                <button
+                  className="service__btn service__btn--accept"
+                  onClick={() => handlePremium(item.slug, "premium")}
+                >
+                  Chấp nhận
+                </button>
+                <button
+                  className="service__btn service__btn--reject"
+                  onClick={() => handlePremium(item.slug, "regular")}
+                >
+                  Từ chối
+                </button>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
+
+      {/* Modal tạo thông báo */}
       {modalOpen && (
         <Modal modalOpen={modalOpen} setModalOpen={setModalOpen}>
           <ModalTitle fnClose={() => setModalOpen(false)}>
             <h4>Tạo thông báo mới</h4>
           </ModalTitle>
-          <ModalBody>
-            <div className="service__notifi">
-              <textarea
+          <ModalBody className="flex">
+            <div className="modal-input-wrap">
+              <label htmlFor="title">Tiêu đề:</label>
+              <input
                 type="text"
-                id="notifi"
-                placeholder="Nhập nội dung"
-                onChange={(e) => setContent(e.target.value)}
+                id="title"
+                placeholder="Tiêu đề"
+                value={notifiTitle}
+                onChange={(e) => setNotifiTitle(e.target.value)}
+              />
+            </div>
+            <div className="modal-input-wrap">
+              <label htmlFor="content">Nội dung:</label>
+              <textarea
+                id="content"
+                placeholder="Nội dung"
+                value={notifiContent}
+                onChange={(e) => setNotifiContent(e.target.value)}
+              />
+            </div>
+            <div className="modal-input-wrap">
+              <label htmlFor="url">Đường dẫn:</label>
+              <input
+                id="url"
+                type="text"
+                placeholder="URL (tuỳ chọn)"
+                value={notifiUrl}
+                onChange={(e) => setNotifiUrl(e.target.value)}
               />
             </div>
           </ModalBody>
           <ModalFooter>
             <button
-              className="cancel-btn"
-              onClick={() => {
-                setModalOpen(false);
-              }}
+              className="service__btn service__btn--cancel"
+              onClick={() => setModalOpen(false)}
             >
               Hủy
             </button>
             <button
-              className="ok-btn"
-              onClick={() => {
-                handleNotifi();
-                setModalOpen(false);
-              }}
+              className="service__btn service__btn--primary"
+              onClick={handleCreateNotifi}
             >
               Tạo
             </button>

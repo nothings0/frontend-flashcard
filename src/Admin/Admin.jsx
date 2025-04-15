@@ -3,7 +3,6 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import NavBar from "./NavBar";
 import AdminDashboard from "./AdminDashboard";
 import { useSelector } from "react-redux";
-import CreateAdmin from "./CreateAdmin";
 import Service from "./Service";
 import Helmet from "../components/Helmet";
 import Search from "../components/Search";
@@ -25,7 +24,6 @@ const Admin = () => {
           />
           <Route path="/user" element={<User />} />
           <Route path="/flashcard" element={<Card />} />
-          <Route path="/create" element={<CreateAdmin />} />
           <Route path="/service" element={<Service />} />
         </Routes>
       </div>

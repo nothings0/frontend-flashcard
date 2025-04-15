@@ -118,6 +118,16 @@ export const AddCard = async (card, accessToken, dispatch) => {
     return res.data;
   } catch (error) {}
 };
+export const AdminAddCard = async ({data, accessToken}) => {
+  try {
+    const res = await axiosJWT.post(`${genURL("/v1/card/admin/all")}`, data, {
+      headers: { token: `Bearer ${accessToken}` },
+    });
+    return res.data;
+  } catch (error) {
+    throw error
+  }
+};
 export const getCardById = async (dispatch, card, page, limit) => {
   try {
     dispatch(handleLoading());
@@ -186,6 +196,21 @@ export const GetTranslate = async (translate) => {
 
     return res.data;
   } catch (error) {}
+};
+
+export const AdminUpdateCard = async ({data, accessToken}) => {
+  try {
+    const res = await axiosJWT.patch(
+      `${genURL(`/v1/card/${data.slug}`)}`,
+      { data },
+      {
+        headers: { token: `Bearer ${accessToken}` },
+      }
+    );
+    return res.data;
+  } catch (error) {
+    throw error
+  }
 };
 
 export const UpdateCard = async (card, slug, accessToken, userId, dispatch) => {
@@ -471,10 +496,10 @@ export const GetListCard = async (
   }
 };
 
-export const GetAllCard = async ({ page = 1, limit = 10, accessToken }) => {
+export const GetAllCard = async ({ page = 1, limit = 10, accessToken, search = "" }) => {
   try {
     const res = await axiosJWT.get(
-      `${genURL(`/v1/card/adminall`, { page: page, limit: limit })}`,
+      `${genURL(`/v1/card/admin/all`, { page: page, limit: limit, search })}`,
       {
         headers: { token: `Bearer ${accessToken}` },
       }
@@ -483,14 +508,6 @@ export const GetAllCard = async ({ page = 1, limit = 10, accessToken }) => {
   } catch (error) {
     return { cards: [], totalItems: 0, totalPages: 1 };
   }
-};
-export const createCardAdmin = async (accessToken, data) => {
-  try {
-    const res = await axios.post(`${genURL("/v1/card/adminall")}`, data, {
-      headers: { token: `Bearer ${accessToken}` },
-    });
-    return res.data;
-  } catch (error) {}
 };
 
 export const GetHome = async (limit, userId) => {
@@ -506,10 +523,10 @@ export const GetHome = async (limit, userId) => {
   }
 };
 
-export const GetAllUser = async ({ page = 1, limit = 10, accessToken }) => {
+export const GetAllUser = async ({ page = 1, limit = 10, search, accessToken }) => {
   try {
     const res = await axiosJWT.get(
-      `${genURL(`/v1/auth`, { page: page, limit: limit })}`,
+      `${genURL(`/v1/auth`, { page: page, limit: limit, search })}`,
       {
         headers: { token: `Bearer ${accessToken}` },
       }
@@ -518,6 +535,32 @@ export const GetAllUser = async ({ page = 1, limit = 10, accessToken }) => {
   } catch (error) {
     console.error("Lỗi khi lấy danh sách user:", error);
     return { users: [], totalItems: 0, totalPages: 1 };
+  }
+};
+export const AdminAddUser = async ({ data, accessToken }) => {
+  try {
+    const res = await axiosJWT.post(
+      `${genURL(`/v1/auth/admin/add-user`)}`, data,
+      {
+        headers: { token: `Bearer ${accessToken}` },
+      }
+    );
+    return res.data;
+  } catch (error) {
+    throw error
+  }
+};
+export const AdminUpdateUser = async ({ data, accessToken }) => {
+  try {
+    const res = await axiosJWT.put(
+      `${genURL(`/v1/auth/admin/update-user`)}`, data,
+      {
+        headers: { token: `Bearer ${accessToken}` },
+      }
+    );
+    return res.data;
+  } catch (error) {
+    throw error
   }
 };
 

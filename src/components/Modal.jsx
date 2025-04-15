@@ -34,16 +34,16 @@ export const ModalTitle = ({ children, fnClose }) => {
         </div>
     )
 }
-export const ModalBody = ({ children }) => {
+export const ModalBody = ({ children, className = "" }) => {
     return (
-        <div className="body">
+        <div className={`body ${className}`}>
             {children}
         </div>
     )
 }
 export const ModalFooter = ({ children }) => {
     return (
-        <div className="footer">
+        <div className="modal-footer">
             {children}
         </div>
     )

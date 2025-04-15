@@ -183,7 +183,7 @@ const Detail = () => {
     const { action, index, status, type } = data;
     setRun((state) => ({ ...state, isRun: true }));
     if ([EVENTS.STEP_AFTER, EVENTS.TARGET_NOT_FOUND].includes(type)) {
-      // Update state to advance the tour
+      // Update state to Fluxquiz Plus the tour
       setRun((state) => ({
         ...state,
         stepIndex: index + (action === ACTIONS.PREV ? -1 : 1),
@@ -200,9 +200,9 @@ const Detail = () => {
 
   const handleApproval = async () => {
     const reps = await approvalCard(slug, accessToken);
-    if(reps.code === 200){
+    if (reps.code === 200) {
       window.location.reload();
-    }else{
+    } else {
       alert(reps.msg);
     }
   };
@@ -233,9 +233,8 @@ const Detail = () => {
                         Học <i className="fa-solid fa-angle-down"></i>
                       </div>
                       <div
-                        className={`card-detail__header__title__btn__menu ${
-                          topActive ? "active" : ""
-                        }`}
+                        className={`card-detail__header__title__btn__menu ${topActive ? "active" : ""
+                          }`}
                         ref={menuRef}
                       >
                         <Link to={`/learn/${slug}`}>
@@ -260,21 +259,20 @@ const Detail = () => {
                         <Link to={`/${slug}/live`}>
                           <div className="card-detail__left__item">Live</div>
                         </Link>
-                        {data?.cards?.type === "premium" ? (
+                        {data?.cards?.type.toUpperCase() === "PREMIUM" ? (
                           <Link to={`/card/p/${slug}`}>
                             <div
-                              className={`card-detail__left__item ${
-                                userId ? "" : "disable"
-                              }`}
+                              className={`card-detail__left__item ${userId ? "" : "disable"
+                                }`}
                             >
-                              Advance
+                              Fluxquiz Plus <i className="fa-solid fa-gem"></i>
                             </div>
                           </Link>
                         ) : (
                           <>
                             {data?.cards?.user._id === userId && (
                               <>
-                                {data?.cards?.type === "pending" ? (
+                                {data?.cards?.type.toUpperCase() === "PENDING" ? (
                                   <div className="card-detail__left__item pending disable">
                                     Pending
                                   </div>
@@ -334,21 +332,20 @@ const Detail = () => {
                     <Link to={`/${slug}/live`}>
                       <div className="card-detail__left__item item_6">Live</div>
                     </Link>
-                    {data?.cards?.type === "premium" ? (
+                    {data?.cards?.type.toUpperCase() === "PREMIUM" ? (
                       <Link to={`/card/p/${slug}`}>
                         <div
-                          className={`card-detail__left__item ${
-                            userId ? "" : "disable"
-                          }`}
+                          className={`card-detail__left__item ${userId ? "" : "disable"
+                            }`}
                         >
-                          Advance
+                          Fluxquiz Plus
                         </div>
                       </Link>
                     ) : (
                       <>
                         {data?.cards?.user._id === userId && (
                           <>
-                            {data?.cards?.type === "pending" ? (
+                            {data?.cards?.type.toUpperCase() === "PREMIUM" ? (
                               <div className="card-detail__left__item pending disable">
                                 Pending
                               </div>

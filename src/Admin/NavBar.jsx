@@ -22,16 +22,6 @@ const mainNav = [
         display: "Service",
         path: "/admin/service",
         icon: "fa-brands fa-servicestack"
-    },
-    {
-        display: "Tạo",
-        path: "/admin/create",
-        icon: "fa-solid fa-plus"
-    },
-    {
-        display: "Sign Out",
-        path: "/signout",
-        icon: "fa-solid fa-arrow-right-from-bracket"
     }
 ]
 
