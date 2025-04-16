@@ -1,10 +1,15 @@
-import React, { useState } from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, BarChart, Bar } from 'recharts';
+import { statistical } from '../redux/apiRequest';
+import { useSelector } from 'react-redux';
 
 const AdminDashboard = () => {
+  const accessToken = useSelector(state => state.user.currentUser?.accessToken);
   const [timeFrame, setTimeFrame] = useState('Week');
+  const [statisticalData, setStatisticalData] = useState([]);
 
-  const visitorData = [
+  const userData = [
     { day: 'Mon', pageViews: 30, sessions: 20 },
     { day: 'Tue', pageViews: 40, sessions: 30 },
     { day: 'Wed', pageViews: 60, sessions: 50 },
@@ -24,6 +29,20 @@ const AdminDashboard = () => {
     { day: 'Sun', income: 4000 },
   ];
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await statistical({accessToken, period: "month"});
+
+        setStatisticalData(res.data)
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    }
+    fetchData();
+  }
+  , []);
+
   return (
 
     <>
@@ -33,26 +52,13 @@ const AdminDashboard = () => {
     <div className="admin-dashboard">
       {/* Header Metrics */}
       <div className="metrics-grid">
-        <div className="metric-card">
-          <h2 className="metric-title">TOTAL PAGE VIEWS</h2>
-          <p className="metric-value">4,42,236 <span className="metric-change positive">↑ 59.3%</span></p>
-          <p className="metric-note">You made an extra 35,000 this year</p>
-        </div>
-        <div className="metric-card">
-          <h2 className="metric-title">TOTAL USERS</h2>
-          <p className="metric-value">78,250 <span className="metric-change positive">↑ 70.5%</span></p>
-          <p className="metric-note">You made an extra 8,500 this year</p>
-        </div>
-        <div className="metric-card">
-          <h2 className="metric-title">TOTAL ORDER</h2>
-          <p className="metric-value">18,800 <span className="metric-change negative">↓ 27.7%</span></p>
-          <p className="metric-note">You made an extra 1,943 this year</p>
-        </div>
-        <div className="metric-card">
-          <h2 className="metric-title">TOTAL SALES</h2>
-          <p className="metric-value">$35,078 <span className="metric-change negative">↓ 27.4%</span></p>
-          <p className="metric-note">You made an extra $20,395 this year</p>
-        </div>
+        {statisticalData && statisticalData.map((item, index) => (
+          <div className="metric-card" key={index}>
+            <h2 className="metric-title">{item.title}</h2>
+            <p className="metric-value">{item.value}</p>
+            <p className="metric-change">{item.percentageValue}</p>
+          </div>
+        ))}
       </div>
 
       {/* Charts Section */}
@@ -77,7 +83,7 @@ const AdminDashboard = () => {
             </div>
           </div>
           <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={visitorData}>
+            <LineChart data={userData}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="day" />
               <YAxis />

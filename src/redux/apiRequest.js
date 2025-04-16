@@ -819,9 +819,10 @@ export const getInvoice = async ({ invoiceId, accessToken }) => {
   }
 };
 // admin
-export const statistical = async ({ accessToken, type }) => {
+export const statistical = async ({ accessToken, period }) => {
+  console.log("period", period);
   try {
-    const res = await axiosJWT.get(`${genURL(`/v1/admin`)}`, {
+    const res = await axiosJWT.get(`${genURL(`/v1/admin`, {period: period})}`, {
       headers: { token: `Bearer ${accessToken}` },
     });
     return res.data;
