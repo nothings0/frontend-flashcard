@@ -25,7 +25,14 @@ const Pricing = () => {
     }, []);
 
     const onHandleCreateInvoice = async (planType, amount) => {
+        
         try {
+            if(!accessToken) {
+                dispatch(showToast({ msg: "Vui lòng đăng nhập để nâng cấp tài khoản!", success: false }));
+                navigate("/login");
+                return;
+            }
+
             const res = await createInvoice({ planType, amount, accessToken });
 
             const invoice = res?.invoice;
@@ -51,11 +58,10 @@ const Pricing = () => {
                 <div className="banner-content">
                     <h1 className="title">FluxQuiz Plus</h1>
                     <h2 className="subtitle">
-                        ĐĂNG KÝ THƯỜNG ĐẦU TIÊN CỦA BẠN VỚI GIÁ 1 US$!
+                        ĐĂNG KÝ LẦN ĐẦU TIÊN GIÁ 25.000đ
                     </h2>
                     <p className="description">
-                        Ưu đãi một lần có giới hạn: Nâng cấp lên gói đăng ký FluxQuiz Plus hàng
-                        tháng và mua thường đầu tiên với giá 1 US$
+                        Ưu đãi có giới hạn: Nâng cấp lên gói FluxQuiz Plus với giá chỉ 25.000đ cho tháng đầu tiên. Sau đó sẽ quay lại giá gốc
                     </p>
                 </div>
 
@@ -69,7 +75,7 @@ const Pricing = () => {
                                         <h3 className="card-title">{item.title}</h3>
                                         <div>
                                             <p className="card-description">{item.description}</p>
-                                            <p className="price">{item.price}đ<span> /tháng</span></p>
+                                            <p className="price">{item.price.toLocaleString()}đ<span> /tháng</span></p>
                                         </div>
                                         <button className="start-trial-btn" onClick={() => onHandleCreateInvoice(item.type, item.price)}>Bắt đầu dùng thử miễn phí</button>
                                     </div>
@@ -81,7 +87,8 @@ const Pricing = () => {
                                         <h3 className="card-title">{item.title}</h3>
                                         <div>
                                             <p className="card-description">{item.description}</p>
-                                            <p className="price">{(item.price / 12).toFixed(0)}đ<span> /tháng</span></p>
+                                            <p className="price">{Math.floor(item.price / 12).toLocaleString("vi-VN")}đ
+                                            <span> /tháng</span></p>
                                         </div>
                                         <button className="buy-now-btn" onClick={() => onHandleCreateInvoice(item.type, item.price)}>Mua FluxQuiz Plus</button>
                                     </div>

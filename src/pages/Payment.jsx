@@ -85,18 +85,17 @@ function PaymentPage() {
                     <div className="left">
                         <h3 className="method-title">Cách 1: Mở app ngân hàng và quét mã QR</h3>
                         <img src={qrUrl} alt="QR Code" className="qr-image" />
-                        <a href={qrUrl} download className="download-link">
+                        <a href={qrUrl} download className="download-link" target="_blank" rel="noopener noreferrer">
                             ⬇ Tải ảnh QR
                         </a>
                         <p className="payment-status">
-                            Trạng thái:{" "}
                             {status === "SUCCESS" ? (
                                 <span style={{ color: "green", fontWeight: "bold" }}>
                                     ✅ Đã thanh toán
                                 </span>
                             ) : countdown > 0 ? (
                                 <span className="waiting">
-                                    ⏳ Đang chờ thanh toán... ({formatCountdown(countdown)})
+                                    <i class="far fa-hourglass rotate"></i> Đang chờ thanh toán... ({formatCountdown(countdown)})
                                 </span>
                             ) : (
                                 <span style={{ color: "red", fontWeight: "bold" }}>

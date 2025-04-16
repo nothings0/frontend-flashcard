@@ -207,6 +207,9 @@ const Detail = () => {
     }
   };
 
+  const isOwner = data?.cards?.user._id === userId;
+  const cardType = data?.cards?.type?.toUpperCase();
+
   return (
     <Helmet title={`${data?.cards?.title || "Loading"} | Flux`}>
       <div className="card-detail">
@@ -259,35 +262,34 @@ const Detail = () => {
                         <Link to={`/${slug}/live`}>
                           <div className="card-detail__left__item">Live</div>
                         </Link>
-                        {data?.cards?.type.toUpperCase() === "PREMIUM" ? (
-                          <Link to={`/card/p/${slug}`}>
-                            <div
-                              className={`card-detail__left__item ${userId ? "" : "disable"
-                                }`}
-                            >
-                              Fluxquiz Plus <i className="fa-solid fa-gem"></i>
-                            </div>
-                          </Link>
-                        ) : (
-                          <>
-                            {data?.cards?.user._id === userId && (
-                              <>
-                                {data?.cards?.type.toUpperCase() === "PENDING" ? (
-                                  <div className="card-detail__left__item pending disable">
-                                    Pending
-                                  </div>
-                                ) : (
-                                  <div
-                                    className="card-detail__left__item approval"
-                                    onClick={handleApproval}
-                                  >
-                                    Nâng cấp
-                                  </div>
-                                )}
-                              </>
-                            )}
-                          </>
-                        )}
+                        <>
+                          {isOwner ? (
+                            <>
+                              {cardType === "PREMIUM" ? (
+                                <Link to={`/card/p/${slug}`}>
+                                  <div className="card-detail__left__item plus">Fluxquiz Plus</div>
+                                </Link>
+                              ) : cardType === "PENDING" ? (
+                                <div className="card-detail__left__item pending disable">Pending</div>
+                              ) : (
+                                <div className="card-detail__left__item approval" onClick={handleApproval}>
+                                  Nâng cấp
+                                </div>
+                              )}
+                            </>
+                          ) : (
+                            <>
+                              {
+                          userId && cardType === "PREMIUM" ?
+                            <Link to={`/card/p/${slug}`}>
+                              <div className="card-detail__left__item plus">Fluxquiz Plus</div>
+                            </Link> : <Link to="/pricing">
+                              <div className="card-detail__left__item plus">Fluxquiz Plus</div>
+                            </Link>
+                          }
+                            </>
+                          )}
+                        </>
                       </div>
                     </div>
                   </div>
@@ -332,35 +334,34 @@ const Detail = () => {
                     <Link to={`/${slug}/live`}>
                       <div className="card-detail__left__item item_6">Live</div>
                     </Link>
-                    {data?.cards?.type.toUpperCase() === "PREMIUM" ? (
-                      <Link to={`/card/p/${slug}`}>
-                        <div
-                          className={`card-detail__left__item ${userId ? "" : "disable"
-                            }`}
-                        >
-                          Fluxquiz Plus
-                        </div>
-                      </Link>
-                    ) : (
-                      <>
-                        {data?.cards?.user._id === userId && (
-                          <>
-                            {data?.cards?.type.toUpperCase() === "PREMIUM" ? (
-                              <div className="card-detail__left__item pending disable">
-                                Pending
-                              </div>
-                            ) : (
-                              <div
-                                className="card-detail__left__item approval"
-                                onClick={handleApproval}
-                              >
-                                Nâng cấp
-                              </div>
-                            )}
-                          </>
-                        )}
-                      </>
-                    )}
+                    <>
+                      {isOwner ? (
+                        <>
+                          {cardType === "PREMIUM" ? (
+                            <Link to={`/card/p/${slug}`}>
+                              <div className="card-detail__left__item plus">Fluxquiz Plus</div>
+                            </Link>
+                          ) : cardType === "PENDING" ? (
+                            <div className="card-detail__left__item pending disable">Pending</div>
+                          ) : (
+                            <div className="card-detail__left__item approval" onClick={handleApproval}>
+                              Nâng cấp
+                            </div>
+                          )}
+                        </>
+                      ) : (
+                        <>
+                          {
+                          userId && cardType === "PREMIUM" ?
+                            <Link to={`/card/p/${slug}`}>
+                              <div className="card-detail__left__item plus">Fluxquiz Plus</div>
+                            </Link> : <Link to="/pricing">
+                              <div className="card-detail__left__item plus">Fluxquiz Plus</div>
+                            </Link>
+                          }
+                        </>
+                      )}
+                    </>
                     <Joyride
                       run={run.isRun}
                       steps={steps}

@@ -778,6 +778,21 @@ export const getPries = async () => {
 };
 
 // invoice api
+export const updatePlan = async ({accessToken}) => {
+  try {
+    const res = await axiosJWT.put(`${genURL(`/v1/auth/user/update-plan`)}`, {
+      headers: { token: `Bearer ${accessToken}` },
+    });
+    return res.data;
+  } catch (error) {
+    // Ném lại lỗi có data từ response nếu có
+    if (error.response && error.response.data) {
+      throw error.response.data;
+    }
+    throw error;
+  }
+};
+
 export const createInvoice = async ({ planType, amount, accessToken }) => {
   try {
     const res = await axiosJWT.post(`${genURL(`/v1/invoice`)}`, { planType, amount }, {
