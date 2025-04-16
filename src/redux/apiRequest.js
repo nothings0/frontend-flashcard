@@ -818,3 +818,14 @@ export const getInvoice = async ({ invoiceId, accessToken }) => {
     console.log(error);
   }
 };
+// admin
+export const statistical = async ({ accessToken, type }) => {
+  try {
+    const res = await axiosJWT.get(`${genURL(`/v1/admin`)}`, {
+      headers: { token: `Bearer ${accessToken}` },
+    });
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
