@@ -453,4 +453,37 @@
         background-color: #ddd;
         cursor: not-allowed;
     }
+
+    input,
+      textarea {
+        border: 1px solid #d1d5db; // Equivalent to border-gray-300
+        border-radius: 4px; // Equivalent to rounded
+        padding: 8px; // Equivalent to p-2
+        width: 100%;
+      }
+  
+      textarea {
+        resize: vertical;
+        min-height: 100px; // Equivalent to min-h-[100px]
+      }
 }
+
+
+.parent {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.div2 {
+    grid-column-start: 1;
+    grid-row-start: 2;
+}
+
+.div3 {
+    grid-row: span 2 / span 2;
+    grid-column-start: 2;
+    grid-row-start: 1;
+}
+        

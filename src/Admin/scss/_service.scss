@@ -1,18 +1,39 @@
 .service {
+  @include flex(flex-start, space-between);
   padding: 24px;
+  gap: 2rem;
+
+  @include tablet {
+    flex-direction: column;
+  }
+
+  .service__left {
+    flex: 1;
+  }
+
+  .service__right {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    flex: 1;
+    width: 100%;
+
+  }
 
   &__section {
     margin-bottom: 32px;
     background: #fff;
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
   }
 
   &__title {
-    font-size: 20px;
+    font-size: 16px;
     font-weight: bold;
     margin-bottom: 16px;
+    @include flex(center, space-between);
+
   }
 
   &__btn {
@@ -105,9 +126,10 @@
   }
 }
 
-.notifi-textarea{
+.notifi-textarea {
   width: 100%;
 }
+
 .notifi-textarea textarea {
   width: 100%;
   height: 120px;
@@ -118,6 +140,215 @@
   resize: vertical;
 }
 
-.notifi-field{
+.notifi-field {
   width: 100%;
+}
+
+.service-manager {
+  margin-bottom: 32px;
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+
+  .error {
+    color: #ef4444; // Equivalent to text-red-500
+    margin-bottom: 16px; // Equivalent to mb-4
+  }
+
+  .loading {
+    color: #6b7280; // Equivalent to text-gray-500
+  }
+
+  .table-container {
+    max-width: 1280px; // Matches max-w-7xl
+    margin: 0 auto;
+  }
+
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #e5e7eb; // Matches border
+    background: #ffffff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); // Matches shadow
+
+    th,
+    td {
+      padding: 12px; // Slightly more padding than service-card
+      text-align: left;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    th {
+      background: #f3f4f6; // Light gray for header
+      font-weight: 600; // Matches font-semibold
+      font-size: 14px;
+      color: #374151; // Matches text-gray-700
+    }
+
+    td {
+      font-size: 14px;
+      color: #374151; // Matches text-gray-700
+    }
+
+    tr {
+      img{
+        width: 80px;
+      }
+      &:hover {
+        background: #f9fafb; // Light hover effect
+      }
+    }
+
+    .actions {
+      display: flex;
+      gap: 8px; // Matches gap-2
+    }
+  }
+
+  .no-data {
+    color: #6b7280; // Matches text-gray-500
+    text-align: center;
+    padding: 16px;
+  }
+
+  // Button styles (reused from previous SCSS)
+  .btn {
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    font-size: 14px;
+
+    &.edit {
+      background-color: #eab308; // Matches bg-yellow-500
+      color: #ffffff;
+
+      &:hover {
+        background-color: #ca8a04; // Matches hover:bg-yellow-600
+      }
+    }
+
+    &.delete {
+      background-color: #ef4444; // Matches bg-red-500
+      color: #ffffff;
+
+      &:hover {
+        background-color: #dc2626; // Matches hover:bg-red-600
+      }
+    }
+  }
+
+  .no-banners {
+    color: #6b7280; // Equivalent to text-gray-500
+  }
+
+  // Button styles
+  .btn {
+    padding: 8px 16px; // Equivalent to px-4 py-2 or px-3 py-1
+    border-radius: 4px; // Equivalent to rounded
+    cursor: pointer;
+    transition: background-color 0.2s;
+
+    &.primary {
+      background-color: #3b82f6; // Equivalent to bg-blue-500
+      color: #ffffff; // Equivalent to text-white
+
+      &:hover {
+        background-color: #2563eb; // Equivalent to hover:bg-blue-600
+      }
+
+      &:disabled {
+        background-color: #93c5fd; // Equivalent to disabled:bg-blue-300
+      }
+    }
+
+    &.edit {
+      background-color: #eab308; // Equivalent to bg-yellow-500
+      color: #ffffff;
+
+      &:hover {
+        background-color: #ca8a04; // Equivalent to hover:bg-yellow-600
+      }
+    }
+
+    &.delete {
+      background-color: #ef4444; // Equivalent to bg-red-500
+      color: #ffffff;
+
+      &:hover {
+        background-color: #dc2626; // Equivalent to hover:bg-red-600
+      }
+    }
+
+    &.cancel {
+      background-color: #d1d5db; // Equivalent to bg-gray-300
+      color: #000000; // Equivalent to text-black
+
+      &:hover {
+        background-color: #9ca3af; // Equivalent to hover:bg-gray-400
+      }
+    }
+  }
+
+  // Modal styles (from previous responses, adapted)
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 50;
+  }
+
+  .modal-content {
+    background: #ffffff;
+    padding: 24px; // Equivalent to p-6
+    border-radius: 8px; // Equivalent to rounded
+    width: 100%;
+    max-width: 500px; // Equivalent to max-w-md
+  }
+
+  .modal-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px; // Equivalent to mb-4
+  }
+
+  .modal-body {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .modal-input-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 8px; // Equivalent to gap-2
+    margin-bottom: 16px; // Equivalent to mb-4
+
+    label {
+      font-weight: 500; // Equivalent to font-medium
+    }
+
+    input,
+    textarea {
+      border: 1px solid #d1d5db; // Equivalent to border-gray-300
+      border-radius: 4px; // Equivalent to rounded
+      padding: 8px; // Equivalent to p-2
+      width: 100%;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 100px; // Equivalent to min-h-[100px]
+    }
+  }
+
+  .modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px; // Equivalent to gap-2
+  }
 }

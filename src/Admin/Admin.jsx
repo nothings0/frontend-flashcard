@@ -1,6 +1,6 @@
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-import NavBar from "./NavBar";
+import NavBar from "./components/NavBar";
 import AdminDashboard from "./AdminDashboard";
 import { useSelector } from "react-redux";
 import Service from "./Service";

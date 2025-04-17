@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { AddView } from "../redux/apiRequest";
 import { nFormatter } from "../util";
@@ -28,7 +28,7 @@ const Card = ({ data, flex }) => {
     <>
     <div className={`card ${flex ? "flex" : ""}`} onClick={handleClick}>
       <div className={`badge ${data?.type ? data?.type.toLowerCase() : ""}`}>
-      {data?.type?.toLowerCase() !== "regular" && data?.type?.toLowerCase()}
+      {!["regular", "pending"].includes(data?.type?.toLowerCase()) && data?.type?.toLowerCase()}
       </div>
       <Link to={`/card/${data?.slug}`}>
         <div

@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { GetAllCard, UpdateCardAdmin, AdminAddCard } from '../redux/apiRequest';
 import Modal, { ModalTitle, ModalBody, ModalFooter } from '../components/Modal';
-import List from './List';
+import List from './components/List';
 import debounce from 'lodash/debounce';
-import CardModal from './CardModal';
+import CardModal from './components/CardModal';
 
 const Card = () => {
   const [cards, setCards] = useState([]);

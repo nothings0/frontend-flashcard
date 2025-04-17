@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { statistical } from '../redux/apiRequest';
 import { useSelector } from 'react-redux';
-import InvoiceChart from './InvoiceChart';
+import InvoiceChart from './components/InvoiceChart';
 
 const AdminDashboard = () => {
   const accessToken = useSelector(state => state.user.currentUser?.accessToken);

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import Modal, { ModalTitle, ModalBody, ModalFooter } from '../components/Modal';
+import Modal, { ModalTitle, ModalBody, ModalFooter } from '../../components/Modal';
 
 const UserModal = ({ user, setModalOpen, handleSaveUser }) => {
     const [serverError, setServerError] = useState(null);

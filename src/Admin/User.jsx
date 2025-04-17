@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { GetAllUser } from '../redux/apiRequest';
 import Modal, { ModalTitle, ModalBody, ModalFooter } from '../components/Modal';
-import List from './List';
+import List from './components/List';
 import debounce from 'lodash/debounce';
-import UserModal from './UserModal';
+import UserModal from './components/UserModal';
 import { AdminAddUser, AdminUpdateUser } from '../redux/apiRequest';
 
 const User = () => {

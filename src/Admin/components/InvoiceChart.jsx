@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { adminGetCards, getInvoiceChart } from '../redux/apiRequest';
+import { adminGetCards, getInvoiceChart } from '../../redux/apiRequest';
 import { XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from 'recharts';
 import { useSelector } from 'react-redux';
 
