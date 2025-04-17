@@ -107,7 +107,7 @@ const LyricMain = () => {
         <>
           <div className="lyric-main__video">
             <ReactPlayer
-              url={`https://www.youtube.com/embed/${youtubeId}?showinfo=0&enablejsapi=1&origin=http://fluxquiz.netlify.app`}
+              url={`https://www.youtube.com/embed/${youtubeId}?showinfo=0&enablejsapi=1&origin=http://fluxquiz.vercel.app`}
               config={{
                 youtube: {
                   playerVars: {

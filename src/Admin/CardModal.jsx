@@ -18,10 +18,12 @@ const CardModal = ({ card, setModalOpen, handleSaveCard }) => {
             title: Yup.string().required('Vui lòng nhập tiêu đề'),
             type: Yup.string(),
             description: Yup.string(),
-            json: Yup.string().required('Vui lòng nhập danh sách từ vựng'),
+            json: Yup.string(),
             background: Yup.string(),
         }),
         onSubmit: async (values) => {
+            console.log('values', values);
+            
             try {
                 await handleSaveCard({
                     ...card,
@@ -84,8 +86,9 @@ const CardModal = ({ card, setModalOpen, handleSaveCard }) => {
                             disabled={card?.view}
                         >
                             <option value="">-- Chọn loại --</option>
-                            <option value="REGULAR">REGULAR</option>
-                            <option value="PREMIUM">PREMIUM</option>
+                            <option value="REGULAR">Regular</option>
+                            <option value="PREMIUM">Premium</option>
+                            <option value="PROMAX">Promax</option>
                         </select>
                         {formik.touched.type && formik.errors.type && (
                             <div className="error">{formik.errors.type}</div>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { AddView } from "../redux/apiRequest";
 import { nFormatter } from "../util";
@@ -19,13 +19,17 @@ const Card = ({ data, flex }) => {
     }
   };
 
-  const addView = () => {
+  const handleClick = (e) => {
     AddView(data.slug);
     Recent();
   };
 
   return (
-    <div className={`card ${flex ? "flex" : ""}`} onClick={addView}>
+    <>
+    <div className={`card ${flex ? "flex" : ""}`} onClick={handleClick}>
+      <div className={`badge ${data?.type ? data?.type.toLowerCase() : ""}`}>
+      {data?.type?.toLowerCase() !== "regular" && data?.type?.toLowerCase()}
+      </div>
       <Link to={`/card/${data?.slug}`}>
         <div
           className="card__des"
@@ -49,6 +53,8 @@ const Card = ({ data, flex }) => {
         </div>
       </div>
     </div>
+    
+    </>
   );
 };
 

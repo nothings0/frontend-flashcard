@@ -186,7 +186,7 @@
   &__container {
     @include flex(flex-start, unset);
     gap: 0 5rem;
-    height: 60vh;
+    height: 35vh;
   }
   &__menu {
     width: 25%;
@@ -209,7 +209,7 @@
     border-radius: 5px;
   }
   &__bottom {
-    margin-top: 20px;
+    margin: 20px 0;
     @include flex(center, space-between);
     &__left {
       width: 25%;

@@ -2,15 +2,19 @@
   &__header {
     margin-bottom: 3rem;
     padding: 0 1rem;
+
     &__title {
       @include flex(center, space-between);
+
       &__txt {
         font-size: 2.8rem;
         text-transform: capitalize;
       }
+
       &__btn {
         display: none;
       }
+
       &.shrink {
         position: fixed;
         top: 0;
@@ -26,6 +30,7 @@
         .card-detail__header__title__btn {
           display: block;
           position: relative;
+
           &__in {
             @include flex(center, center);
             gap: 0 1rem;
@@ -36,6 +41,7 @@
             border-radius: 10px;
             cursor: pointer;
           }
+
           &__menu {
             position: absolute;
             top: 120%;
@@ -46,9 +52,11 @@
             padding: 1rem 5px 0 5px;
             box-shadow: var(--box-shadow);
             display: none;
+
             &.left {
               left: 0;
             }
+
             &.active {
               display: block;
             }
@@ -56,56 +64,69 @@
         }
       }
     }
+
     &__rate {
       @include flex(center, unset);
       margin-top: 1.2rem;
+
       i {
         font-size: 12px;
         color: #fd4;
       }
     }
+
     &__rating {
       margin-top: 1rem;
       transform: rotateY(180deg);
       display: inline-block;
       text-align: center;
+
       input {
         display: none;
       }
+
       label {
         font-size: 30px;
         color: #444;
         padding: 1px;
         transition: all 0.2s ease;
       }
-      input:not(:checked) ~ label:hover,
-      input:not(:checked) ~ label:hover ~ label {
+
+      input:not(:checked)~label:hover,
+      input:not(:checked)~label:hover~label {
         color: #fd4;
       }
-      input:checked ~ label {
+
+      input:checked~label {
         color: #fd4;
       }
-      input#rate-5:checked ~ label {
+
+      input#rate-5:checked~label {
         color: #fd4;
         text-shadow: 0 0 10px #ffdc3f;
       }
 
-      #rate-1:checked ~ .form header::before {
+      #rate-1:checked~.form header::before {
         content: "Rất tệ";
       }
-      #rate-2:checked ~ .form header::before {
+
+      #rate-2:checked~.form header::before {
         content: "Tệ";
       }
-      #rate-3:checked ~ .form header::before {
+
+      #rate-3:checked~.form header::before {
         content: "Khá";
       }
-      #rate-4:checked ~ .form header::before {
+
+      #rate-4:checked~.form header::before {
         content: "Chất lượng";
       }
-      #rate-5:checked ~ .form header::before {
+
+      #rate-5:checked~.form header::before {
         content: "Rất chất lượng";
         width: 10px;
       }
+
       .form header {
         margin-top: 2rem;
         width: 100%;
@@ -117,6 +138,7 @@
         transform: rotateY(180deg);
       }
     }
+
     span {
       font-size: 14px;
       margin-left: 1rem;
@@ -127,6 +149,7 @@
   &__top {
     @include flex(flex-start, space-between);
     gap: 0 5rem;
+
     @include mobile {
       align-items: center;
       flex-direction: column;
@@ -136,11 +159,13 @@
 
   &__left {
     flex: 1;
+
     @include mobile {
       @include flex(center, space-between);
       flex-wrap: wrap;
       gap: 0 5px;
     }
+
     &__item {
       font-size: 1.6rem;
       padding: 1.5rem;
@@ -148,37 +173,51 @@
       border-radius: 10px;
       cursor: pointer;
       background-color: #f6f7fb;
+
       &:hover {
         background-color: $main-color;
         color: $txt-white;
       }
+
       &.disable {
         opacity: 0.35;
         pointer-events: none;
       }
+
       &.approval {
         background-color: rgb(216, 61, 0);
         color: #fff;
       }
+
       &.pending {
         background-color: rgb(0, 24, 236);
         color: #fff;
       }
-      &.plus{
+
+      &.plus {
         position: relative;
-        &::before{
-          content: "PLUS";
-          font-size: 1.6rem;
-          padding: 8px 16px;
-          font-weight: 600;
-          color: #fff;
+
+        &::before {
+          content: "plus";
           position: absolute;
-          background-color: #ffa318;
-          border-radius: 10px;
-          top: 0;
+          display: inline-block;
+          padding: 4px 10px;
+          font-size: 12px;
+          font-weight: 600;
+          background-color: #ffc107;
+          color: #fff;
+          border-radius: 20px;
+          line-height: 1;
+          white-space: nowrap;
+          z-index: 98;
+          padding: 6px 10px;
+          box-shadow: var(--box-shadow);
           right: 0;
+          top: 10px;
+          transform: rotate(45deg);
         }
       }
+
       @include mobile {
         font-size: 12px;
         align-items: center;
@@ -191,6 +230,7 @@
   &__right {
     width: 75%;
     height: 40rem;
+
     @include mobile {
       width: 100%;
       height: 250px;
@@ -200,6 +240,7 @@
   &__info {
     margin: 6rem 0;
     @include flex(center, space-between);
+
     &__user {
       font-size: 1.6rem;
       font-weight: 400;
@@ -208,60 +249,73 @@
         font-weight: 600;
         cursor: pointer;
         margin-left: 8px;
-        & > a {
+
+        &>a {
           display: inline-block;
         }
       }
     }
+
     &__menu {
       border-radius: 10px;
     }
+
     &__icon {
       @include flex(center, space-between);
       gap: 0 1rem;
+
       &__wrap {
         border-radius: 10px;
       }
+
       i {
         padding: 1rem;
         font-size: 1.6rem;
         cursor: pointer;
         border-radius: inherit;
         position: relative;
+
         &:hover {
           background-color: $main-color;
           color: #fff;
         }
+
         &.disable {
           opacity: 0.35;
           pointer-events: none;
         }
       }
+
       span {
         cursor: pointer;
       }
+
       span.disable {
         opacity: 0.35;
         pointer-events: none;
       }
+
       a {
         display: inline-block;
         border-radius: inherit;
+
         &.disable {
           opacity: 0.35;
           pointer-events: none;
         }
       }
     }
+
     &__menu {
       display: inline-block;
       position: relative;
+
       &.disable {
         opacity: 0.35;
         pointer-events: none;
       }
+
       &__list {
-        // cursor: pointer;
         position: absolute;
         top: 140%;
         right: 0;
@@ -270,21 +324,27 @@
         padding: 0.5rem;
         border-radius: 5px;
         display: none;
-        // width: 20rem;
+        width: 18rem;
         font-size: 1.1rem;
+        z-index: 99;
+        box-shadow: var(--box-shadow);
+
         a,
         span {
           @include flex(center, flex-start);
           width: 100%;
           padding-right: 1rem;
+
           &:hover {
             color: $main-color;
           }
+
           i:hover {
             background-color: unset;
             color: unset;
           }
         }
+
         &.active {
           display: block;
         }
@@ -294,15 +354,19 @@
 
   &__des {
     margin-bottom: 4rem;
+
     &__heading {
       font-size: 2rem;
       text-transform: capitalize;
+
       @include mobile {
         font-size: 1.6rem;
       }
     }
+
     &__term {
       margin-top: 2rem;
+
       &__item {
         position: relative;
         @include flex(center, unset);
@@ -313,52 +377,66 @@
         font-size: 1.6rem;
         margin-top: 1.4rem;
         box-shadow: 0px 2px 5px 3px rgb(0 0 0 / 15%);
+
         @include mobile {
           margin-top: 10px;
           padding: 4px 8px;
           gap: 0 6px;
         }
       }
+
       p {
         line-height: 1.6;
       }
+
       &__prompt {
         width: 30%;
       }
+
       &__answer {
         flex: 1;
       }
+
       &__icon {
         width: 30%;
+
         @include mobile {
           width: 18%;
         }
+
         @include flex(center, flex-end);
+
         i {
           margin-left: 1rem;
           padding: 1rem;
           cursor: pointer;
           border-radius: 50%;
+
           &:hover {
             background-color: $main-color;
             color: $txt-white;
           }
+
           &.disable {
             opacity: 0.35;
             pointer-events: none;
           }
+
           @include mobile {
             padding: 2px;
           }
         }
       }
+
       textarea {
         border: none;
         height: max-content;
+
         &:focus {
           border-bottom: 3px solid $main-color;
         }
       }
+
       .term-selector {
         position: absolute;
         top: 0;
@@ -369,11 +447,13 @@
         opacity: 0;
         font-size: 1.8rem;
       }
+
       &__item:hover .term-selector,
       &__item:focus .term-selector {
         visibility: visible;
         opacity: 1;
       }
+
       .card-ghost {
         transition: transform 0.18s ease;
         transform: rotateZ(50deg);
@@ -383,20 +463,156 @@
         transition: transform 0.18s ease-in-out;
         transform: rotateZ(50deg);
       }
+
       .term-drop-preview {
         background-color: rgba(150, 150, 200, 0.1);
         border: 1px dashed var(--txt-color);
         margin: 5px;
       }
-      .smooth-dnd-container.vertical > .smooth-dnd-draggable-wrapper {
+
+      .smooth-dnd-container.vertical>.smooth-dnd-draggable-wrapper {
         overflow: visible;
       }
     }
   }
+
+  /* Popup container */
+  .popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.9);
+    z-index: 1000;
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    max-width: 400px;
+    width: 90%;
+    opacity: 0;
+    animation: popupFadeIn 0.3s ease-out forwards;
+    outline: none;
+  }
+
+  /* Popup animation */
+  @keyframes popupFadeIn {
+    from {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.9);
+    }
+
+    to {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+  }
+
+  /* Overlay */
+  .popup__overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 999;
+    backdrop-filter: blur(3px);
+    /* Blur effect for modern browsers */
+    opacity: 0;
+    animation: overlayFadeIn 0.3s ease-out forwards;
+  }
+
+  /* Overlay animation */
+  @keyframes overlayFadeIn {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  /* Popup content */
+  .popup__content {
+    text-align: center;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  /* Heading */
+  .popup__content h2 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin: 0 0 12px;
+    line-height: 1.3;
+  }
+
+  /* Paragraph */
+  .popup__content p {
+    font-size: 1.4rem;
+    color: #4a4a4a;
+    margin: 0 0 20px;
+    line-height: 1.5;
+  }
+
+  /* Buttons container */
+  .popup__buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 20px;
+  }
+
+  /* Button styles */
+  .popup__buttons button {
+    padding: 10px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.4rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  /* Upgrade button */
+  .popup__buttons button {
+    background: linear-gradient(90deg, #007bff 0%, #0056b3 100%);
+    color: white;
+  }
+
+  .popup__buttons button:hover {
+    background: linear-gradient(90deg, #0056b3 0%, #003d82 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 123, 255, 0.3);
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 480px) {
+    .popup {
+      padding: 20px;
+      max-width: 300px;
+    }
+
+    .popup__content h2 {
+      font-size: 1.5rem;
+    }
+
+    .popup__content p {
+      font-size: 0.9rem;
+    }
+
+    .popup__buttons button {
+      padding: 8px 16px;
+      font-size: 0.9rem;
+    }
+  }
+
   [data-c-tooltip] {
     position: relative;
     cursor: pointer;
   }
+
   /* Base styles for the entire c-tooltip */
   [data-c-tooltip]:before,
   [data-c-tooltip]:after {
@@ -416,6 +632,7 @@
     transform: translate3d(0, 0, 0);
     pointer-events: none;
   }
+
   /* Show the entire c-tooltip on hover and focus */
   [data-c-tooltip]:hover:before,
   [data-c-tooltip]:hover:after,
@@ -426,6 +643,7 @@
     // filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
     opacity: 1;
   }
+
   /* Base styles for the c-tooltip's directional arrow */
   [data-c-tooltip]:before {
     z-index: 1001;
@@ -433,6 +651,7 @@
     background: transparent;
     content: "";
   }
+
   /* Base styles for the c-tooltip's content area */
   [data-c-tooltip]:after {
     z-index: 105;
@@ -447,6 +666,7 @@
     font-weight: 500;
     border-radius: 5px;
   }
+
   /* Directions */
   /* Top (default) */
   [data-c-tooltip]:before,
@@ -454,15 +674,18 @@
     bottom: 100%;
     right: 50%;
   }
+
   [data-c-tooltip]:before {
     margin-left: -6px;
     margin-bottom: -12px;
     border-top-color: var(--txt-color);
   }
+
   /* Horizontally align top/bottom c-tooltips */
   [data-c-tooltip]:after {
     margin-right: -10px;
   }
+
   [data-c-tooltip]:hover:before,
   [data-c-tooltip]:hover:after,
   [data-c-tooltip]:focus:before,
@@ -471,6 +694,7 @@
     -moz-transform: translateY(-12px);
     transform: translateY(-12px);
   }
+
   /* Bottom */
   [tooltip-position="bottom"]:before,
   [tooltip-position="bottom"]:after {
@@ -478,12 +702,14 @@
     bottom: auto;
     right: 50%;
   }
+
   [tooltip-position="bottom"]:before {
     margin-top: -12px;
     margin-bottom: 0;
     border-top-color: transparent;
     border-bottom-color: var(--txt-color);
   }
+
   [tooltip-position="bottom"]:hover:before,
   [tooltip-position="bottom"]:hover:after,
   [tooltip-position="bottom"]:focus:before,

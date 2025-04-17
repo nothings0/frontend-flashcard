@@ -89,27 +89,38 @@ const DetailIcon = ({ setModalOpen, iUsername }) => {
       >
         <i className="fa-solid fa-share-from-square" onClick={handleShare}></i>
         <div
-          className={`${
-            isShareActive
+          className={`${isShareActive
               ? "card-detail__info__menu__list active"
               : "card-detail__info__menu__list"
-          }`}
+            }`}
           ref={shareRef}
         >
           <a
-            href={`https://www.facebook.com/sharer.php?u=https://fluxquiz.netlify.app/card/${slug}`}
+            href={`https://www.facebook.com/sharer.php?u=https://fluxquiz.vercel.app/card/${slug}`}
             target="_blank"
           >
             <i className="fa-brands fa-facebook" rel="noopener noreferrer"></i>{" "}
             Facebook
           </a>
           <a
-            href={`https://twitter.com/intent/tweet?refer_source=https://fluxquiz.netlify.app/card/${slug}`}
+            href={`https://twitter.com/intent/tweet?refer_source=https://fluxquiz.vercel.app/card/${slug}`}
             target="_blank"
           >
             <i className="fa-brands fa-twitter" rel="noopener noreferrer"></i>{" "}
             Twitter
           </a>
+          <a
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              navigator.clipboard.writeText(`https://fluxquiz.vercel.app/card/${slug}`);
+              setShareActive(!isShareActive);
+            }}
+            rel="noopener noreferrer"
+          >
+            <i className="fas fa-link"></i> Sao chép liên kết
+          </a>
+
         </div>
       </div>
       <div
@@ -118,11 +129,10 @@ const DetailIcon = ({ setModalOpen, iUsername }) => {
       >
         <i className="fa-solid fa-ellipsis" onClick={handleMenu}></i>
         <div
-          className={`${
-            isMenuActive
+          className={`${isMenuActive
               ? "card-detail__info__menu__list active"
               : "card-detail__info__menu__list"
-          }`}
+            }`}
           ref={menuRef}
         >
           <span

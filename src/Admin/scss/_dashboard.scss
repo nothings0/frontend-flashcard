@@ -15,7 +15,7 @@
         display: grid;
         grid-template-columns: 1fr;
         gap: 1rem;
-        margin-bottom: 1.5rem;
+        margin-bottom: 3rem;
 
         @media (min-width: 768px) {
             grid-template-columns: repeat(4, 1fr);
@@ -26,21 +26,44 @@
             padding: 2rem;
             border-radius: 0.5rem;
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            @include flex(center, flex-start);
+            gap: 3rem;
+
+            .icon {
+                font-size: 5rem;
+                color: #3b82f6;
+
+                i.red {
+                    color: #ef4444;
+                }
+
+                i.green {
+                    color: #22c55e;
+                }
+
+                i.yellow {
+                    color: #f59e0b;
+                }
+
+                i.blue {
+                    color: #3b82f6;
+                }
+            }
 
             .metric-title {
                 font-size: 1.2rem;
                 font-weight: 600;
                 color: #4b5563;
-                margin-bottom: 0.5rem;
             }
 
             .metric-value {
                 font-size: 2rem;
                 font-weight: 700;
-                margin-bottom: 0.25rem;
+                margin-top: 1.4rem;
 
                 .metric-change {
                     font-size: 1.2rem;
+                    margin-left: 1rem;
 
                     &.positive {
                         color: #22c55e;
@@ -65,11 +88,10 @@
         gap: 1rem;
 
         @media (min-width: 1024px) {
-            grid-template-columns: 2fr 1fr;
+            grid-template-columns: 1fr 1fr;
         }
 
         .chart-card {
-            background-color: white;
             padding: 1rem;
             border-radius: 0.5rem;
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
@@ -80,35 +102,49 @@
             }
 
             .chart-title {
-                font-size: 1.125rem;
+                font-size: 1.4rem;
                 font-weight: 600;
                 margin-bottom: 1rem;
             }
 
             &.visitor-chart {
-                .timeframe-buttons {
-                    display: flex;
-                    gap: 0.5rem;
-                    margin-bottom: 1rem;
+                font-size: 1.4rem;
 
-                    button {
-                        padding: 0.5rem 1rem;
-                        border-radius: 0.25rem;
-                        background-color: #e5e7eb;
-                        border: none;
-                        cursor: pointer;
-                        transition: background-color 0.3s;
-
-                        &.active {
-                            background-color: #3b82f6;
-                            color: white;
-                        }
-
-                        &:hover {
-                            background-color: #d1d5db;
-                        }
-                    }
+                table {
+                    background-color: #fff;
+                    width: 100%;
+                    border-collapse: collapse;
+                    margin-top: 1rem;
+                    font-family: Arial, sans-serif;
                 }
+
+                thead {
+                    background-color: #f0f0f0;
+                }
+
+                thead th {
+                    text-align: left;
+                    padding: 12px;
+                    font-weight: bold;
+                    border-bottom: 2px solid #ccc;
+                }
+
+                tbody td {
+                    padding: 12px;
+                    border-bottom: 1px solid #e0e0e0;
+                }
+
+                tbody tr:hover {
+                    background-color: #f9f9f9;
+                }
+
+                .no-data {
+                    text-align: center;
+                    padding: 16px;
+                    font-style: italic;
+                    color: #888;
+                }
+
             }
 
             &.income-chart {
@@ -120,6 +156,119 @@
             }
         }
     }
+
+    &>.header-title {
+        @include flex(center, space-between);
+        margin-bottom: 1rem;
+    
+        select#period {
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+            background-color: white;
+            color: #333;
+            outline: none;
+            transition: all 0.2s ease-in-out;
+            margin-left: 16px;
+            cursor: pointer;
+        }
+    
+        select#period:hover {
+            border-color: #888;
+        }
+    
+        select#period:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.2);
+        }
+    
+        .header-control {
+            @include flex(center, space-between);
+            margin: 2rem 0 3rem 0;
+    
+            .search-wrapper {
+                position: relative;
+                display: inline-block;
+                width: 80%;
+    
+                i.disable {
+                    opacity: 0.5;
+                    pointer-events: none;
+                }
+            }
+    
+            .search-icon {
+                position: absolute;
+                right: 10px;
+                top: 50%;
+                transform: translateY(-50%);
+                color: #666;
+                pointer-events: none;
+                font-size: 1.7rem;
+            }
+    
+            input {
+                padding: 8px 16px;
+                border-radius: 4px;
+                border: 1px solid #ccc;
+                width: 100%;
+            }
+    
+            &>button {
+                background-color: $main-color;
+                padding: 8px 16px;
+                border-radius: 4px;
+                color: white;
+                width: 200px;
+            }
+        }
+    }
+    
+}
+
+.header-title {
+
+    .header-control {
+        @include flex(center, space-between);
+        margin: 2rem 0 3rem 0;
+
+        .search-wrapper {
+            position: relative;
+            display: inline-block;
+            width: 80%;
+
+            i.disable {
+                opacity: 0.5;
+                pointer-events: none;
+            }
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+            pointer-events: none;
+            font-size: 1.7rem;
+        }
+
+        input {
+            padding: 8px 16px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            width: 100%;
+        }
+
+        &>button {
+            background-color: $main-color;
+            padding: 8px 16px;
+            border-radius: 4px;
+            color: white;
+            width: 200px;
+        }
+    }
 }
 
 .admin-list th:first-child,
@@ -129,6 +278,7 @@
     text-align: center;
     width: 100px;
 }
+
 .admin-list {
     width: 100%;
     max-width: 100%;
@@ -191,9 +341,11 @@
         &.edit {
             background-color: #cfcc10;
         }
+
         &.delete {
             background-color: #ef4444;
         }
+
         &.view {
             background-color: #22c55e;
         }
@@ -247,49 +399,6 @@
 
 }
 
-.header-title {
-    .header-control {
-        @include flex(center, space-between);
-        margin: 2rem 0 3rem 0;
-
-        .search-wrapper {
-            position: relative;
-            display: inline-block;
-            width: 80%;
-
-            i.disable {
-                opacity: 0.5;
-                pointer-events: none;
-            }
-        }
-
-        .search-icon {
-            position: absolute;
-            right: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #666;
-            pointer-events: none;
-            font-size: 1.7rem;
-        }
-
-        input {
-            padding: 8px 16px;
-            border-radius: 4px;
-            border: 1px solid #ccc;
-            width: 100%;
-        }
-
-        &>button {
-            background-color: $main-color;
-            padding: 8px 16px;
-            border-radius: 4px;
-            color: white;
-            width: 200px;
-        }
-    }
-}
-
 .modal-input-wrap {
     margin-bottom: 20px;
     width: 100%;
@@ -302,7 +411,8 @@
         color: #333;
     }
 
-    input, select {
+    input,
+    select {
         width: 100%;
         padding: 10px;
         font-size: 16px;
@@ -312,7 +422,8 @@
         transition: border-color 0.3s;
     }
 
-    input:focus, select:focus {
+    input:focus,
+    select:focus {
         border-color: $main-color;
         /* Màu xanh lá khi focus */
         box-shadow: 0 0 5px $main-color;

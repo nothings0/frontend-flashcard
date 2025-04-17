@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { GetAllCard, AdminUpdateCard, AdminAddCard } from '../redux/apiRequest';
+import { GetAllCard, UpdateCardAdmin, AdminAddCard } from '../redux/apiRequest';
 import Modal, { ModalTitle, ModalBody, ModalFooter } from '../components/Modal';
 import List from './List';
 import debounce from 'lodash/debounce';
@@ -42,7 +42,7 @@ const Card = () => {
   const handleSaveCard = async (card) => {
     try {
       if (card._id) {
-        await AdminUpdateCard({ data: card, accessToken });
+        await UpdateCardAdmin({ data: card, accessToken });
       } else {
         await AdminAddCard({ data: card, accessToken });
       }

@@ -159,6 +159,7 @@ const Calendar = () => {
                       value={boardTitle}
                       onChange={(e) => setBoardTitle(e.target.value)}
                       onKeyDown={handleUpdateBoard}
+                      disabled
                     />
                   </div>
                   <Container

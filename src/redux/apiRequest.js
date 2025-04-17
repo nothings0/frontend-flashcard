@@ -198,21 +198,6 @@ export const GetTranslate = async (translate) => {
   } catch (error) {}
 };
 
-export const AdminUpdateCard = async ({data, accessToken}) => {
-  try {
-    const res = await axiosJWT.patch(
-      `${genURL(`/v1/card/${data.slug}`)}`,
-      { data },
-      {
-        headers: { token: `Bearer ${accessToken}` },
-      }
-    );
-    return res.data;
-  } catch (error) {
-    throw error
-  }
-};
-
 export const UpdateCard = async (card, slug, accessToken, userId, dispatch) => {
   try {
     const res = await axiosJWT.patch(
@@ -225,6 +210,20 @@ export const UpdateCard = async (card, slug, accessToken, userId, dispatch) => {
     return res.data;
   } catch (error) {
     dispatch(showToast(error.response.data.msg));
+  }
+};
+export const UpdateCardAdmin = async ({data, accessToken}) => {
+  try {
+    const res = await axiosJWT.patch(
+      `${genURL(`/v1/card/admin`)}`,
+      { data },
+      {
+        headers: { token: `Bearer ${accessToken}` },
+      }
+    );
+    return res.data;
+  } catch (error) {
+    throw error
   }
 };
 
@@ -820,9 +819,28 @@ export const getInvoice = async ({ invoiceId, accessToken }) => {
 };
 // admin
 export const statistical = async ({ accessToken, period }) => {
-  console.log("period", period);
   try {
     const res = await axiosJWT.get(`${genURL(`/v1/admin`, {period: period})}`, {
+      headers: { token: `Bearer ${accessToken}` },
+    });
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const getInvoiceChart = async ({ accessToken }) => {
+  try {
+    const res = await axiosJWT.get(`${genURL(`/v1/admin/recentIncome`)}`, {
+      headers: { token: `Bearer ${accessToken}` },
+    });
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const adminGetCards = async ({ accessToken, page, limit, sort }) => {
+  try {
+    const res = await axiosJWT.get(`${genURL(`/v1/admin/cards`, {page, limit, sort})}`, {
       headers: { token: `Bearer ${accessToken}` },
     });
     return res.data;

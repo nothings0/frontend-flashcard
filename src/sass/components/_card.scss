@@ -1,5 +1,34 @@
-.card{
-    &__des{
+.card {
+    position: relative;
+    .badge {
+        position: absolute;
+        display: inline-block;
+        padding: 4px 10px;
+        font-size: 12px;
+        font-weight: 600;
+        color: white;
+        border-radius: 20px;
+        line-height: 1;
+        white-space: nowrap;
+        z-index: 98;
+        padding: 6px 10px;
+        box-shadow: var(--box-shadow);
+        left: 50%;
+        transform: translateX(-50%);
+        top: -12px;
+
+        &.premium {
+            background-color: #ffc107;
+            color: #fff;
+        }
+
+        &.promax {
+            background-color: #dc3545;
+            color: #fff;
+        }
+    }
+
+    &__des {
         width: 100%;
         font-weight: 600;
         border-radius: 10px;
@@ -7,8 +36,9 @@
         color: $txt-white;
         position: relative;
         overflow: hidden;
-        &::after{
-            background-color: rgba(0,0,0,.5);
+
+        &::after {
+            background-color: rgba(0, 0, 0, .5);
             content: "";
             inset: 0;
             opacity: 0;
@@ -16,18 +46,22 @@
             transition: all .3s ease 0s;
             visibility: hidden;
         }
-        &:hover::after{
+
+        &:hover::after {
             opacity: 1;
             visibility: visible;
         }
-        @include mobile{
+
+        @include mobile {
             border-radius: 8px;
             height: 14rem;
         }
-        @include tablet{
+
+        @include tablet {
             height: 15rem;
         }
-        button{
+
+        button {
             background-color: #fff;
             border-color: #fff;
             color: #000;
@@ -35,8 +69,8 @@
             opacity: 0;
             position: absolute;
             top: 60%;
-            -webkit-transform: translate(-50%,-50%);
-            transform: translate(-50%,-50%);
+            -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
             transition: all .3s ease 0s;
             visibility: hidden;
             z-index: 1;
@@ -47,19 +81,23 @@
             font-weight: 600;
             cursor: pointer;
             text-align: center;
-            @include tablet{
+
+            @include tablet {
                 font-size: 1.3rem;
             }
-            @include mobile{
+
+            @include mobile {
                 font-size: 1.1rem;
             }
         }
-        &:hover button{
+
+        &:hover button {
             top: 50%;
             opacity: 1;
             visibility: visible;
         }
-        h3{
+
+        h3 {
             display: block;
             font-size: 2.2rem;
             line-height: 1.5;
@@ -69,19 +107,23 @@
             text-overflow: ellipsis;
             text-align: center;
             position: absolute;
-            top: 50%;left: 50%;
+            top: 50%;
+            left: 50%;
             transform: translate(-50%, -50%);
             width: 100%;
-            @include tablet{
+
+            @include tablet {
                 font-size: 2rem;
             }
-            @include mobile{
+
+            @include mobile {
                 font-size: 1.5rem;
                 line-height: 1.5;
                 font-weight: 600;
             }
         }
-        i{
+
+        i {
             font-size: 10rem;
             position: absolute;
             top: 50%;
@@ -90,7 +132,8 @@
             opacity: 0.1;
         }
     }
-    &__title{
+
+    &__title {
         margin: 1.4rem 0 0.6rem 0;
         font-size: 1.6rem;
         line-height: 1.4;
@@ -99,27 +142,100 @@
         -webkit-line-clamp: 1;
         text-transform: capitalize;
     }
-    &__info{
+
+    &__info {
         font-size: 1.5rem;
         font-weight: 400;
     }
-    
-    &.flex{
+
+    &.flex {
         @include flex(flex-start, space-between);
         margin-top: 2rem;
         gap: 0 12px;
-        & > a{
+
+        &>a {
             width: 50%;
         }
-        .card__txt{
+
+        .card__txt {
             flex: 1;
             text-align: left;
         }
-        .card__des{
+
+        .card__des {
             height: 12rem;
-            h3{
+
+            h3 {
                 font-size: 1.6rem;
             }
         }
     }
+
+    .popup__overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.4);
+        z-index: 999;
+    }
+
+    .popup {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1000;
+    }
+
+    .popup__content {
+        background: #fff;
+        padding: 24px 32px;
+        border-radius: 12px;
+        max-width: 400px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        animation: popupFade 0.3s ease-in-out;
+    }
+
+    .popup__content h2 {
+        margin-bottom: 12px;
+        font-size: 20px;
+        font-weight: 600;
+    }
+
+    .popup__content p {
+        margin-bottom: 20px;
+        font-size: 16px;
+        color: #555;
+    }
+
+    .popup__content button {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 500;
+        transition: background-color 0.2s ease;
+    }
+
+    .popup__content button:hover {
+        background-color: #0056b3;
+    }
+
+    @keyframes popupFade {
+        from {
+            opacity: 0;
+            transform: translate(-50%, -40%);
+        }
+
+        to {
+            opacity: 1;
+            transform: translate(-50%, -50%);
+        }
+    }
+
 }
