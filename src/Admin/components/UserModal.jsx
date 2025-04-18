@@ -12,6 +12,11 @@ const UserModal = ({ user, setModalOpen, handleSaveUser }) => {
             email: '',
             password: '',
             name: '',
+            plan: {
+                type: 'FREE',
+                startDate: null,
+                endDate: null,
+            },
             isBlock: false,
             _id: '',
         },
@@ -19,6 +24,14 @@ const UserModal = ({ user, setModalOpen, handleSaveUser }) => {
             username: Yup.string().required('Vui lòng nhập username'),
             email: Yup.string().email('Email không hợp lệ').required('Vui lòng nhập email'),
             name: Yup.string(),
+            plan: Yup.object({
+                type: Yup.string()
+                    .required('Vui lòng chọn gói')
+                    .oneOf(['FREE', 'MONTHLY', 'YEARLY'], 'Gói không hợp lệ'),
+                startDate: Yup.string().nullable(), // Có thể thêm validation nếu bắt buộc
+                endDate: Yup.string().nullable(), // Có thể thêm validation nếu bắt buộc
+            }),
+            isBlock: Yup.boolean(),
             password: !user
                 ? Yup.string().required('Vui lòng nhập mật khẩu')
                 : Yup.string(),
@@ -43,9 +56,14 @@ const UserModal = ({ user, setModalOpen, handleSaveUser }) => {
                 _id: user._id || '',
                 username: user.username || '',
                 email: user.email || '',
-                password: '',
+                password: 'HACKED',
                 name: user.name || '',
                 isBlock: user.isBlock || false,
+                plan: {
+                    type: user.plan?.type || 'FREE',
+                    startDate: user.plan?.startDate || null,
+                    endDate: user.plan?.endDate || null,
+                },
             });
         }
     }, [user]);
@@ -145,6 +163,28 @@ const UserModal = ({ user, setModalOpen, handleSaveUser }) => {
                         </div>
                     )}
 
+                    <div className="modal-input-wrap">
+                        <label htmlFor="plan">Gói?</label>
+                        <select
+                            id="plan"
+                            name="plan.type"
+                            value={formik.values.plan.type}
+                            onChange={(e) => {
+                                formik.setFieldValue('plan.type', e.target.value);
+                                // Nếu cần cập nhật startDate và endDate khi thay đổi gói, thêm logic ở đây
+                                formik.setFieldValue('plan.startDate', new Date().toISOString()); // Ví dụ
+                                formik.setFieldValue('plan.endDate', new Date().toISOString()); // Ví dụ
+                            }}
+                            disabled={user?.view}
+                        >
+                            <option value="FREE">FREE</option>
+                            <option value="MONTHLY">MONTHLY</option>
+                            <option value="YEARLY">YEARLY</option>
+                        </select>
+                        {formik.touched.plan?.type && formik.errors.plan?.type && (
+                            <div className="error">{formik.errors.plan.type}</div>
+                        )}
+                    </div>
                     <div className="modal-input-wrap">
                         <label htmlFor="isBlock">Đã khóa?</label>
                         <select

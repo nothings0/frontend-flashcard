@@ -151,7 +151,7 @@ const Detail = () => {
     const fetchCard = async () => {
       setPage(1);
       const res = await getCardById(dispatch, slug, 1, 50);
-      if (res?.cards?.type && res.cards.type.toUpperCase() === "PRO" && plan?.type !== "PRO") {
+      if (res?.cards?.type && res.cards.type.toUpperCase() === "PRO" && !["MONTHLY", "YEARLY"].includes(plan?.type)) {
         setPopupOpen(true);
         return;
       }
@@ -321,7 +321,7 @@ const Detail = () => {
                             Nâng cấp
                           </div>
                         )
-                      ) : userId && plan.type === "PLUS" ? (
+                      ) : userId && ["MONTHLY", "YEARLY"].includes(plan.type) ? (
                         <Link to={`/card/p/${slug}`}>
                           <div className="card-detail__left__item plus">
                             Fluxquiz Plus
@@ -393,7 +393,7 @@ const Detail = () => {
                         Nâng cấp
                       </div>
                     )
-                  ) : userId && plan.type === "PLUS" ? (
+                  ) : userId && ["MONTHLY", "YEARLY"].includes(plan.type) ? (
                     <Link to={`/card/p/${slug}`}>
                       <div className="card-detail__left__item plus">
                         Fluxquiz Plus

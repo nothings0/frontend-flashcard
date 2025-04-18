@@ -65,7 +65,7 @@ export default function ChatWidget() {
     // Kiểm tra trạng thái Plus khi nhấn nút chat
     const handleChatButtonClick = async () => {
         setOpen(true);
-        if (plan?.type !== "PRO") {
+        if (!["MONTHLY", "YEARLY"].includes(plan?.type)) {
             setShowUpgradePopup(true); // Hiện popup nâng cấp
         }
     };
@@ -75,7 +75,7 @@ export default function ChatWidget() {
 
         setMessages((prevMessages) => [
             ...prevMessages,
-            { sender: 'user', message: input },
+            { sender: 'user-chat', message: input },
         ]);
 
         setInput('');
@@ -84,7 +84,8 @@ export default function ChatWidget() {
 
         try {
             const res = await aiChat({accessToken, userMessage: input}); // Gửi token
-            const reader = res.data.getReader();
+            
+            const reader = res.getReader();
             const decoder = new TextDecoder();
             let done = false;
             let responseText = '';

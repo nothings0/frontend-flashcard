@@ -971,14 +971,19 @@ export const deleteBanner = async ({id, accessToken}) => {
 };
 
 //
-export const aiChat = async ({accessToken, userMessage}) => {
-  try {
-    return fetch(`${genURL(`/v1/ai/chat`)}`, {
+export const aiChat = async ({ accessToken, userMessage }) => {
+  const res = await fetch('http://localhost:8000/v1/ai/chat', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ userMessage, accessToken }),
-    });
-  } catch (error) {
-    throw error;
+      headers: {
+          'Content-Type': 'application/json',
+          'token': `Bearer ${accessToken}`,
+      },
+      body: JSON.stringify({ userMessage: userMessage }),
+  });
+
+  if (!res.ok) {
+      throw new Error('API trả về lỗi');
   }
-}
+
+  return res.body;
+};

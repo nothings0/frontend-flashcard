@@ -1,4 +1,5 @@
 import React from 'react';
+import Skeleton from '../../components/Skeleton';
 
 const List = ({
     data = [],
@@ -12,7 +13,7 @@ const List = ({
     onPageChange = () => { },
     customRender = {},
 }) => {
-    if (!data || data.length === 0) return <div className="list">No data found.</div>;
+    if (!data || data.length === 0) return <Skeleton />;
 
     // Giới hạn cột là các key từ columns
     const headers = columns || Object.keys(data[0] || {}).filter((k) => k !== '_id' && k !== '__v');

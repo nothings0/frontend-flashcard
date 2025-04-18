@@ -14,19 +14,27 @@ const Admin = () => {
 
   return (
     <Helmet title="Admin">
-      <div className="admin">
-        <NavBar />
-        <Search />
-        <Routes>
-          <Route
-            path="/"
-            element={isAdmin ? <AdminDashboard /> : <Navigate to="/login" />}
-          />
-          <Route path="/user" element={<User />} />
-          <Route path="/flashcard" element={<Card />} />
-          <Route path="/service" element={<Service />} />
-        </Routes>
-      </div>
+      {
+        isAdmin ? <>
+          <div className="admin">
+            <NavBar />
+            <Search />
+            <Routes>
+              <Route
+                path="/"
+                element={<AdminDashboard />}
+              />
+              <Route path="/user" element={<User />} />
+              <Route path="/flashcard" element={<Card />} />
+              <Route path="/service" element={<Service />} />
+            </Routes>
+          </div>
+        </> :
+          <>
+            <Navigate to="/login" />
+          </>
+      }
+
     </Helmet>
   );
 };
