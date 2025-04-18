@@ -89,7 +89,7 @@ const Notification = () => {
     if (!window.confirm("Delete this notification?")) return;
     setLoading(true);
     try {
-      await DeleteNotifi(id);
+      await DeleteNotifi({id, accessToken});
       setNotifications((prev) => prev.filter((n) => n._id !== id));
     } catch (err) {
       setError(err.response?.data?.content || "Failed to delete");
@@ -101,8 +101,8 @@ const Notification = () => {
   return (
     <div className="service-manager">
       <h2 className="service__title">
-        Notification Management
-        <button onClick={openCreateModal} className="btn primary">Create</button>
+        Notification
+        <button onClick={openCreateModal} className="btn primary"><i className="fa-solid fa-plus"></i></button>
       </h2>
 
       {error && <p className="error">{error}</p>}

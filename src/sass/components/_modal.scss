@@ -60,7 +60,7 @@
     }
 
     .flex {
-      @include flex(start, center);
+      @include flex(flex-start, center);
       flex-direction: column;
       width: 100%;
       gap: 1.2rem;

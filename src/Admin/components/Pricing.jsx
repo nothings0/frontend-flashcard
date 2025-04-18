@@ -1,39 +1,41 @@
 import { useState, useEffect } from "react";
 import {
-    getAllBanners,
-    createBanner,
-    updateBanner,
-    deleteBanner,
+    getPries,
+    createPricing,
+    updatePricing,
+    deletePricing,
 } from "../../redux/apiRequest";
 import Modal, { ModalBody, ModalFooter, ModalTitle } from "../../components/Modal";
 
-const BannerManager = ({ accessToken }) => {
-    const [banners, setBanners] = useState([]);
+const PricingManager = ({ accessToken }) => {
+    const [pricings, setPricings] = useState([]);
     const [modalOpen, setModalOpen] = useState(false);
     const [isEditMode, setIsEditMode] = useState(false);
-    const [currentBanner, setCurrentBanner] = useState(null);
+    const [currentPricing, setCurrentPricing] = useState(null);
     const [formData, setFormData] = useState({
         title: "",
         description: "",
-        img: "",
+        type: "",
+        discount: 0,
+        price: 0,
     });
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
 
-    // Fetch all banners on mount
+    // Fetch all pricings on mount
     useEffect(() => {
-        const fetchBanners = async () => {
+        const fetchPricings = async () => {
             setLoading(true);
             try {
-                const data = await getAllBanners();
-                setBanners(data);
+                const data = await getPries();
+                setPricings(data);
             } catch (err) {
-                setError("Failed to load banners");
+                setError("Failed to load pricings");
             } finally {
                 setLoading(false);
             }
         };
-        fetchBanners();
+        fetchPricings();
     }, []);
 
     // Handle form input changes
@@ -42,22 +44,24 @@ const BannerManager = ({ accessToken }) => {
         setFormData((prev) => ({ ...prev, [name]: value }));
     };
 
-    // Open modal for creating a new banner
+    // Open modal for creating a new pricing
     const openCreateModal = () => {
-        setFormData({ title: "", description: "", img: "" });
+        setFormData({ title: "", description: "", type: "", discount: 0, price: 0 });
         setIsEditMode(false);
         setError("");
         setModalOpen(true);
     };
 
-    // Open modal for editing a banner
-    const openEditModal = (banner) => {
+    // Open modal for editing a pricing
+    const openEditModal = (pricing) => {
         setFormData({
-            title: banner.title,
-            description: banner.description,
-            img: banner.img,
+            title: pricing.title,
+            description: pricing.description,
+            type: pricing.type,
+            discount: pricing.discount,
+            price: pricing.price,
         });
-        setCurrentBanner(banner);
+        setCurrentPricing(pricing);
         setIsEditMode(true);
         setError("");
         setModalOpen(true);
@@ -66,44 +70,40 @@ const BannerManager = ({ accessToken }) => {
     // Handle form submission (create or update)
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (!formData.img) {
-            setError("Image URL is required");
-            return;
-        }
 
         setLoading(true);
         try {
             if (isEditMode) {
-                const updatedBanner = await updateBanner(currentBanner._id, formData);
-                setBanners((prev) =>
-                    prev.map((banner) =>
-                        banner._id === updatedBanner._id ? updatedBanner : banner
+                const updatedPricing = await updatePricing({id: currentPricing._id, data: formData, accessToken});
+                setPricings((prev) =>
+                    prev.map((pricing) =>
+                        pricing._id === updatedPricing._id ? updatedPricing : pricing
                     )
                 );
             } else {
-                const newBanner = await createBanner(formData);
-                setBanners((prev) => [...prev, newBanner]);
+                const newPricing = await createPricing({data: formData, accessToken});
+                setPricings((prev) => [...prev, newPricing]);
             }
             setModalOpen(false);
-            setFormData({ title: "", description: "", img: "" });
+            setFormData({ title: "", description: "", type: "", discount: 0, price: 0 });
             setError("");
         } catch (err) {
-            setError(err.response?.data?.message || "Failed to save banner");
+            setError(err.response?.data?.message || "Failed to save pricing");
         } finally {
             setLoading(false);
         }
     };
 
-    // Handle banner deletion
+    // Handle pricing deletion
     const handleDelete = async (id) => {
-        if (!window.confirm("Are you sure you want to delete this banner?")) return;
+        if (!window.confirm("Are you sure you want to delete this pricing?")) return;
 
         setLoading(true);
         try {
-            await deleteBanner({id, accessToken});
-            setBanners((prev) => prev.filter((banner) => banner._id !== id));
+            await deletePricing({id, accessToken});
+            setPricings((prev) => prev.filter((pricing) => pricing._id !== id));
         } catch (err) {
-            setError(err.response?.data?.message || "Failed to delete banner");
+            setError(err.response?.data?.message || "Failed to delete pricing");
         } finally {
             setLoading(false);
         }
@@ -111,9 +111,9 @@ const BannerManager = ({ accessToken }) => {
 
     return (
         <div className="service-manager">
-            <h2 className="service__title">Banner
+            <h2 className="service__title">Pricing
                 <button onClick={openCreateModal} className="btn primary">
-                <i className="fa-solid fa-plus"></i>
+                    <i className="fa-solid fa-plus"></i>
                 </button>
             </h2>
 
@@ -123,22 +123,24 @@ const BannerManager = ({ accessToken }) => {
             {loading && <p className="loading">Loading...</p>}
 
             <div className="table-container">
-                {banners.length > 0 ? (
+                {pricings.length > 0 ? (
                     <table className="table">
                         <thead>
                             <tr>
-                                <th></th>
                                 <th>Title</th>
-                                <th>Actions</th>
+                                <th>Price</th>
+                                <th>Discount</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
-                            {banners.map((n) => (
+                            {pricings.map((n) => (
                                 <tr key={n._id}>
                                     <td>
-                                        <img src={n.img} alt="" />
+                                        {n.title}
                                     </td>
-                                    <td>{n.title}</td>
+                                    <td>{n.price}</td>
+                                    <td>{n.discount}</td>
                                     <td>
                                         <div className="actions">
                                             <button onClick={() => openEditModal(n)} className="btn edit">
@@ -161,7 +163,7 @@ const BannerManager = ({ accessToken }) => {
             {modalOpen && (
                 <Modal modalOpen={modalOpen} setModalOpen={setModalOpen}>
                     <ModalTitle fnClose={() => setModalOpen(false)}>
-                        <h4>{isEditMode ? "Edit Banner" : "Create Banner"}</h4>
+                        <h4>{isEditMode ? "Edit Pricing" : "Create Pricing"}</h4>
                     </ModalTitle>
                     <ModalBody className="modal-body">
                         {error && <p className="error">{error}</p>}
@@ -186,16 +188,42 @@ const BannerManager = ({ accessToken }) => {
                                 onChange={handleInputChange}
                             />
                         </div>
+                        <div style={{ display: "flex", gap: "1rem", width: "100%" }}>
+                            <div className="modal-input-wrap">
+                                <label htmlFor="price">Price:</label>
+                                <input
+                                    id="price"
+                                    name="price"
+                                    type="text"
+                                    placeholder="Image URL"
+                                    value={formData.price}
+                                    onChange={handleInputChange}
+                                />
+                            </div>
+                            <div className="modal-input-wrap">
+                                <label htmlFor="discount">Discount:</label>
+                                <input
+                                    id="discount"
+                                    name="discount"
+                                    type="text"
+                                    placeholder="Image URL"
+                                    value={formData.discount}
+                                    onChange={handleInputChange}
+                                />
+                            </div>
+                        </div>
                         <div className="modal-input-wrap">
-                            <label htmlFor="img">Image URL:</label>
-                            <input
-                                id="img"
-                                name="img"
-                                type="text"
-                                placeholder="Image URL"
-                                value={formData.img}
+                            <label htmlFor="discount">Type:</label>
+                            <select
+                                id="type"
+                                name="type"
+                                value={formData.type}
                                 onChange={handleInputChange}
-                            />
+                            >
+                                <option value="">-- Chọn loại --</option>
+                                <option value="MONTHLY">Tháng</option>
+                                <option value="YEARLY">Năm</option>
+                            </select>
                         </div>
                     </ModalBody>
                     <ModalFooter>
@@ -216,4 +244,4 @@ const BannerManager = ({ accessToken }) => {
     );
 };
 
-export default BannerManager;
+export default PricingManager;

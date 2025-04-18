@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from "react";
-import banner_1 from "../assets/1.png";
-import banner_2 from "../assets/2.jpg";
-
-const banners = [
-  {
-    img: banner_1,
-  },
-  {
-    img: banner_2,
-  },
-];
+import { getAllBanners } from "../redux/apiRequest";
 
 const Banner = () => {
   const [index, setIndex] = useState(0);
+  const [banners, setBanners] = useState([]);
+
+  useEffect(() => {
+    const getData = async () => {
+      const data = await getAllBanners();
+      setBanners(data);
+    }
+    getData();
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {

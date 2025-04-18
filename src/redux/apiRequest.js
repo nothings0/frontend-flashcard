@@ -799,9 +799,52 @@ export const getPendingPlus = async (accessToken) => {
 export const getPries = async () => {
   try {
     const res = await axios.get(`${genURL(`/v1/pricing`)}`);
-    return res.data;
+    return res.data.data;
   } catch (error) {
     console.log(error);
+  }
+};
+
+export const getPricingById = async (id) => {
+  try {
+    const response = await axiosJWT.get(`${genURL(`/v1/pricing`, {id})}`);
+    return response.data.pricing
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const createPricing = async ({data: pricingData, accessToken}) => {
+  try {
+    const response = await axiosJWT.post(`${genURL(`/v1/pricing`)}`, pricingData, {
+      headers: { token: `Bearer ${accessToken}` },
+    });
+    return response.data.pricing
+
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const updatePricing = async ({id, data, accessToken}) => {
+
+  try {
+    const response = await axiosJWT.patch(`${genURL(`/v1/pricing/${id}`)}`, data, {
+      headers: { token: `Bearer ${accessToken}` },
+    });
+    return response.data
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const deletePricing = async ({id, accessToken}) => {
+  try {
+    await axiosJWT.delete(`${genURL(`/v1/pricing/${id}`)}`, {
+      headers: { token: `Bearer ${accessToken}` },
+    });
+  } catch (error) {
+    throw error;
   }
 };
 
@@ -881,7 +924,7 @@ export const adminGetCards = async ({ accessToken, page, limit, sort }) => {
 // banner
 export const getAllBanners = async () => {
   try {
-    const response = await axiosJWT.get(`${genURL(`/v1/banner`)}`);
+    const response = await axios.get(`${genURL(`/v1/banner`)}`);
     return response.data.banners;
   } catch (error) {
     throw error;
@@ -917,21 +960,23 @@ export const updateBanner = async (id, bannerData) => {
   }
 };
 
-export const deleteBanner = async (id) => {
+export const deleteBanner = async ({id, accessToken}) => {
   try {
-    await axiosJWT.delete(`${genURL(`/v1/banner/${id}`)}`);
+    await axiosJWT.delete(`${genURL(`/v1/banner/${id}`)}`, {
+      headers: { token: `Bearer ${accessToken}` },
+    });
   } catch (error) {
     throw error;
   }
 };
 
 //
-export const aiChat = async (userMessage) => {
+export const aiChat = async ({accessToken, userMessage}) => {
   try {
     return fetch(`${genURL(`/v1/ai/chat`)}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ userMessage }),
+      body: JSON.stringify({ userMessage, accessToken }),
     });
   } catch (error) {
     throw error;

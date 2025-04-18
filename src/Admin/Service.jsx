@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import Notification from "./components/Notification";
 import PlusRequests from "./components/PlusRequests";
 import BannerManager from "./components/Banner";
+import PricingManager from "./components/Pricing";
 
 const Service = () => {
   const accessToken = useSelector(
@@ -17,7 +18,8 @@ const Service = () => {
       </div>
       <div className="service__right">
         <BannerManager accessToken={accessToken}/>
-      <PlusRequests accessToken={accessToken} />
+        <PricingManager accessToken={accessToken}/>
+        <PlusRequests accessToken={accessToken} />
       </div>
     </div>
   );

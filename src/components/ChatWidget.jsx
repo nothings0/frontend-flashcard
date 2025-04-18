@@ -21,6 +21,9 @@ export default function ChatWidget() {
     const plan = useSelector(
         (state) => state.user.currentUser?.user.plan
     );
+    const accessToken = useSelector(
+        (state) => state.user.currentUser?.accessToken
+    );
 
     // Đóng popup khi click ra ngoài
     useEffect(() => {
@@ -80,8 +83,7 @@ export default function ChatWidget() {
         setStreamingMessage('');
 
         try {
-            const token = localStorage.getItem('token');
-            const res = await aiChat(input, messages, token); // Gửi token
+            const res = await aiChat({accessToken, userMessage: input}); // Gửi token
             const reader = res.data.getReader();
             const decoder = new TextDecoder();
             let done = false;

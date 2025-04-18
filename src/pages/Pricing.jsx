@@ -18,7 +18,7 @@ const Pricing = () => {
         const getData = async () => {
             try {
                 const res = await getPries();
-                setPrices(res.data);
+                setPrices(res);
             } catch (err) { }
         };
         getData();
