@@ -10,6 +10,7 @@ import OtherRoute from "./OtherRoute";
 import Toast from "../components/Toast";
 import QuizLive from "../pages/QuizLive";
 import QuizRoot from "../pages/QuizRoot";
+import ChatWidget from "../components/ChatWidget";
 
 const Layout = () => {
   const dispatch = useDispatch();
@@ -40,6 +41,7 @@ const Layout = () => {
           <Route path="/*" element={<Main />} />
         </Routes>
         {toast && <Toast />}
+        <ChatWidget />
       </div>
     </Router>
   );

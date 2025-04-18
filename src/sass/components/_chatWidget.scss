@@ -1,0 +1,346 @@
+// Biến màu sắc và kích thước
+$primary-color: #007bff;
+$secondary-color: #6c757d;
+$text-color: #372d2d;
+$background-light: #f5f5f5;
+$border-color: #ccc;
+$shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+$chat-width: 400px;
+$chat-width-mobile: 350px;
+$chat-min-height: 500px;
+
+// Mixin cho nút
+@mixin button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.2s;
+}
+
+.chat-widget {
+
+
+    // Chat Button
+    .chat-button {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+        background-color: $primary-color;
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: 24px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+        transition: transform 0.2s;
+
+        &:hover {
+            transform: scale(1.1);
+        }
+    }
+
+    // Chat Popup
+    .chat-popup {
+        position: fixed;
+        bottom: 80px;
+        right: 20px;
+        width: $chat-width;
+        min-height: $chat-min-height;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: $shadow;
+        display: flex;
+        flex-direction: column;
+        z-index: 1000;
+        overflow: hidden;
+
+        // Chat Header
+        & .chat-header {
+            background-color: $primary-color;
+            color: white;
+            padding: 10px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+            font-size: 1.6rem;
+
+            & button {
+                background: none;
+                border: none;
+                color: white;
+                font-size: 16px;
+                cursor: pointer;
+                padding: 3px 6px;
+                transition: background 0.15s;
+                border-radius: 5px;
+
+                &:hover {
+                    color: #f0f0f0;
+                    background-color: red;
+                }
+            }
+        }
+
+        // Chat Body
+        & .chat-body {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            background-color: $background-light;
+            max-height: 400px;
+
+            .overlay {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.5); // Nền mờ
+                z-index: 1000;
+            }
+        
+            .upgrade-popup {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: 300px;
+                background-color: white;
+                border-radius: 10px;
+                box-shadow: $shadow;
+                z-index: 1001;
+                font-family: "Manrope", sans-serif;
+                font-weight: 400;
+        
+                & .upgrade-header {
+                    background-color: $primary-color;
+                    color: white;
+                    padding: 10px 15px;
+                    text-align: center;
+                    font-size: 15px;
+                    font-weight: 600;
+        
+                    & button {
+                        background: none;
+                        border: none;
+                        color: white;
+                        font-size: 16px;
+                        cursor: pointer;
+        
+                        &:hover {
+                            color: #f0f0f0;
+                        }
+                    }
+                }
+        
+                & .upgrade-body {
+                    padding: 15px;
+                    text-align: center;
+        
+                    & p {
+                        margin: 10px 0;
+                        font-size: 14px;
+                        line-height: 1.5;
+                    }
+        
+                    & .upgrade-button {
+                        display: inline-block;
+                        padding: 10px 20px;
+                        background-color: $primary-color;
+                        color: white;
+                        border-radius: 5px;
+                        text-decoration: none;
+                        font-weight: 500;
+                        transition: background-color 0.2s;
+                        font-size: 1.5rem;
+        
+                        &:hover {
+                            background-color: darken($primary-color, 10%);
+                        }
+                    }
+                }
+            }
+
+            // Scrollbar tùy chỉnh
+            &::-webkit-scrollbar {
+                width: 8px;
+            }
+
+            &::-webkit-scrollbar-track {
+                background: #f1f1f1;
+            }
+
+            &::-webkit-scrollbar-thumb {
+                background: #888;
+                border-radius: 4px;
+
+                &:hover {
+                    background: #555;
+                }
+            }
+
+            // Tin nhắn
+            & .chat-message {
+                margin-bottom: 10px;
+                padding: 10px;
+                border-radius: 8px;
+                max-width: 80%;
+                word-wrap: break-word;
+                line-height: 1.8;
+                font-size: 1.5rem;
+                font-weight: 500;
+
+                &.user-chat {
+                    background-color: $primary-color;
+                    color: white;
+                    margin-left: auto;
+                    border-bottom-left-radius: 0;
+                }
+
+                &.ai {
+                    background-color: #e9ecef;
+                    color: $text-color;
+                    margin-right: auto;
+                    border-bottom-right-radius: 0;
+                }
+
+                &.loading-dots {
+                    display: flex;
+                    gap: 5px;
+                    background-color: transparent; // Không cần nền cho DOT
+                    justify-content: flex-start;
+
+                    & span {
+                        display: inline-block;
+                        width: 8px;
+                        height: 8px;
+                        background-color: $text-color;
+                        border-radius: 50%;
+                        animation: dot-flashing 1s infinite linear alternate;
+
+                        &:nth-child(2) {
+                            animation-delay: 0.2s;
+                        }
+
+                        &:nth-child(3) {
+                            animation-delay: 0.4s;
+                        }
+                    }
+                }
+
+                & ul,
+                & ol {
+                    margin: 8px 0;
+                    padding-left: 20px; // Khoảng cách dấu đầu dòng
+                    list-style-position: outside;
+                }
+
+                & ul {
+                    list-style-type: disc; // Dấu đầu dòng tròn
+
+                    & li {
+                        margin-bottom: 5px;
+                        line-height: 1.5;
+                    }
+                }
+
+                & ol {
+                    list-style-type: decimal; // Số thứ tự
+
+                    & li {
+                        margin-bottom: 5px;
+                        line-height: 1.5;
+                    }
+                }
+
+                // Danh sách lồng nhau
+                & ul ul,
+                & ol ol,
+                & ul ol,
+                & ol ul {
+                    margin: 5px 0;
+                    padding-left: 15px;
+                }
+
+            }
+        }
+
+        // Chat Input
+        & .chat-input {
+            display: flex;
+            align-items: flex-end;
+            gap: 10px;
+            padding: 10px;
+            background-color: white;
+            border-top: 1px solid $border-color;
+
+            & textarea {
+                flex: 1;
+                padding: 10px;
+                border: 1px solid $border-color;
+                border-radius: 5px;
+                resize: none;
+                font-size: 14px;
+                outline: none;
+                margin-bottom: 0 !important;
+                min-height: 36px; // Chiều cao tối thiểu
+                max-height: 90px; // Chiều cao tối đa
+                overflow-y: auto; // Hiển thị thanh cuộn khi vượt quá
+
+                &::-webkit-scrollbar {
+                    width: 8px;
+                }
+
+                &::-webkit-scrollbar-track {
+                    background: #f1f1f1;
+                }
+
+                &::-webkit-scrollbar-thumb {
+                    background: #888;
+                    border-radius: 4px;
+
+                    &:hover {
+                        background: #555;
+                    }
+                }
+
+                &:focus {
+                    border-color: $primary-color;
+                }
+            }
+
+            & button {
+                @include button;
+                background-color: $primary-color;
+                color: white;
+
+                &:disabled {
+                    background-color: $secondary-color;
+                    cursor: not-allowed;
+                }
+
+                &:hover:not(:disabled) {
+                    background-color: darken($primary-color, 10%);
+                }
+            }
+        }
+    }
+
+    @keyframes dot-flashing {
+        0% {
+            opacity: 0.2;
+        }
+
+        100% {
+            opacity: 1;
+        }
+    }
+}

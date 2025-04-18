@@ -785,9 +785,9 @@ export const handleUpgrade = async (slug, accessToken, decision) => {
     console.log(error);
   }
 };
-export const getPendingPremium = async (accessToken) => {
+export const getPendingPlus = async (accessToken) => {
   try {
-    const res = await axiosJWT.get(`${genURL(`/v1/card/getPendingPremium`)}`, {
+    const res = await axiosJWT.get(`${genURL(`/v1/card/getPendingPlus`)}`, {
       headers: { token: `Bearer ${accessToken}` },
     });
     return res.data;
@@ -924,3 +924,16 @@ export const deleteBanner = async (id) => {
     throw error;
   }
 };
+
+//
+export const aiChat = async (userMessage) => {
+  try {
+    return fetch(`${genURL(`/v1/ai/chat`)}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ userMessage }),
+    });
+  } catch (error) {
+    throw error;
+  }
+}

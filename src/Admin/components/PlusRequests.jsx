@@ -1,14 +1,14 @@
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { getPendingPremium, handleUpgrade } from "../../redux/apiRequest";
+import { getPendingPlus, handleUpgrade } from "../../redux/apiRequest";
 import { Link } from "react-router-dom";
 
-const PremiumRequests = ({ accessToken }) => {
+const PlusRequests = ({ accessToken }) => {
   const queryClient = useQueryClient();
 
-  // Fetch pending premium
+  // Fetch pending plus
   const { data: pendingData, isLoading } = useQuery({
-    queryKey: "pending-premium",
-    queryFn: () => getPendingPremium(accessToken),
+    queryKey: "pending-plus",
+    queryFn: () => getPendingPlus(accessToken),
     staleTime: 1000 * 60 * 60 * 6,
   });
 
@@ -17,36 +17,36 @@ const PremiumRequests = ({ accessToken }) => {
     mutationFn: ({ slug, decision }) =>
       handleUpgrade(slug, accessToken, decision),
     onSuccess: () => {
-      queryClient.invalidateQueries("pending-premium");
+      queryClient.invalidateQueries("pending-plus");
     },
   });
 
-  const handlePremium = (slug, decision) => {
+  const handlePlus = (slug, decision) => {
     upgradeMutation.mutate({ slug, decision });
   };
 
   if (isLoading) return <p className="loading-text">Đang tải...</p>;
 
   return (
-    <div className="service__section service__premium">
+    <div className="service__section service__plus">
       <h2 className="service__title">Yêu cầu nâng cấp thẻ</h2>
-      <div className="premium-grid">
+      <div className="plus-grid">
         {pendingData?.data?.map((item) => (
-          <div key={item.slug} className="premium-card">
-            <Link className="premium-card__info" to={`/card/${item.slug}`}>
+          <div key={item.slug} className="plus-card">
+            <Link className="plus-card__info" to={`/card/${item.slug}`}>
               <h4>{item.title}</h4>
               <p>Loại: {item.type}</p>
             </Link>
-            <div className="premium-card__actions">
+            <div className="plus-card__actions">
               <button
                 className="service__btn service__btn--accept"
-                onClick={() => handlePremium(item.slug, "premium")}
+                onClick={() => handlePlus(item.slug, "plus")}
               >
                 Chấp nhận
               </button>
               <button
                 className="service__btn service__btn--reject"
-                onClick={() => handlePremium(item.slug, "regular")}
+                onClick={() => handlePlus(item.slug, "regular")}
               >
                 Từ chối
               </button>
@@ -58,4 +58,4 @@ const PremiumRequests = ({ accessToken }) => {
   );
 };
 
-export default PremiumRequests;
+export default PlusRequests;

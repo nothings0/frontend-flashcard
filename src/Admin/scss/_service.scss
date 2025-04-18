@@ -91,13 +91,13 @@
   padding: 10px 0;
 }
 
-.premium-grid {
+.plus-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 16px;
 }
 
-.premium-card {
+.plus-card {
   border: 1px solid #ddd;
   border-radius: 6px;
   padding: 16px;

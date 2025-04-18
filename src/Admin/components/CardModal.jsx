@@ -87,8 +87,8 @@ const CardModal = ({ card, setModalOpen, handleSaveCard }) => {
                         >
                             <option value="">-- Chọn loại --</option>
                             <option value="REGULAR">Regular</option>
-                            <option value="PREMIUM">Premium</option>
-                            <option value="PROMAX">Promax</option>
+                            <option value="PLUS">Plus</option>
+                            <option value="PRO">Pro</option>
                         </select>
                         {formik.touched.type && formik.errors.type && (
                             <div className="error">{formik.errors.type}</div>

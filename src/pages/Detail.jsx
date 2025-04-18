@@ -46,7 +46,7 @@ const ProMaxPopup = ({ isOpen, onClose, onUpgrade }) => {
       <Skeleton type="detail" />
       <div className="popup" tabIndex={0} ref={popupRef}>
         <div className="popup__content">
-          <h2>Đây là thẻ học ProMax</h2>
+          <h2>Đây là thẻ học Pro</h2>
           <p>
             Thẻ học này yêu cầu bạn phải nâng cấp tài khoản lên FluxQuiz Plus để có thể
             học.
@@ -151,7 +151,7 @@ const Detail = () => {
     const fetchCard = async () => {
       setPage(1);
       const res = await getCardById(dispatch, slug, 1, 50);
-      if (res?.cards?.type && res.cards.type.toUpperCase() === "PROMAX" && plan?.type !== "PROMAX") {
+      if (res?.cards?.type && res.cards.type.toUpperCase() === "PRO" && plan?.type !== "PRO") {
         setPopupOpen(true);
         return;
       }
@@ -303,7 +303,7 @@ const Detail = () => {
                         <div className="card-detail__left__item">Live</div>
                       </Link>
                       {isOwner ? (
-                        cardType === "PREMIUM" ? (
+                        cardType === "PLUS" ? (
                           <Link to={`/card/p/${slug}`}>
                             <div className="card-detail__left__item plus">
                               Fluxquiz Plus
@@ -321,7 +321,7 @@ const Detail = () => {
                             Nâng cấp
                           </div>
                         )
-                      ) : userId && plan.type === "PREMIUM" ? (
+                      ) : userId && plan.type === "PLUS" ? (
                         <Link to={`/card/p/${slug}`}>
                           <div className="card-detail__left__item plus">
                             Fluxquiz Plus
@@ -375,7 +375,7 @@ const Detail = () => {
                     <div className="card-detail__left__item item_6">Live</div>
                   </Link>
                   {isOwner ? (
-                    cardType === "PREMIUM" ? (
+                    cardType === "PLUS" ? (
                       <Link to={`/card/p/${slug}`}>
                         <div className="card-detail__left__item plus">
                           Fluxquiz Plus
@@ -393,7 +393,7 @@ const Detail = () => {
                         Nâng cấp
                       </div>
                     )
-                  ) : userId && plan.type === "PREMIUM" ? (
+                  ) : userId && plan.type === "PLUS" ? (
                     <Link to={`/card/p/${slug}`}>
                       <div className="card-detail__left__item plus">
                         Fluxquiz Plus
