@@ -3,7 +3,7 @@ import { socket } from "../../socket.js";
 import { useNavigate, useParams } from "react-router-dom";
 import Helmet from "../../components/Helmet.jsx";
 import Search from "../../components/Search.jsx";
-import WaitRoom from "./waitRoom.jsx";
+import WaitRoom from "./WaitRoom.jsx";
 import LiveRoom from "./LiveRoom.jsx";
 
 const QuizLive = () => {

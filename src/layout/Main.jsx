@@ -24,6 +24,7 @@ import SpaceRep from "../pages/SpaceRep";
 import Pricing from "../pages/Pricing";
 import ProLearn from "../pages/proLearn/ProLearn";
 import PaymentPage from "../pages/Payment";
+import VoiceRecorder from "../components/VoiceRecorder";
 
 const Main = () => {
   return (
@@ -41,6 +42,7 @@ const Main = () => {
         <Route path="/mylibrary" element={<Library />} />
         <Route path="/flashcard/:slug" element={<FlashCard />} />
         <Route path="/learn/:slug" element={<Learn />} />
+        <Route path="/ai/:slug" element={<VoiceRecorder />} />
         <Route path="/write/:slug" element={<Write />} />
         <Route path="/listen/:slug" element={<Listen />} />
         <Route path="/match/:slug" element={<MatchCard />} />

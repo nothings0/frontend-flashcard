@@ -28,6 +28,7 @@
     "react-facebook-login": "^4.1.1",
     "react-ga4": "^1.4.1",
     "react-joyride": "^2.5.4",
+    "react-mic": "^12.4.6",
     "react-player": "^2.11.0",
     "react-query": "^3.39.3",
     "react-redux": "^8.0.2",
