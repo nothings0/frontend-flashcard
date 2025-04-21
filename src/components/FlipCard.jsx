@@ -3,7 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateIndex } from "../redux/cardSlice";
-import { handleSpeech } from "../util/speech";
+import { handleSpeech, handleVoice } from "../util/speech";
 import { GetUsage } from "../redux/apiRequest";
 
 const FlipCard = ({ data, isVolume, isOpenAI = true }) => {
@@ -32,7 +32,7 @@ const FlipCard = ({ data, isVolume, isOpenAI = true }) => {
     setCurrent((current) => {
       const index = current === length ? 1 : current + 1;
       if (isVolume) {
-        handleSpeech(data[index - 1].prompt);
+        handleVoice(data[index - 1].prompt);
       }
       dispatch(updateIndex(index));
       setActive(false);
@@ -45,7 +45,7 @@ const FlipCard = ({ data, isVolume, isOpenAI = true }) => {
     let index = current === 1 ? length : current - 1;
     setCurrent(index);
     if (isVolume) {
-      handleSpeech(data[index - 1].prompt);
+      handleVoice(data[index - 1].prompt);
     }
     dispatch(updateIndex(index));
     setActive(false);
@@ -106,7 +106,7 @@ const FlipCard = ({ data, isVolume, isOpenAI = true }) => {
                     <div className="flip-card__table__card__icon">
                       <i
                         className={`fa-solid fa-volume-high`}
-                        onClick={() => handleSpeech(item.prompt)}
+                        onClick={() => handleVoice(item.prompt)}
                       ></i>
                     </div>
                   )}
