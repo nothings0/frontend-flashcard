@@ -6,8 +6,9 @@
         height: 65vh;
     }
     &__bottom{
-        margin: 4rem 0 2rem 0;
-        padding: 0 15%;
+        margin: 4rem auto 2rem auto;
+        width: 100%;
+        max-width: 680px;
         @include flex(center, space-between);
         @include mobile{
             flex-wrap: wrap;

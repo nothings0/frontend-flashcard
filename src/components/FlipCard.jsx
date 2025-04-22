@@ -1,158 +1,157 @@
-import React, { useState, memo } from "react";
-import { Link, useParams } from "react-router-dom";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { updateIndex } from "../redux/cardSlice";
-import { handleSpeech, handleVoice } from "../util/speech";
-import { GetUsage } from "../redux/apiRequest";
+import { useState } from "react";
+import {
+  motion,
+  AnimatePresence,
+  useMotionValue,
+  useTransform
+} from "framer-motion";
 
-const FlipCard = ({ data, isVolume, isOpenAI = true }) => {
-  const dispatch = useDispatch();
-  const index = useSelector((state) => state.card.index);
-  const [current, setCurrent] = useState(index);
-  const [isActive, setActive] = useState(false);
-  const [isAuto, setAuto] = useState(false);
-  const [usage, setUsage] = useState([]);
-  const length = data?.length;
+function Card({ item, total, frontCard, setIndex, drag }) {
+  const [isFlipped, setIsFlipped] = useState(false);
+  const [exitX, setExitX] = useState(0);
 
-  const { slug } = useParams();
+  const x = useMotionValue(0);
+  const scale = useTransform(x, [-150, 0, 150], [0.5, 1, 0.5]);
+  const rotate = useTransform(x, [-150, 0, 150], [-45, 0, 45], {
+    clamp: false
+  });
 
-  useEffect(() => {
-    let index = current > length ? 1 : current;
-    setCurrent(index);
-  }, []);
-
-  const handleOpenAi = async () => {
-    setActive(true);
-    const res = await GetUsage(data[current - 1].prompt);
-    setUsage(res.bot.split("\n"));
-  };
-
-  const nextSlide = () => {
-    setCurrent((current) => {
-      const index = current === length ? 1 : current + 1;
-      if (isVolume) {
-        handleVoice(data[index - 1].prompt);
-      }
-      dispatch(updateIndex(index));
-      setActive(false);
-      setUsage([]);
-      return index;
-    });
-  };
-
-  const prevSlide = () => {
-    let index = current === 1 ? length : current - 1;
-    setCurrent(index);
-    if (isVolume) {
-      handleVoice(data[index - 1].prompt);
+  const handleDragEnd = (_, info) => {
+    if (info.offset.x < -100) {
+      setExitX(-400);
+      setIndex((prev) =>
+        (prev - 1 + total) % total
+      );
     }
-    dispatch(updateIndex(index));
-    setActive(false);
-    setUsage([]);
-  };
-  //flip card
-  const handleFlip = (e) => {
-    e.target.classList.toggle("flip");
+    if (info.offset.x > 100) {
+      setExitX(400);
+      setIndex((prev) => prev + 1);
+    }
   };
 
-  const handleAuto = () => {
-    setAuto(!isAuto);
+  const cardVariants = {
+    animate: { scale: 1, y: 0, opacity: 1 },
+    exit: (custom) => ({
+      x: custom,
+      opacity: 0.1,
+      scale: 0.6,
+      transition: { duration: 0.35 }
+    }),
+    initial: { scale: 0, y: 105, opacity: 0 }
   };
-
-  useEffect(() => {
-    if (!isAuto) return;
-    const card = document.querySelector(".flip-card__table__card.active");
-    card.classList.toggle("flip");
-    const timeOut = setTimeout(() => {
-      nextSlide();
-    }, 3500);
-    const interval = setInterval(() => {
-      const card = document.querySelector(".flip-card__table__card.active");
-      card.classList.toggle("flip");
-      setTimeout(() => {
-        nextSlide();
-      }, 3500);
-    }, 6000);
-    return () => {
-      clearInterval(interval);
-      clearTimeout(timeOut);
-    };
-  }, [isAuto]);
 
   return (
-    <div className="flip-card">
-      <div className="flip-card__table">
-        {data &&
-          data.map((item, index) => {
-            let position = "";
-            let iCurrent = current > length ? 1 : current;
-            if (index === iCurrent - 1) {
-              position = "active";
-            } else if (index <= iCurrent - 2) {
-              position = "lastSlide";
-            } else if (index >= iCurrent) {
-              position = "nextSlide";
-            }
-            return (
-              <div
-                className={`flip-card__table__card ${position}`}
-                key={index}
-                onClick={(e) => handleFlip(e)}
-              >
-                <div className={`flip-card__table__item front-view`}>
-                  <span>{item.prompt}</span>
-                  {isVolume && (
-                    <div className="flip-card__table__card__icon">
-                      <i
-                        className={`fa-solid fa-volume-high`}
-                        onClick={() => handleVoice(item.prompt)}
-                      ></i>
-                    </div>
-                  )}
-                </div>
-                <div className={`flip-card__table__item back-view`}>
-                  {item.answer}
-                </div>
-              </div>
-            );
-          })}
-      </div>
-      <div className="flip-card__control">
-        <div className="flip-card__control__left" onClick={handleAuto}>
-          {!isAuto ? (
-            <i className="fa-solid fa-play"></i>
-          ) : (
-            <i className="fa-solid fa-pause"></i>
-          )}
+    <motion.div
+      style={{
+        width: 380,
+        height: 380,
+        position: "absolute",
+        top: 0,
+        x,
+        rotate,
+        scale,
+        cursor: "pointer",
+        perspective: 1000 // 👈 quan trọng để tạo 3D
+      }}
+      drag={drag}
+      dragConstraints={{ top: 0, bottom: 0, left: 0, right: 0 }}
+      onDragEnd={handleDragEnd}
+      onDoubleClick={() => setIsFlipped(!isFlipped)}
+      variants={cardVariants}
+      initial="initial"
+      animate="animate"
+      exit="exit"
+      custom={exitX}
+      transition={
+        frontCard
+          ? { type: "spring", stiffness: 300, damping: 20 }
+          : { scale: { duration: 0.2 }, opacity: { duration: 0.4 } }
+      }
+    >
+      <motion.div
+        style={{
+          width: "100%",
+          height: "100%",
+          position: "relative",
+          transformStyle: "preserve-3d",
+          transition: "transform 0.6s",
+          transform: isFlipped ? "rotateX(180deg)" : "rotateX(0deg)"
+        }}
+      >
+        {/* Front side */}
+        <div
+          style={{
+            position: "absolute",
+            width: "100%",
+            height: "100%",
+            backfaceVisibility: "hidden",
+            backgroundColor: "#fff",
+            borderRadius: 20,
+            boxShadow: "0 8px 20px rgba(0,0,0,0.1)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            fontSize: 20,
+            fontWeight: 500,
+            padding: 20
+          }}
+        >
+          {item.prompt}
         </div>
-        <div className="flip-card__control__middle">
-          <i className="fa-solid fa-chevron-left" onClick={prevSlide}></i>
-          <span>
-            {current > length ? 1 : current}/{length}
-          </span>
-          <i className="fa-solid fa-chevron-right" onClick={nextSlide}></i>
-        </div>
-        <div className="flip-card__control__right">
-          <Link to={`/flashcard/${slug}`}>
-            <i className="fas fa-expand"></i>
-          </Link>
-        </div>
-      </div>
-      {isOpenAI && (
-        <div className="flip-card__usage">
-          {!isActive ? (
-            <button onClick={handleOpenAi}>Cách dùng</button>
-          ) : (
-            <div className="">
-              {usage.length > 0 &&
-                usage.map((item, index) => <p key={index}>{item}</p>)}
-            </div>
-          )}
-        </div>
-      )}
-    </div>
-  );
-};
 
-export default memo(FlipCard);
+        {/* Back side */}
+        <div
+          style={{
+            position: "absolute",
+            width: "100%",
+            height: "100%",
+            backgroundColor: "#f8f8f8",
+            borderRadius: 20,
+            boxShadow: "0 8px 20px rgba(0,0,0,0.1)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            fontSize: 20,
+            fontWeight: 500,
+            padding: 20,
+            transform: "rotateX(180deg)",
+            backfaceVisibility: "hidden"
+          }}
+        >
+          {item.answer}
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+}
+
+export default function FlipCard({data: sampleData}) {
+  const [index, setIndex] = useState(0);
+
+  const current = sampleData[index % sampleData.length];
+  const next = sampleData[(index + 1) % sampleData.length];
+
+  return (
+    <motion.div
+      style={{
+        width: 380,
+        height: 380,
+        position: "relative",
+        margin: "0 auto",
+      }}
+    >
+      <AnimatePresence initial={false}>
+        <Card key={index + 1} item={next} frontCard={false} />
+        <Card
+          key={index}
+          item={current}
+          frontCard={true}
+          index={index}
+          setIndex={setIndex}
+          drag="x"
+          total={sampleData.length}
+        />
+      </AnimatePresence>
+    </motion.div>
+  );
+}

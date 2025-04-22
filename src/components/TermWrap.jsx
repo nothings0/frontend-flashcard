@@ -1,7 +1,7 @@
 import { memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Container, Draggable } from "react-smooth-dnd";
-import { handleSpeech } from "../util/speech";
+import { handleVoice } from "../util/speech";
 import { applyDrag } from "../util/index";
 import { useParams } from "react-router-dom";
 import { DeleteTerm, UpdateCard } from "../redux/apiRequest";
@@ -118,7 +118,7 @@ const TermWrap = ({ terms, setTerms, iUsername, type }) => {
                     <i
                       className="fa-solid fa-volume-high"
                       onClick={(e) =>
-                        handleSpeech(
+                        handleVoice(
                           e.target.parentElement.parentElement.querySelector(
                             ".prompt"
                           ).textContent

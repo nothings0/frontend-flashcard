@@ -4,6 +4,7 @@ import { loginSuccess, logoutSuccess } from "./userSlice";
 import { handleLoading, handleRemove } from "./middleSlice";
 import { showToast } from "./toastSlice";
 import { play } from "./audioSlice";
+import { syncUserToLocal } from "../util";
 
 axios.defaults.withCredentials = true;
 export const registerUser = async (user, navigate, dispatch, setErrorMsg) => {
@@ -585,10 +586,10 @@ export const UpdateUser = async (userId, type, data, accessToken, dispatch) => {
 
 export const UpdateProfilePic = async (file, dispatch, accessToken) => {
   try {
-    const res = await axiosJWT.put(`${genURL("/v1/auth/")}`, file, {
+    await axiosJWT.put(`${genURL("/v1/auth/")}`, file, {
       headers: { token: `Bearer ${accessToken}` },
     });
-    dispatch(loginSuccess(res.data));
+    syncUserToLocal(accessToken, dispatch)
     dispatch(showToast({ msg: "Update thành công", success: true }));
   } catch (error) { }
 };

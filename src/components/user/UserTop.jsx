@@ -17,6 +17,7 @@ const UserTop = ({data}) => {
         let formData = new FormData()
         formData.append("file", avatar)
         UpdateProfilePic(formData, dispatch, accessToken)
+        setAvatar("")
     }
 
     const handleChangeAva = (e) => {

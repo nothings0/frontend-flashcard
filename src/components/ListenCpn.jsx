@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { handleSpeech } from "../util/speech";
+import { handleVoice } from "../util/speech";
 import InputAnswer from "./InputAnswer.jsx";
 
 const ListenCpn = ({
@@ -29,7 +29,7 @@ const ListenCpn = ({
             Ấn vào loa để nghe
             <i
               className="fa-solid fa-volume-high"
-              onClick={() => handleSpeech(data?.prompt)}
+              onClick={() => handleVoice(data?.prompt)}
             ></i>
           </div>
           <div className="listen__top__define__alert">

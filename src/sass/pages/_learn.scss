@@ -11,6 +11,7 @@
     padding: 3rem 4rem;
     @include flex(flex-start, space-between);
     flex-direction: column;
+    max-width: 680px;
   }
   &__question {
     h4 {

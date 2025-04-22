@@ -8,6 +8,7 @@
     background-color: var(--main-bg);
     border-radius: 5px;
     padding: 4rem;
+    max-width: 680px;
     @include flex(stretch, space-between);
     flex-direction: column;
     @include mobile {
@@ -86,6 +87,9 @@
   &__suggest {
     text-align: center;
     span {
+      padding: 6px;
+      border-radius: 6px;
+      background-color: rgba($color: #c9c9c9, $alpha: 0.2);
       font-size: 1.8rem;
       cursor: pointer;
     }

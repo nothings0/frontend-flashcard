@@ -11,7 +11,7 @@ const SearchAva = () => {
     (state) => state.user.currentUser?.user
   );
   const profile = useSelector(
-    (state) => state.user.currentUser?.user.profilePic
+    (state) => state.user.currentUser?.user?.profilePic
   );
   const accessToken = useSelector(
     (state) => state.user.currentUser?.accessToken
