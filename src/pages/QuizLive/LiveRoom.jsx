@@ -34,7 +34,7 @@ const LiveRoot = ({ socket, roomId }) => {
 
   useEffect(() => {
     // if (showCountdown) {
-      socket.emit("re-get-quiz", roomId);
+      // socket.emit("re-get-quiz", roomId);
     // }
     socket.on("quiz", ({ ques, startTime }) => {
       const currentTime = Date.now();

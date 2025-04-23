@@ -15,7 +15,7 @@ const RankQuiz = ({ data }) => {
         ))}
       </div>
       <div className="rank-quiz__btn">
-        <Link to={`/${slug}`}>Return</Link>
+        <Link to={`/card/${slug}`}>Return</Link>
       </div>
     </div>
   );

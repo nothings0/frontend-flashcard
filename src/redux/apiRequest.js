@@ -973,7 +973,9 @@ export const deleteBanner = async ({id, accessToken}) => {
 
 //
 export const aiChat = async ({ accessToken, userMessage }) => {
-  const res = await fetch('http://localhost:8000/v1/ai/chat', {
+  const URL = process.env.NODE_ENV === "production" ? `https://backend-kfnn.onrender.com`
+  : `http://localhost:8000`;
+  const res = await fetch(`${URL}/v1/ai/chat`, {
       method: 'POST',
       headers: {
           'Content-Type': 'application/json',

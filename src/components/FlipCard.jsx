@@ -7,6 +7,7 @@ import {
 } from "framer-motion";
 
 function Card({ item, total, frontCard, setIndex, drag }) {
+
   const [isFlipped, setIsFlipped] = useState(false);
   const [exitX, setExitX] = useState(0);
 
@@ -39,6 +40,9 @@ function Card({ item, total, frontCard, setIndex, drag }) {
     }),
     initial: { scale: 0, y: 105, opacity: 0 }
   };
+
+  if(!item) return;
+
 
   return (
     <motion.div
