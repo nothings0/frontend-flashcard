@@ -74,7 +74,8 @@ const PricingManager = ({ accessToken }) => {
         setLoading(true);
         try {
             if (isEditMode) {
-                const updatedPricing = await updatePricing({id: currentPricing._id, data: formData, accessToken});
+                const pricing = await updatePricing({id: currentPricing._id, data: formData, accessToken});
+                const updatedPricing = pricing.pricing
                 setPricings((prev) =>
                     prev.map((pricing) =>
                         pricing._id === updatedPricing._id ? updatedPricing : pricing
