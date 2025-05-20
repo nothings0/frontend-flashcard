@@ -5,9 +5,10 @@
 
     &__title {
       @include flex(center, space-between);
+      gap: 0 1rem;
 
       &__txt {
-        font-size: 2.8rem;
+        font-size: 2rem;
         text-transform: capitalize;
       }
 
@@ -26,6 +27,7 @@
         background-color: var(--main-bg);
         transition: 0.2s linear;
         box-shadow: var(--box-shadow);
+        font-size: 1.6rem;
 
         .card-detail__header__title__btn {
           display: block;
@@ -152,7 +154,7 @@
 
     @include mobile {
       align-items: center;
-      flex-direction: column;
+      flex-direction: column-reverse;
       gap: 30px 0;
     }
   }
@@ -161,9 +163,13 @@
     flex: 1;
 
     @include mobile {
-      @include flex(center, space-between);
-      flex-wrap: wrap;
-      gap: 0 5px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 5px;
+    }
+
+    & > a {
+      flex-basis: 20%;
     }
 
     &__item {
@@ -172,7 +178,7 @@
       margin: 0.5rem 0;
       border-radius: 10px;
       cursor: pointer;
-      background-color: #f6f7fb;
+      background-color: var(--second-bg);
 
       &:hover {
         background-color: $main-color;
@@ -229,7 +235,7 @@
   }
 
   &__right {
-    width: 75%;
+    width: 60%;
     height: 40rem;
 
     @include mobile {
@@ -241,6 +247,10 @@
   &__info {
     margin: 6rem 0;
     @include flex(center, space-between);
+
+    @include mobile{
+      margin: 3rem 0;
+    }
 
     &__user {
       font-size: 1.6rem;
@@ -378,15 +388,14 @@
         gap: 0 1rem;
         background-color: var(--main-bg);
         border-radius: 5px;
-        padding: 1rem;
+        padding: 1rem 1.6rem;
         font-size: 1.6rem;
         margin-top: 1.4rem;
-        box-shadow: 0px 2px 5px 3px rgb(0 0 0 / 15%);
+        box-shadow: 0px 1px 2px 1px rgb(0 0 0 / 15%);
 
         @include mobile {
-          margin-top: 10px;
-          padding: 4px 8px;
-          gap: 0 6px;
+          margin-top: 1.6rem;
+          gap: 0 1rem;
         }
       }
 

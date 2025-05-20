@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import {
   motion,
   AnimatePresence,
@@ -7,7 +7,6 @@ import {
 } from "framer-motion";
 
 function Card({ item, total, frontCard, setIndex, drag }) {
-
   const [isFlipped, setIsFlipped] = useState(false);
   const [exitX, setExitX] = useState(0);
 
@@ -17,18 +16,15 @@ function Card({ item, total, frontCard, setIndex, drag }) {
     clamp: false
   });
 
-  const handleDragEnd = (_, info) => {
+  const handleDragEnd = useCallback((_, info) => {
     if (info.offset.x < -100) {
       setExitX(-400);
-      setIndex((prev) =>
-        (prev - 1 + total) % total
-      );
-    }
-    if (info.offset.x > 100) {
+      setIndex((prev) => (prev - 1 + total) % total);
+    } else if (info.offset.x > 100) {
       setExitX(400);
-      setIndex((prev) => prev + 1);
+      setIndex((prev) => (prev + 1) % total);
     }
-  };
+  }, [setIndex, total]);
 
   const cardVariants = {
     animate: { scale: 1, y: 0, opacity: 1 },
@@ -41,21 +37,40 @@ function Card({ item, total, frontCard, setIndex, drag }) {
     initial: { scale: 0, y: 105, opacity: 0 }
   };
 
-  if(!item) return;
+  if (!item) return null;
 
+  const cardSizeStyle = {
+    width: "clamp(260px, 50vw, 380px)",
+    height: "clamp(260px, 50vw, 380px)"
+  };
+
+  const sharedCardFaceStyle = {
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+    borderRadius: 20,
+    boxShadow: "0 8px 20px rgba(0,0,0,0.1)",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    fontSize: 20,
+    fontWeight: 500,
+    padding: 20,
+    backgroundColor: "var(--second-bg)",
+    backfaceVisibility: "hidden"
+  };
 
   return (
     <motion.div
       style={{
-        width: 380,
-        height: 380,
+        ...cardSizeStyle,
         position: "absolute",
         top: 0,
         x,
         rotate,
         scale,
         cursor: "pointer",
-        perspective: 1000 // 👈 quan trọng để tạo 3D
+        perspective: 1000
       }}
       drag={drag}
       dragConstraints={{ top: 0, bottom: 0, left: 0, right: 0 }}
@@ -83,43 +98,15 @@ function Card({ item, total, frontCard, setIndex, drag }) {
         }}
       >
         {/* Front side */}
-        <div
-          style={{
-            position: "absolute",
-            width: "100%",
-            height: "100%",
-            backfaceVisibility: "hidden",
-            backgroundColor: "#fff",
-            borderRadius: 20,
-            boxShadow: "0 8px 20px rgba(0,0,0,0.1)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            fontSize: 20,
-            fontWeight: 500,
-            padding: 20
-          }}
-        >
+        <div style={sharedCardFaceStyle}>
           {item.prompt}
         </div>
 
         {/* Back side */}
         <div
           style={{
-            position: "absolute",
-            width: "100%",
-            height: "100%",
-            backgroundColor: "#f8f8f8",
-            borderRadius: 20,
-            boxShadow: "0 8px 20px rgba(0,0,0,0.1)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            fontSize: 20,
-            fontWeight: 500,
-            padding: 20,
-            transform: "rotateX(180deg)",
-            backfaceVisibility: "hidden"
+            ...sharedCardFaceStyle,
+            transform: "rotateX(180deg)"
           }}
         >
           {item.answer}
@@ -129,19 +116,19 @@ function Card({ item, total, frontCard, setIndex, drag }) {
   );
 }
 
-export default function FlipCard({data: sampleData}) {
+export default function FlipCard({ data }) {
   const [index, setIndex] = useState(0);
 
-  const current = sampleData[index % sampleData.length];
-  const next = sampleData[(index + 1) % sampleData.length];
+  const current = data[index % data.length];
+  const next = data[(index + 1) % data.length];
 
   return (
     <motion.div
       style={{
-        width: 380,
-        height: 380,
+        width: "clamp(260px, 50vw, 380px)",
+        height: "clamp(260px, 50vw, 380px)",
         position: "relative",
-        margin: "0 auto",
+        margin: "0 auto"
       }}
     >
       <AnimatePresence initial={false}>
@@ -153,7 +140,7 @@ export default function FlipCard({data: sampleData}) {
           index={index}
           setIndex={setIndex}
           drag="x"
-          total={sampleData.length}
+          total={data.length}
         />
       </AnimatePresence>
     </motion.div>

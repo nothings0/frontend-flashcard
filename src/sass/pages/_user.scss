@@ -120,8 +120,11 @@
     }
     &__left{
         width: 45%;
+        position: sticky;
+        top: 80px;
         @include mobile{
             width: 100%;
+            position: unset
         }
         &__item{
             border: 1px solid #ccc;

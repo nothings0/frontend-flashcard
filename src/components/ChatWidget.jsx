@@ -130,7 +130,7 @@ export default function ChatWidget() {
                 title="Chat với AI"
                 ref={buttonRef}
             >
-                💬
+                <i class="far fa-comment"></i>
             </div>
             {open && (
                 <div className="chat-popup" ref={popupRef}>

@@ -169,6 +169,18 @@ a {
   height: 1.8rem;
 }
 
+.flex{
+  display: flex;
+}
+.items-center{
+  align-items: center;
+}
+.justify-center{
+  justify-content: center;
+}
+.justify-between{
+  justify-content: center;
+}
 @include tablet {
   html {
     font-size: 60%;
