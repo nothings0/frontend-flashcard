@@ -1,0 +1,247 @@
+$primary-color: #4f46e5;
+$secondary-color: #e5e7eb;
+$text-color: #1f2937;
+$light-text: #6b7280;
+$background-color: #f3f4f6;
+$card-background: #ffffff;
+$user-message-bg: #4f46e5;
+$user-message-text: #ffffff;
+$ai-message-bg: #e5e7eb;
+$ai-message-text: #1f2937;
+$error-color: #ef4444;
+$border-radius: 12px;
+$box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+$transition: all 0.2s ease;
+
+// Mixins
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+// Main container
+.voiceChatContainer {
+  @include flex-center;
+}
+
+// Chat card
+.chatCard {
+  @include flex-column;
+  width: 100%;
+  max-width: 500px;
+  height: 80vh;
+  background-color: $card-background;
+  border-radius: $border-radius;
+  box-shadow: $box-shadow;
+  overflow: hidden;
+}
+
+// Chat header
+.chatHeader {
+  padding: 1rem;
+  background-color: $primary-color;
+  color: white;
+  text-align: center;
+  border-top-left-radius: $border-radius;
+  border-top-right-radius: $border-radius;
+
+  h1 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+}
+
+// Chat messages area
+.chatMessages {
+  @include flex-column;
+  flex: 1;
+  padding: 1rem;
+  overflow-y: auto;
+  gap: 1rem;
+}
+
+// Message container
+.messageContainer {
+  display: flex;
+  width: 100%;
+
+  &.userMessage {
+    justify-content: flex-end;
+  }
+
+  &.aiMessage {
+    justify-content: flex-start;
+  }
+}
+
+// Message bubble
+.messageBubble {
+  max-width: 80%;
+  padding: 0.75rem 1rem;
+  border-radius: 1rem;
+  word-break: break-word;
+
+  .userMessage & {
+    background-color: $user-message-bg;
+    color: $user-message-text;
+    border-bottom-right-radius: 0;
+  }
+
+  .aiMessage & {
+    background-color: $ai-message-bg;
+    color: $ai-message-text;
+    border-bottom-left-radius: 0;
+
+    a {
+      color: $primary-color;
+      text-decoration: underline;
+    }
+  }
+}
+
+// Input area
+.inputArea {
+  @include flex-column;
+  padding: 1rem;
+  border-top: 1px solid $secondary-color;
+  gap: 0.75rem;
+}
+
+// Voice input display
+.voiceInputDisplay {
+  background-color: $secondary-color;
+  padding: 0.75rem;
+  border-radius: $border-radius;
+  min-height: 60px;
+  max-height: 120px;
+  overflow-y: auto;
+
+  p {
+    margin: 0.5rem 0 0 0;
+    color: $text-color;
+  }
+}
+
+// Recording indicator
+.recordingIndicator {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: $error-color;
+  font-weight: 500;
+}
+
+// Recording dot animation
+.recordingDot {
+  width: 10px;
+  height: 10px;
+  background-color: $error-color;
+  border-radius: 50%;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+// Input form
+.inputForm {
+  width: 100%;
+}
+
+// Text input
+.textInput {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid $secondary-color;
+  border-radius: $border-radius;
+  font-size: 1rem;
+  outline: none;
+  transition: $transition;
+
+  &:focus {
+    border-color: $primary-color;
+    box-shadow: 0 0 0 2px rgba($primary-color, 0.2);
+  }
+}
+
+// Controls
+.controls {
+  display: flex;
+  gap: 0.5rem;
+}
+
+// Control button
+.controlButton {
+  @include flex-center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: $secondary-color;
+  border: none;
+  cursor: pointer;
+  transition: $transition;
+
+  &:hover {
+    background-color: darken($secondary-color, 5%);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  &.active {
+    background-color: $error-color;
+    color: white;
+  }
+}
+
+// Send button
+.sendButton {
+  @include flex-center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: $primary-color;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: $transition;
+
+  &:hover {
+    background-color: darken($primary-color, 5%);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+// Media queries for responsiveness
+@media (max-width: 600px) {
+  .chatCard {
+    height: 90vh;
+    max-width: 100%;
+  }
+
+  .messageBubble {
+    max-width: 85%;
+  }
+}

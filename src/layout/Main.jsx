@@ -24,6 +24,7 @@ import SpaceRep from "../pages/SpaceRep";
 import Pricing from "../pages/Pricing";
 import ProLearn from "../pages/proLearn/ProLearn";
 import PaymentPage from "../pages/Payment";
+import ChatWindow from "../pages/chatAI";
 import VoiceRecorder from "../components/VoiceRecorder";
 
 const Main = () => {
@@ -53,6 +54,7 @@ const Main = () => {
         <Route path="/calendar" element={<Calendar />} />
         <Route path="/pricing" element={<Pricing />} />
         <Route path="/payment/:invoiceId" element={<PaymentPage />} />
+        <Route path="/chat-ai" element={<ChatWindow />} />
 
         <Route path="*" element={<NotFound />} />
       </Routes>

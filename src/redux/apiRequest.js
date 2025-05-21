@@ -972,21 +972,76 @@ export const deleteBanner = async ({id, accessToken}) => {
 };
 
 //
-export const aiChat = async ({ accessToken, userMessage }) => {
-  const URL = process.env.NODE_ENV === "production" ? `https://backend-kfnn.onrender.com`
-  : `http://localhost:8000`;
+export const aiChat = async ({ accessToken, userMessage, context }) => {
+  const URL =
+    process.env.NODE_ENV === "production"
+      ? "https://backend-kfnn.onrender.com"
+      : "http://localhost:8000";
+
+  const payload = {
+    userMessage,
+    context, // đảm bảo truyền context vào body
+  };
+
   const res = await fetch(`${URL}/v1/ai/chat`, {
-      method: 'POST',
-      headers: {
-          'Content-Type': 'application/json',
-          'token': `Bearer ${accessToken}`,
-      },
-      body: JSON.stringify({ userMessage: userMessage }),
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      token: `Bearer ${accessToken}`,
+    },
+    body: JSON.stringify(payload),
   });
 
   if (!res.ok) {
-      throw new Error('API trả về lỗi');
+    throw new Error("API trả về lỗi");
   }
 
   return res.body;
+};
+
+
+export const aiVoiceChat = async ({ accessToken, userMessage, audioFile }) => {
+  const URL = process.env.NODE_ENV === 'production'
+    ? 'https://backend-kfnn.onrender.com'
+    : 'http://localhost:8000';
+
+  try {
+    let res;
+    const headers = {
+      'token': `Bearer ${accessToken}`,
+    };
+
+    if (audioFile) {
+      // Voice input: Gửi file âm thanh
+      const formData = new FormData();
+      formData.append('audio', audioFile, 'recording.mp3');
+      res = await fetch(`${URL}/v1/ai/chat`, {
+        method: 'POST',
+        headers,
+        body: formData,
+      });
+    } else if (userMessage) {
+      // Text input: Gửi userMessage
+      res = await fetch(`${URL}/v1/ai/chat`, {
+        method: 'POST',
+        headers: {
+          ...headers,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ userMessage }),
+      });
+    } else {
+      throw new Error('Hihi, bạn cần gửi tin nhắn hoặc file âm thanh nha! 😺');
+    }
+
+    if (!res.ok) {
+      const errorData = await res.json();
+      throw new Error(`Hihi, API trả về lỗi nè: ${errorData.msg || 'Không rõ lỗi'} 😿`);
+    }
+
+    return res.body;
+  } catch (error) {
+    console.error('AI Voice Chat error:', error);
+    throw error;
+  }
 };
