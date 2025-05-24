@@ -21,7 +21,7 @@
 
   &__logo {
     @include flex(center, flex-start);
-    gap: 1rem 0;
+    gap: 2rem;
     flex: 2;
 
     @include mobile {
