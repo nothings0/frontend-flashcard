@@ -4,7 +4,7 @@ import { GetNotifi, ReadNotifi } from "../redux/apiRequest";
 import moment from "moment-timezone";
 import { useSelector } from "react-redux";
 import Skeleton from "./Skeleton";
-const logo = require("../assets/Logo.png");
+const logo = require("../assets/logo.png");
 
 const Notifi = () => {
   const queryClient = useQueryClient();

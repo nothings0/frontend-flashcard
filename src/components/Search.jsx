@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { LogoutUser } from '../redux/apiRequest';
 import Notifi from './Notifi';
 import { googleLogout } from '@react-oauth/google'
-const logo = require("../assets/Logo.png")
+const logo = require("../assets/logo.png")
 const ava = require("../assets/ava1.png")
 
 const mainNav = [

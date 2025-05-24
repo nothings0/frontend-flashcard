@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { ActiveAccount } from "../../redux/apiRequest";
-const logo = require("../../assets/Logo.png");
+const logo = require("../../assets/logo.png");
 const ActiveAccountPage = () => {
   const { slug } = useParams();
   const [msg, setMsg] = useState("");
