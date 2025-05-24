@@ -36,7 +36,7 @@
 
 /* Smooth-dnd container */
 .smooth-dnd-container.horizontal {
-  display: flex;
+  display: flex !important;
   align-items: flex-start;
   overflow-x: auto;
   gap: 1.5rem;
