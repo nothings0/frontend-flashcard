@@ -1,6 +1,6 @@
 import {Link, useLocation} from 'react-router-dom'
 
-const logo = require("../../assets/logo.png")
+import logo from "../../assets/logo.png"
 const mainNav = [
     {
         display: "Dashboard",

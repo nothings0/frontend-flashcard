@@ -1,5 +1,5 @@
 import React from 'react'
-const logo = require("../../assets/logo.png")
+import logo from "../../assets/logo.png"
 
 const MidleActive = () => {
   return (
