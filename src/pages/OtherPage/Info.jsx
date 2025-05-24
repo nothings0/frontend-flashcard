@@ -2,7 +2,7 @@ import React from 'react'
 import Footer from '../../components/Footer'
 import {Link} from 'react-router-dom'
 import Helmet from '../../components/Helmet'
-import logo from "../../assets/logo.png"
+import logo from "../../assets/Lo-go.png"
 
 const Info = () => {
   return (
