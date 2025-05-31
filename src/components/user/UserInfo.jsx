@@ -13,14 +13,12 @@ const UserInfo = ({data}) => {
     const [name, setName] = useState('')
     const [bio, setBio] = useState('')
     const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
 
     useEffect(() => {
         if(!data) return;
         setEmail(data.email)
         setName(data.name)
         setBio(data.bio)
-        setPassword(data.password)
     }, [data])
 
     const handleUpdateUser = async(param, type) => {
@@ -39,7 +37,6 @@ const UserInfo = ({data}) => {
                 currentUser === username &&
                 <>
                 <InfoItem type="email" title="email" param={email} handleUpdateUser={handleUpdateUser} setParam={setEmail}/>
-                <InfoItem type="password" title="mật khẩu" param={password} handleUpdateUser={handleUpdateUser} setParam={setPassword} edit={edit}/>
                 </>
             }
         </div>

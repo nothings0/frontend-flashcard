@@ -137,7 +137,7 @@ const Detail = () => {
     };
 
     const fetchMoreTerms = async () => {
-      const res = await getCardById(dispatch, slug, page, 50);
+      const res = await getCardById(dispatch, slug, page, 20);
       setTerms((prev) => [...prev, ...res.terms]);
       dispatch(add(res.terms));
     };
@@ -150,7 +150,7 @@ const Detail = () => {
   useEffect(() => {
     const fetchCard = async () => {
       setPage(1);
-      const res = await getCardById(dispatch, slug, 1, 50);
+      const res = await getCardById(dispatch, slug, 1, 20);
       if (res?.cards?.type && res.cards.type.toUpperCase() === "PRO" && !["MONTHLY", "YEARLY"].includes(plan?.type)) {
         setPopupOpen(true);
         return;
@@ -451,7 +451,7 @@ const Detail = () => {
                   iUsername={data.cards.user.username}
                   type="detail"
                 />
-                {data.total > page * 50 && (
+                {data.total > page && (
                   <div className="load-more">
                     <span onClick={handleLoadMore}>Xem thêm</span>
                   </div>

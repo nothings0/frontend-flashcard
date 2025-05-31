@@ -11,6 +11,7 @@ import Toast from "../components/Toast";
 import QuizLive from "../pages/QuizLive";
 import QuizRoot from "../pages/QuizRoot";
 import ChatWidget from "../components/ChatWidget";
+import ScrollToTop from "../components/ScrollToTop";
 
 const Layout = () => {
   const dispatch = useDispatch();
@@ -42,6 +43,7 @@ const Layout = () => {
         </Routes>
         {toast && <Toast />}
         <ChatWidget />
+        <ScrollToTop />
       </div>
     </Router>
   );

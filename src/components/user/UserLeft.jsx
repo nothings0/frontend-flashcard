@@ -16,7 +16,7 @@ const UserLeft = ({data}) => {
                 Giới thiệu
             </div>
             <div className="user__left__item__des">
-                <span>Bắt đầu học tập trên <span>Fluxquiz.com</span> từ {day}</span>
+                <span>Bắt đầu học tập trên <span>Fluxquiz.com</span> từ <b>{day}</b></span>
             </div>
         </div>
         <UserInfo data={data}/>

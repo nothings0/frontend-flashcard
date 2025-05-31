@@ -583,6 +583,21 @@ export const UpdateUser = async (userId, type, data, accessToken, dispatch) => {
     return res.data;
   } catch (error) { }
 };
+export const ChangePassword = async (data, accessToken, dispatch) => {
+  try {
+    const res = await axiosJWT.put(
+      `${genURL(`/v1/auth/changePassword`)}`,
+      data,
+      {
+        headers: { token: `Bearer ${accessToken}` },
+      }
+    );
+    dispatch(showToast({ msg: "Update thành công", success: true }));
+    return res.data;
+  } catch (error) {
+    dispatch(showToast({ msg: "Có lỗi xảy ra", success: false }));
+  }
+};
 
 export const UpdateProfilePic = async (file, dispatch, accessToken) => {
   try {

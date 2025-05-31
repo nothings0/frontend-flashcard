@@ -146,6 +146,12 @@ const SearchAva = () => {
                 >
                   Trang cá nhân<i className="fa-solid fa-user"></i>
                 </Link>
+                <Link
+                  to={`/user/change-password`}
+                  className="searching__ava__list__item"
+                >
+                  Đổi mật khẩu<i className="fa-solid fa-user"></i>
+                </Link>
                 <div
                   className="searching__ava__list__item"
                   onClick={handleLogout}
