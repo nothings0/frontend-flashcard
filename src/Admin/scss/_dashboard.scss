@@ -13,12 +13,12 @@
 
     .metrics-grid {
         display: grid;
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(4, 1fr);
         gap: 1rem;
         margin-bottom: 3rem;
 
-        @media (min-width: 768px) {
-            grid-template-columns: repeat(4, 1fr);
+        @include mobile {
+            grid-template-columns: repeat(2, 1fr);
         }
 
         .metric-card {
@@ -83,18 +83,17 @@
     }
 
     .charts-grid {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 1rem;
-
-        @media (min-width: 1024px) {
-            grid-template-columns: 1fr 1fr;
-        }
 
         .chart-card {
             padding: 1rem;
             border-radius: 0.5rem;
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+
+            &-wrap{
+                margin-top: 2rem;
+                display: flex;
+                gap: 1rem;
+            }
 
             .chart-header {
                 @include flex(center, space-between);
@@ -102,12 +101,13 @@
             }
 
             .chart-title {
-                font-size: 1.4rem;
+                font-size: 1.6rem;
                 font-weight: 600;
-                margin-bottom: 1rem;
+                margin-bottom: 1.4rem;
             }
 
             &.visitor-chart {
+                width: 50%;
                 font-size: 1.4rem;
 
                 table {
@@ -148,6 +148,7 @@
             }
 
             &.income-chart {
+                width: 100%;
                 .income-stat {
                     font-size: 1.5rem;
                     font-weight: 700;
@@ -294,8 +295,7 @@
         width: 100%;
         border-collapse: collapse;
         font-size: 14px;
-        table-layout: fixed;
-        /* Đảm bảo các cột có độ rộng cố định */
+        table-layout: auto;
     }
 
     thead {
@@ -468,6 +468,19 @@
       }
 }
 
+.admin-header-title{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.view-all-link{
+    font-size: 1.4rem;
+    text-decoration: underline;
+    &:hover {
+        color: #3b82f6;
+    }
+}
 
 .parent {
     display: grid;

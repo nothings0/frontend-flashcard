@@ -124,7 +124,7 @@ const Calendar = () => {
     setOpenFormAdd(false);
   };
 
-  const handleDeleteSection = (sectionId, accessToken, i) => {
+  const handleDeleteSection = (sectionId, i) => {
     clearTimeout(timer);
     let newSections = [...sections];
     newSections.splice(i, 1);

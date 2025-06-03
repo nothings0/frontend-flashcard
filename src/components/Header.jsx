@@ -5,30 +5,30 @@ import { toggle } from "../redux/themeSlice";
 
 const mainNav = [
   {
-    display: "Home",
+    display: "Trang chủ",
     path: "/",
     icon: "fa-solid fa-house",
   },
   {
-    display: "Library",
+    display: "Thư viện",
     path: "/mylibrary",
     icon: "fa-solid fa-book",
   },
   {
-    display: "Calendar",
+    display: "Lịch học",
     path: "/calendar",
     icon: "fa-brands fa-hive",
   },
   {
-    display: "Create",
+    display: "Tạo",
     path: "/card/create",
     icon: "fa-solid fa-plus",
   },
-  {
-    display: "Lyric training",
-    path: "/lyric",
-    icon: "fa-solid fa-music",
-  },
+  // {
+  //   display: "Lyric training",
+  //   path: "/lyric",
+  //   icon: "fa-solid fa-music",
+  // },
 ];
 
 const Header = () => {

@@ -5,6 +5,7 @@ import Modal, { ModalTitle, ModalBody, ModalFooter } from '../components/Modal';
 import List from './components/List';
 import debounce from 'lodash/debounce';
 import CardModal from './components/CardModal';
+import dayjs from 'dayjs';
 
 const Card = () => {
   const [cards, setCards] = useState([]);
@@ -88,7 +89,8 @@ const Card = () => {
         onEdit={setEditingCard}
         onDelete={setEditingCard}
         customRender={{
-          createdAt: (val) => new Date(val).toLocaleString(),
+          createdAt: (val) => dayjs(val).format('DD/MM/YYYY'),
+          type: (val) => <span className={`badge badge-${val}`}>{val}</span>,
         }}
       />
 

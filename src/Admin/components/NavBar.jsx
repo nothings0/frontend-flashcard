@@ -1,6 +1,5 @@
 import {Link, useLocation} from 'react-router-dom'
 
-import logo from "../../assets/Lo-go.png"
 const mainNav = [
     {
         display: "Dashboard",
@@ -31,11 +30,6 @@ const NavBar = () => {
 
   return (
     <div className="navbar">
-        <div className="navbar__logo">
-            <Link to="/">
-                <img src={logo} alt="Logo" />
-            </Link>
-        </div>
         <div className="navbar__link">
             {
                 mainNav?.map((item, index) => (

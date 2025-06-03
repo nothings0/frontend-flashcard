@@ -140,8 +140,8 @@ const PricingManager = ({ accessToken }) => {
                                     <td>
                                         {n.title}
                                     </td>
-                                    <td>{n.price}</td>
-                                    <td>{n.discount}</td>
+                                    <td>{n.price.toLocaleString()}</td>
+                                    <td>{n.discount}%</td>
                                     <td>
                                         <div className="actions">
                                             <button onClick={() => openEditModal(n)} className="btn edit">

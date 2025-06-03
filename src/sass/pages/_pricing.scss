@@ -474,16 +474,16 @@
 .countdown-bar {
   width: 100%;
   height: 10px;
-  background-color: #eee;
   border-radius: 5px;
   overflow: hidden;
   margin-bottom: 8px;
   direction: rtl; /* chạy từ phải sang trái */
+  background-color: #007bff;
 }
 
 .countdown-progress {
   height: 100%;
-  background-color: #007bff;
+  background-color: #eee;
   transition: width 0.5s ease;
   transform-origin: right; /* điểm bắt đầu co giãn từ bên phải */
 }

@@ -16,12 +16,25 @@
       font-size: 2rem;
     }
     &__right {
-      font-size: 2rem;
-      padding: 1rem 1.5rem;
-      background-color: $main-color;
-      color: #fff;
-      cursor: pointer;
-      border-radius: 5px;
+      @include flex(center, center);
+      gap: 2rem;
+      .generate-terms-btn {
+        background-color: #ffc637;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1.6rem;
+      }
+
+      &__create {
+        font-size: 1.6rem;
+        padding: 10px 20px;
+        border-radius: 5px;
+        background-color: $main-color;
+        color: #fff;
+        cursor: pointer;
+      }
     }
   }
   &__header {

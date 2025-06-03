@@ -905,6 +905,17 @@ export const getInvoice = async ({ invoiceId, accessToken }) => {
     console.log(error);
   }
 };
+export const getInvoices = async ({ page, limit, skip = 0, accessToken }) => {
+  try {
+    const res = await axiosJWT.get(`${genURL(`/v1/invoice/admin`)}`, {
+      params: {page, limit, skip},
+      headers: { token: `Bearer ${accessToken}` },
+    });
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
 // admin
 export const statistical = async ({ accessToken, period }) => {
   try {
@@ -1006,6 +1017,35 @@ export const aiChat = async ({ accessToken, userMessage, context }) => {
     },
     body: JSON.stringify(payload),
   });
+
+  if (!res.ok) {
+    throw new Error("API trả về lỗi");
+  }
+
+  return res.body;
+};
+export const genAiCard = async ({ accessToken, title, existingPrompts }) => {
+  const URL =
+    process.env.NODE_ENV === "production"
+      ? "https://backend-kfnn.onrender.com"
+      : "http://localhost:8000";
+
+  const payload = {
+    title,
+    existingPrompts, // đảm bảo truyền context vào body
+  };
+
+  const res = await fetch(
+        `${URL}/v1/ai/chat/generate-terms`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Token: `Bearer ${accessToken}`, // Sửa header "Token" thành "Authorization"
+          },
+          body: JSON.stringify(payload),
+        }
+      );
 
   if (!res.ok) {
     throw new Error("API trả về lỗi");

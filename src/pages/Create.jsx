@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { AddCard, GetTranslate } from "../redux/apiRequest";
+import { AddCard, genAiCard, GetTranslate } from "../redux/apiRequest";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import Modal, { ModalBody, ModalFooter, ModalTitle } from "../components/Modal";
@@ -53,6 +53,7 @@ const Create = () => {
   const [share, setShare] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
   const [matches, setMatches] = useState([]);
+  const [isStreaming, setIsStreaming] = useState(false);
   const topRef = useRef(null);
   const { loading } = useSelector((state) => state.middle);
   const { success, toast } = useSelector((state) => state.card);
@@ -131,13 +132,13 @@ const Create = () => {
         };
         setTerms(termArr1);
       }, 250);
-      // clearTimeout(timer);
     } else {
       let termArr = [...terms];
       termArr[index] = { ...termArr[index], answer: value };
       setTerms(termArr);
     }
   };
+
   const handleAdd = async (title) => {
     const newTerms = terms.filter(
       (term) => term.prompt.trim() !== "" && term.answer.trim() !== ""
@@ -154,7 +155,9 @@ const Create = () => {
     } else {
       const res = await AddCard(newCard, accessToken, dispatch);
       if (res?.type === "failure") return;
-      else navigate("/");
+      else {
+        navigate(`${res?.card? `/card/${res?.card?.slug}` : "/"}`); 
+      }
     }
   };
 
@@ -164,14 +167,125 @@ const Create = () => {
     setTerms(updatedTerms);
   };
 
+  const typeText = async (index, text, field) => {
+    let currentText = "";
+    for (let i = 0; i < text.length; i++) {
+      currentText += text[i];
+      setTerms((prev) => {
+        const newTerms = [...prev];
+        newTerms[index] = { ...newTerms[index], [field]: currentText };
+        return newTerms;
+      });
+      await new Promise((resolve) => setTimeout(resolve, 50)); // 50ms per character
+    }
+  };
+
+  const handleGenerateTerms = async () => {
+    if (isStreaming) return;
+    setIsStreaming(true);
+
+    try {
+      const existingPrompts = terms
+      .filter((term) => term.prompt.trim() !== "")
+      .map((term) => term.prompt);
+
+      const response = await genAiCard({
+        title: values.title, accessToken, existingPrompts})
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch terms");
+      }
+
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
+      let buffer = "";
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        buffer += decoder.decode(value, { stream: true });
+
+        // Process complete JSON objects
+        const lines = buffer.split("\n");
+        buffer = lines.pop(); // Keep incomplete line in buffer
+
+        for (const line of lines) {
+          if (line.trim()) {
+            try {
+              const term = JSON.parse(line);
+              if (term.prompt && term.answer) {
+                // Thêm term rỗng và lấy chỉ số từ prev.length
+                setTerms((prev) => {
+                  const newIndex = prev.length;
+                  const newTerms = [...prev, { prompt: "", answer: "" }];
+                  // Bắt đầu animation ngay sau khi thêm term
+                  setTimeout(async () => {
+                    await typeText(newIndex, term.prompt, "prompt");
+                    await typeText(newIndex, term.answer, "answer");
+                  }, 0);
+                  return newTerms;
+                });
+              } else if (term.error) {
+                console.error("Server error:", term.error);
+                setTerms([{ prompt: "", answer: "" }]);
+                break;
+              }
+            } catch (e) {
+              console.error("Error parsing JSON:", line, e);
+            }
+          }
+        }
+      }
+
+      // Process any remaining buffer
+      if (buffer.trim()) {
+        try {
+          const term = JSON.parse(buffer);
+          if (term.prompt && term.answer) {
+            setTerms((prev) => {
+              const newIndex = prev.length;
+              const newTerms = [...prev, { prompt: "", answer: "" }];
+              setTimeout(async () => {
+                await typeText(newIndex, term.prompt, "prompt");
+                await typeText(newIndex, term.answer, "answer");
+              }, 0);
+              return newTerms;
+            });
+          }
+        } catch (e) {
+          console.error("Error parsing final buffer:", buffer, e);
+        }
+      }
+    } catch (error) {
+      console.error("Error streaming terms:", error);
+      setTerms([{ prompt: "", answer: "" }]);
+    } finally {
+      setIsStreaming(false);
+    }
+  };
+
   return (
     <Helmet title="Tạo | Flux">
       <div className="create">
         <Search />
         <div className="create__top" ref={topRef}>
           <div className="create__top__left">Tạo học phần mới</div>
-          <div className="create__top__right" onClick={handleSubmit}>
-            Tạo
+          <div className="create__top__right">
+            <button
+              className="generate-terms-btn"
+              onClick={handleGenerateTerms}
+              disabled={isStreaming || !values.title}
+            >
+              {isStreaming ? (
+                <i className="fa-solid fa-spinner fa-spin"></i>
+              ) : (
+                <i className="fa-solid fa-robot"></i>
+              )}
+            </button>
+            <div className="create__top__right__create" onClick={handleSubmit}>
+              Tạo
+            </div>
           </div>
         </div>
         <div className="create__header">
@@ -179,14 +293,15 @@ const Create = () => {
             <div className="create__header__input">
               <div className="create__header__input__wrap">
                 <textarea
-                  maxLength="30"
+                  maxLength="50"
                   placeholder="Nhập tiêu đề..."
                   onChange={handleChange}
                   value={values.title}
                   name="title"
                   onBlur={handleBlur}
+                  autoFocus
                 ></textarea>
-                <small>{values.title.length}/30</small>
+                <small>{values.title.length}/50</small>
               </div>
               <p>
                 tiêu đề{" "}
@@ -249,6 +364,7 @@ const Create = () => {
         <div className="create__term">
           {terms &&
             terms.map((item, index) => {
+              if (!item) return null; // Bỏ qua item undefined
               return (
                 <div className="term" key={index}>
                   <div className="term__header">
@@ -266,7 +382,7 @@ const Create = () => {
                         name="prompt"
                         maxLength="255"
                         onChange={(e) => handleCardChange(e, index)}
-                        value={item.prompt}
+                        value={item.prompt || ""}
                       ></textarea>
                       <p>thuật ngữ</p>
                     </div>
@@ -275,7 +391,7 @@ const Create = () => {
                         name="answer"
                         maxLength="255"
                         onChange={(e) => handleCardChange(e, index)}
-                        value={item.answer}
+                        value={item.answer || ""}
                       ></textarea>
                       <p>định nghĩa</p>
                     </div>

@@ -104,6 +104,36 @@ input {
   }
 }
 
+.badge{
+  display: inline-block;
+  padding: 6px 12px;
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: #fff;
+  border-radius: 5px;
+
+  &-MONTHLY{
+    background-color: #ff2020;
+  }
+  &-FREE{
+    background-color: #5ddd18;
+  }
+  &-YEARLY{
+    background-color: #dddd18;
+  }
+  &-REGULAR{
+    background-color: #1846dd;
+  }
+  &-PRO{
+    background-color: #dd2f18;
+  }
+  &-PLUS{
+    background-color: #18dd18;
+  }
+  &-PENDING{
+    background-color: #18cddd;
+  }
+}
 // ::-webkit-scrollbar {
 //     width: 1rem;
 // }

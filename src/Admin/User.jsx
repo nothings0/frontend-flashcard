@@ -95,8 +95,8 @@ const User = () => {
         onEdit={setEditingUser}
         onView={setEditingUser}
         customRender={{
-          isAdmin: (val) => (val ? '✔️' : '❌'),
-          plan: (val) => val?.type || 'N/A',
+          isBlock: (val) => (val ? '✔️' : '❌'),
+          plan: (val) => <span className={`badge badge-${val?.type}`}>{val?.type}</span>,
         }}
       />
 
