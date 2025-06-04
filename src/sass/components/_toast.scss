@@ -1,99 +1,146 @@
+:root {
+  --success-color: #47d864;
+  --error-color: #ff623d;
+  --background-color-toast: #ffffff;
+  --text-color: #333333;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
 .toast {
   position: fixed;
-  top: 80px;
-  right: 32px;
-  z-index: 99;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
   @include flex(center, space-between);
-  gap: 2rem;
-  padding: 1rem;
-  background-color: var(--main-bg);
-  width: 40rem;
-  animation: slideInLeft ease 0.3s;
-  box-shadow: 0 5px 8px rgba(0, 0, 0, 0.08);
-  &.error::before {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0px;
-    height: 5px;
-    animation: AniLine ease 5s;
-    background-color: #ff623d;
+  gap: 1.5rem;
+  padding: 1.2rem 1.5rem;
+  background-color: var(--background-color-toast);
+  width: clamp(300px, 90vw, 400px);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px var(--shadow-color);
+  animation: slideIn 0.4s ease forwards;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+
+  &.hide {
+    opacity: 0;
+    transform: translateX(calc(100% + 20px));
   }
+
   &.success::before {
     content: "";
     position: absolute;
     bottom: 0;
-    left: 0px;
-    height: 5px;
-    animation: AniLine ease 5s;
-    background-color: #47d864;
+    left: 0;
+    height: 4px;
+    width: 100%;
+    background-color: var(--success-color);
+    animation: progressBar 5s linear forwards;
+    border-radius: 0 0 8px 8px;
   }
-  @keyframes slideInLeft {
-    0% {
+
+  &.error::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 4px;
+    width: 100%;
+    background-color: var(--error-color);
+    animation: progressBar 5s linear forwards;
+    border-radius: 0 0 8px 8px;
+  }
+
+  @keyframes slideIn {
+    from {
       opacity: 0;
-      transform: translateX(calc(100% + 32px));
+      transform: translateX(calc(100% + 20px));
     }
-    100% {
+    to {
       opacity: 1;
       transform: translateX(0);
     }
   }
-  @keyframes AniLine {
+
+  @keyframes progressBar {
     from {
-      width: 40rem;
+      width: 100%;
     }
     to {
       width: 0;
     }
   }
+
   &.success {
-    border-left: 5px solid #47d864;
+    border-left: 4px solid var(--success-color);
     .toast__icon i {
-      color: #47d864;
+      color: var(--success-color);
     }
     .toast__txt__type {
-      color: #47d864;
+      color: var(--success-color);
     }
   }
+
   &.error {
-    border-left: 5px solid #ff623d;
+    border-left: 4px solid var(--error-color);
     .toast__icon i {
-      color: #ff623d;
+      color: var(--error-color);
     }
     .toast__txt__type {
-      color: #ff623d;
+      color: var(--error-color);
     }
   }
-  &__icon {
-    @include flex(center, center);
-    width: 10%;
-    i {
-      font-size: 2rem;
-    }
-  }
+
   &__txt {
     flex: 1;
     text-transform: capitalize;
     &__type {
-      font-size: 2rem;
-      color: var(--txt-color);
-      margin-bottom: 1rem;
+      font-size: 1.6rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
     }
     &__des {
-      font-size: 1.4rem;
-      color: var(--txt-color);
-      margin-bottom: 1rem;
+      font-size: 1.3rem;
+      color: var(--text-color);
+      line-height: 1.4;
     }
   }
+
   &__close {
-    @include flex(center, flex-end);
-    width: 20%;
+    position: absolute;
+    top: 5px;
+    right: 5px;
     i {
-      font-size: 2rem;
-      color: var(--txt-color);
+      font-size: 1.6rem;
+      color: red;
       cursor: pointer;
-      padding: 1rem;
-      border-radius: 50%;
+      padding: 5px 7.5px;
+      transition: background-color 0.2s ease;
+      border-radius: 8px;
+      &:hover {
+        color: white;
+        background-color: red;
+      }
+    }
+  }
+
+  @media (max-width: 600px) {
+    top: 15px;
+    right: 15px;
+    width: clamp(250px, 85vw, 320px);
+    padding: 1rem;
+    gap: 1rem;
+
+    &__icon i {
+      font-size: 1.5rem;
+    }
+    &__txt__type {
+      font-size: 1.4rem;
+    }
+    &__txt__des {
+      font-size: 1.2rem;
+    }
+    &__close i {
+      font-size: 1.4rem;
     }
   }
 }

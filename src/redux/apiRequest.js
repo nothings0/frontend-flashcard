@@ -24,7 +24,7 @@ export const resetPassword = async (password, navigate, slug) => {
       headers: { token: `Bearer ${slug}` },
     });
     navigate("/login");
-  } catch (error) { }
+  } catch (error) {}
 };
 export const LoginUser = async (user, dispatch) => {
   dispatch(handleLoading());
@@ -41,7 +41,7 @@ export const LoginUser = async (user, dispatch) => {
 };
 
 export const getCurrentUser = async (accessToken) => {
-  const res = await axiosJWT.get(`${genURL('/v1/auth/user/me')}`, {
+  const res = await axiosJWT.get(`${genURL("/v1/auth/user/me")}`, {
     headers: { token: `Bearer ${accessToken}` },
   });
   return res.data;
@@ -85,13 +85,15 @@ export const ForgotPasswordAPI = async (user) => {
   try {
     const res = await axios.post(`${genURL("/v1/auth/forgotPassword")}`, user);
     return res.data;
-  } catch (error) { }
+  } catch (error) {}
 };
 export const LogoutUser = async (navigate, accessToken, dispatch) => {
   dispatch(handleLoading());
   try {
     localStorage.setItem("notification", null);
-    const res = await axiosJWT.post(`${genURL("/v1/auth/logout")}`, {},
+    const res = await axiosJWT.post(
+      `${genURL("/v1/auth/logout")}`,
+      {},
       {
         headers: { token: `Bearer ${accessToken}` },
       }
@@ -115,7 +117,11 @@ export const AddCard = async (card, accessToken, dispatch) => {
     dispatch(handleRemove());
     dispatch(showToast({ msg: "Tạo thành công", success: true }));
     return res.data;
-  } catch (error) { }
+  } catch (error) {
+    dispatch(
+      showToast({ msg: "Có lỗi xảy ra, vui lòng thử lại sau", success: false })
+    );
+  }
 };
 export const AdminAddCard = async ({ data, accessToken }) => {
   try {
@@ -124,7 +130,7 @@ export const AdminAddCard = async ({ data, accessToken }) => {
     });
     return res.data;
   } catch (error) {
-    throw error
+    throw error;
   }
 };
 export const getCardById = async (dispatch, card, page, limit) => {
@@ -158,7 +164,7 @@ export const GetTerm = async () => {
   try {
     const res = await axiosJWT.get(`${genURL("/v1/card/")}`);
     return res.data;
-  } catch (error) { }
+  } catch (error) {}
 };
 export const DeleteTerm = async (accessToken, termId) => {
   try {
@@ -169,7 +175,7 @@ export const DeleteTerm = async (accessToken, termId) => {
       }
     );
     return res.data;
-  } catch (error) { }
+  } catch (error) {}
 };
 export const GetLibrary = async (accessToken, dispatch, limit) => {
   try {
@@ -194,7 +200,7 @@ export const GetTranslate = async (translate) => {
     );
 
     return res.data;
-  } catch (error) { }
+  } catch (error) {}
 };
 
 export const UpdateCard = async (card, slug, accessToken, userId, dispatch) => {
@@ -222,7 +228,7 @@ export const UpdateCardAdmin = async ({ data, accessToken }) => {
     );
     return res.data;
   } catch (error) {
-    throw error
+    throw error;
   }
 };
 
@@ -385,7 +391,7 @@ export const UpdateMardMatchCard = async (slug, user, terms) => {
       terms,
     });
     return res.data;
-  } catch (error) { }
+  } catch (error) {}
 };
 export const UpdateAndGetMatch = async (slug, user, terms, limit) => {
   try {
@@ -394,7 +400,7 @@ export const UpdateAndGetMatch = async (slug, user, terms, limit) => {
       { user, terms }
     );
     return res.data;
-  } catch (error) { }
+  } catch (error) {}
 };
 
 export const GetTest = async (dispatch, slug, user, limit) => {
@@ -450,14 +456,14 @@ export const AddView = async (slug) => {
   try {
     const res = await axios.put(`${genURL(`/v1/card/view/${slug}`)}`);
     return res.data;
-  } catch (error) { }
+  } catch (error) {}
 };
 
 export const SearchCard = async (q) => {
   try {
     const res = await axios.get(`${genURL(`/v1/card/search/${q}`)}`);
     return res.data;
-  } catch (error) { }
+  } catch (error) {}
 };
 
 export const RateCard = async (slug, rateNum, accessToken, dispatch) => {
@@ -471,7 +477,7 @@ export const RateCard = async (slug, rateNum, accessToken, dispatch) => {
     );
     dispatch(showToast({ msg: "Cảm ơn bạn đã đánh giá", success: true }));
     return res.data;
-  } catch (error) { }
+  } catch (error) {}
 };
 
 export const GetListCard = async (
@@ -494,7 +500,12 @@ export const GetListCard = async (
   }
 };
 
-export const GetAllCard = async ({ page = 1, limit = 10, accessToken, search = "" }) => {
+export const GetAllCard = async ({
+  page = 1,
+  limit = 10,
+  accessToken,
+  search = "",
+}) => {
   try {
     const res = await axiosJWT.get(
       `${genURL(`/v1/card/admin/all`, { page: page, limit: limit, search })}`,
@@ -517,11 +528,15 @@ export const GetHome = async (limit, userId) => {
     return res.data;
   } catch (error) {
     console.log(error);
-
   }
 };
 
-export const GetAllUser = async ({ page = 1, limit = 10, search, accessToken }) => {
+export const GetAllUser = async ({
+  page = 1,
+  limit = 10,
+  search,
+  accessToken,
+}) => {
   try {
     const res = await axiosJWT.get(
       `${genURL(`/v1/auth`, { page: page, limit: limit, search })}`,
@@ -538,36 +553,37 @@ export const GetAllUser = async ({ page = 1, limit = 10, search, accessToken }) 
 export const AdminAddUser = async ({ data, accessToken }) => {
   try {
     const res = await axiosJWT.post(
-      `${genURL(`/v1/auth/admin/add-user`)}`, data,
+      `${genURL(`/v1/auth/admin/add-user`)}`,
+      data,
       {
         headers: { token: `Bearer ${accessToken}` },
       }
     );
     return res.data;
   } catch (error) {
-    throw error
+    throw error;
   }
 };
 export const AdminUpdateUser = async ({ data, accessToken }) => {
   try {
     const res = await axiosJWT.put(
-      `${genURL(`/v1/auth/admin/update-user`)}`, data,
+      `${genURL(`/v1/auth/admin/update-user`)}`,
+      data,
       {
         headers: { token: `Bearer ${accessToken}` },
       }
     );
     return res.data;
   } catch (error) {
-    throw error
+    throw error;
   }
 };
-
 
 export const GetUser = async (username) => {
   try {
     const res = await axios.get(`${genURL(`/v1/auth/${username}`)}`);
     return res.data;
-  } catch (error) { }
+  } catch (error) {}
 };
 
 export const UpdateUser = async (userId, type, data, accessToken, dispatch) => {
@@ -581,7 +597,7 @@ export const UpdateUser = async (userId, type, data, accessToken, dispatch) => {
     );
     dispatch(showToast({ msg: "Update thành công", success: true }));
     return res.data;
-  } catch (error) { }
+  } catch (error) {}
 };
 export const ChangePassword = async (data, accessToken, dispatch) => {
   try {
@@ -604,9 +620,9 @@ export const UpdateProfilePic = async (file, dispatch, accessToken) => {
     await axiosJWT.put(`${genURL("/v1/auth/")}`, file, {
       headers: { token: `Bearer ${accessToken}` },
     });
-    syncUserToLocal(accessToken, dispatch)
+    syncUserToLocal(accessToken, dispatch);
     dispatch(showToast({ msg: "Update thành công", success: true }));
-  } catch (error) { }
+  } catch (error) {}
 };
 
 export const ActiveAccount = async (data) => {
@@ -623,7 +639,7 @@ export const ContactData = async (data, dispatch) => {
     const res = await axios.post(`${genURL("/v1/auth/contact")}`, data);
     dispatch(showToast({ msg: res.data.msg, success: true }));
     return res.data;
-  } catch (error) { }
+  } catch (error) {}
 };
 
 export const GetNotifi = async (accessToken) => {
@@ -632,15 +648,15 @@ export const GetNotifi = async (accessToken) => {
       headers: { token: `Bearer ${accessToken}` },
     });
     return res.data;
-  } catch (error) { }
+  } catch (error) {}
 };
-export const GetNotifis = async ({accessToken}) => {
+export const GetNotifis = async ({ accessToken }) => {
   try {
     const res = await axiosJWT.get(`${genURL("/v1/notification/multiple")}`, {
       headers: { token: `Bearer ${accessToken}` },
     });
     return res.data;
-  } catch (error) { }
+  } catch (error) {}
 };
 export const CreateNotifi = async (userId, content, accessToken) => {
   try {
@@ -652,20 +668,17 @@ export const CreateNotifi = async (userId, content, accessToken) => {
       }
     );
     return res.data;
-  } catch (error) { }
+  } catch (error) {}
 };
-export const DeleteNotifi = async ({id, accessToken}) => {
+export const DeleteNotifi = async ({ id, accessToken }) => {
   try {
-    const res = await axiosJWT.delete(
-      `${genURL(`/v1/notification/${id}`)}`,
-      {
-        headers: { token: `Bearer ${accessToken}` },
-      }
-    );
+    const res = await axiosJWT.delete(`${genURL(`/v1/notification/${id}`)}`, {
+      headers: { token: `Bearer ${accessToken}` },
+    });
     return res.data;
-  } catch (error) { }
+  } catch (error) {}
 };
-export const UpdateNotifi = async ({data, accessToken}) => {
+export const UpdateNotifi = async ({ data, accessToken }) => {
   try {
     const res = await axiosJWT.put(
       `${genURL(`/v1/notification`)}`,
@@ -675,7 +688,7 @@ export const UpdateNotifi = async ({data, accessToken}) => {
       }
     );
     return res.data;
-  } catch (error) { }
+  } catch (error) {}
 };
 export const ReadNotifi = async (notifiId, accessToken) => {
   try {
@@ -687,7 +700,7 @@ export const ReadNotifi = async (notifiId, accessToken) => {
       }
     );
     return res.data;
-  } catch (error) { }
+  } catch (error) {}
 };
 export const UpdateAchieve = async (target, accessToken) => {
   try {
@@ -699,7 +712,7 @@ export const UpdateAchieve = async (target, accessToken) => {
       }
     );
     return res.data;
-  } catch (error) { }
+  } catch (error) {}
 };
 export const GetContact = async (accessToken) => {
   try {
@@ -707,7 +720,7 @@ export const GetContact = async (accessToken) => {
       headers: { token: `Bearer ${accessToken}` },
     });
     return res.data;
-  } catch (error) { }
+  } catch (error) {}
 };
 export const GetSuggestWord = async (data) => {
   try {
@@ -715,7 +728,7 @@ export const GetSuggestWord = async (data) => {
       params: data,
     });
     return res.data;
-  } catch (error) { }
+  } catch (error) {}
 };
 export const CreateMultipleNotifi = async (dispatch, accessToken, data) => {
   try {
@@ -823,38 +836,44 @@ export const getPries = async () => {
 
 export const getPricingById = async (id) => {
   try {
-    const response = await axiosJWT.get(`${genURL(`/v1/pricing`, {id})}`);
-    return response.data.pricing
+    const response = await axiosJWT.get(`${genURL(`/v1/pricing`, { id })}`);
+    return response.data.pricing;
   } catch (error) {
     throw error;
   }
 };
 
-export const createPricing = async ({data: pricingData, accessToken}) => {
+export const createPricing = async ({ data: pricingData, accessToken }) => {
   try {
-    const response = await axiosJWT.post(`${genURL(`/v1/pricing`)}`, pricingData, {
-      headers: { token: `Bearer ${accessToken}` },
-    });
-    return response.data.pricing
-
+    const response = await axiosJWT.post(
+      `${genURL(`/v1/pricing`)}`,
+      pricingData,
+      {
+        headers: { token: `Bearer ${accessToken}` },
+      }
+    );
+    return response.data.pricing;
   } catch (error) {
     throw error;
   }
 };
 
-export const updatePricing = async ({id, data, accessToken}) => {
-
+export const updatePricing = async ({ id, data, accessToken }) => {
   try {
-    const response = await axiosJWT.patch(`${genURL(`/v1/pricing/${id}`)}`, data, {
-      headers: { token: `Bearer ${accessToken}` },
-    });
-    return response.data
+    const response = await axiosJWT.patch(
+      `${genURL(`/v1/pricing/${id}`)}`,
+      data,
+      {
+        headers: { token: `Bearer ${accessToken}` },
+      }
+    );
+    return response.data;
   } catch (error) {
     throw error;
   }
 };
 
-export const deletePricing = async ({id, accessToken}) => {
+export const deletePricing = async ({ id, accessToken }) => {
   try {
     await axiosJWT.delete(`${genURL(`/v1/pricing/${id}`)}`, {
       headers: { token: `Bearer ${accessToken}` },
@@ -882,9 +901,13 @@ export const updatePlan = async ({ accessToken }) => {
 
 export const createInvoice = async ({ planType, amount, accessToken }) => {
   try {
-    const res = await axiosJWT.post(`${genURL(`/v1/invoice`)}`, { planType, amount }, {
-      headers: { token: `Bearer ${accessToken}` },
-    });
+    const res = await axiosJWT.post(
+      `${genURL(`/v1/invoice`)}`,
+      { planType, amount },
+      {
+        headers: { token: `Bearer ${accessToken}` },
+      }
+    );
     return res.data;
   } catch (error) {
     // Ném lại lỗi có data từ response nếu có
@@ -908,7 +931,7 @@ export const getInvoice = async ({ invoiceId, accessToken }) => {
 export const getInvoices = async ({ page, limit, skip = 0, accessToken }) => {
   try {
     const res = await axiosJWT.get(`${genURL(`/v1/invoice/admin`)}`, {
-      params: {page, limit, skip},
+      params: { page, limit, skip },
       headers: { token: `Bearer ${accessToken}` },
     });
     return res.data;
@@ -919,9 +942,12 @@ export const getInvoices = async ({ page, limit, skip = 0, accessToken }) => {
 // admin
 export const statistical = async ({ accessToken, period }) => {
   try {
-    const res = await axiosJWT.get(`${genURL(`/v1/admin`, { period: period })}`, {
-      headers: { token: `Bearer ${accessToken}` },
-    });
+    const res = await axiosJWT.get(
+      `${genURL(`/v1/admin`, { period: period })}`,
+      {
+        headers: { token: `Bearer ${accessToken}` },
+      }
+    );
     return res.data;
   } catch (error) {
     console.log(error);
@@ -939,9 +965,12 @@ export const getInvoiceChart = async ({ accessToken }) => {
 };
 export const adminGetCards = async ({ accessToken, page, limit, sort }) => {
   try {
-    const res = await axiosJWT.get(`${genURL(`/v1/admin/cards`, { page, limit, sort })}`, {
-      headers: { token: `Bearer ${accessToken}` },
-    });
+    const res = await axiosJWT.get(
+      `${genURL(`/v1/admin/cards`, { page, limit, sort })}`,
+      {
+        headers: { token: `Bearer ${accessToken}` },
+      }
+    );
     return res.data;
   } catch (error) {
     console.log(error);
@@ -960,7 +989,7 @@ export const getAllBanners = async () => {
 
 export const getBannerById = async (id) => {
   try {
-    const response = await axiosJWT.get(`${genURL(`/v1/banner`, {id})}`);
+    const response = await axiosJWT.get(`${genURL(`/v1/banner`, { id })}`);
     return response.data.banner;
   } catch (error) {
     throw error;
@@ -971,23 +1000,24 @@ export const createBanner = async (bannerData) => {
   try {
     const response = await axiosJWT.post(`${genURL(`/v1/banner`)}`, bannerData);
     return response.data.banner;
-
   } catch (error) {
     throw error;
   }
 };
 
 export const updateBanner = async (id, bannerData) => {
-
   try {
-    const response = await axiosJWT.patch(`${genURL(`/v1/banner/${id}`)}`, bannerData);
+    const response = await axiosJWT.patch(
+      `${genURL(`/v1/banner/${id}`)}`,
+      bannerData
+    );
     return response.data.banner;
   } catch (error) {
     throw error;
   }
 };
 
-export const deleteBanner = async ({id, accessToken}) => {
+export const deleteBanner = async ({ id, accessToken }) => {
   try {
     await axiosJWT.delete(`${genURL(`/v1/banner/${id}`)}`, {
       headers: { token: `Bearer ${accessToken}` },
@@ -1024,7 +1054,10 @@ export const aiChat = async ({ accessToken, userMessage, context }) => {
 
   return res.body;
 };
-export const genAiCard = async ({ accessToken, title, existingPrompts }) => {
+export const genAiCard = async (
+  { accessToken, title, existingPrompts },
+  dispatch
+) => {
   const URL =
     process.env.NODE_ENV === "production"
       ? "https://backend-kfnn.onrender.com"
@@ -1032,71 +1065,78 @@ export const genAiCard = async ({ accessToken, title, existingPrompts }) => {
 
   const payload = {
     title,
-    existingPrompts, // đảm bảo truyền context vào body
+    existingPrompts,
   };
 
-  const res = await fetch(
-        `${URL}/v1/ai/chat/generate-terms`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Token: `Bearer ${accessToken}`, // Sửa header "Token" thành "Authorization"
-          },
-          body: JSON.stringify(payload),
-        }
-      );
+  const res = await fetch(`${URL}/v1/ai/chat/generate-terms`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Token: `Bearer ${accessToken}`,
+    },
+    body: JSON.stringify(payload),
+  });
 
   if (!res.ok) {
-    throw new Error("API trả về lỗi");
+    const error = await res.json();
+    console.log(error.msg);
+
+    dispatch(
+      showToast({
+        msg: error.msg || "Có lỗi xảy ra khi tạo thẻ từ AI",
+        success: false,
+      })
+    );
   }
 
   return res.body;
 };
 
-
 export const aiVoiceChat = async ({ accessToken, userMessage, audioFile }) => {
-  const URL = process.env.NODE_ENV === 'production'
-    ? 'https://backend-kfnn.onrender.com'
-    : 'http://localhost:8000';
+  const URL =
+    process.env.NODE_ENV === "production"
+      ? "https://backend-kfnn.onrender.com"
+      : "http://localhost:8000";
 
   try {
     let res;
     const headers = {
-      'token': `Bearer ${accessToken}`,
+      token: `Bearer ${accessToken}`,
     };
 
     if (audioFile) {
       // Voice input: Gửi file âm thanh
       const formData = new FormData();
-      formData.append('audio', audioFile, 'recording.mp3');
+      formData.append("audio", audioFile, "recording.mp3");
       res = await fetch(`${URL}/v1/ai/chat`, {
-        method: 'POST',
+        method: "POST",
         headers,
         body: formData,
       });
     } else if (userMessage) {
       // Text input: Gửi userMessage
       res = await fetch(`${URL}/v1/ai/chat`, {
-        method: 'POST',
+        method: "POST",
         headers: {
           ...headers,
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ userMessage }),
       });
     } else {
-      throw new Error('Hihi, bạn cần gửi tin nhắn hoặc file âm thanh nha! 😺');
+      throw new Error("Hihi, bạn cần gửi tin nhắn hoặc file âm thanh nha! 😺");
     }
 
     if (!res.ok) {
       const errorData = await res.json();
-      throw new Error(`Hihi, API trả về lỗi nè: ${errorData.msg || 'Không rõ lỗi'} 😿`);
+      throw new Error(
+        `Hihi, API trả về lỗi nè: ${errorData.msg || "Không rõ lỗi"} 😿`
+      );
     }
 
     return res.body;
   } catch (error) {
-    console.error('AI Voice Chat error:', error);
+    console.error("AI Voice Chat error:", error);
     throw error;
   }
 };

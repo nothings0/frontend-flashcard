@@ -190,7 +190,7 @@ const Create = () => {
       .map((term) => term.prompt);
 
       const response = await genAiCard({
-        title: values.title, accessToken, existingPrompts})
+        title: values.title, accessToken, existingPrompts}, dispatch)
 
       const reader = response.getReader();
       const decoder = new TextDecoder();

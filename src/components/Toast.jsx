@@ -18,13 +18,6 @@ const Toast = () => {
 
   return (
     <div className={`toast ${success ? "success" : "error"}`}>
-      <div className="toast__icon">
-        {success ? (
-          <i className="fa-solid fa-check"></i>
-        ) : (
-          <i className="fa-solid fa-exclamation"></i>
-        )}
-      </div>
       <div className="toast__txt">
         <div className="toast__txt__type">{success ? "success" : "error"}</div>
         <div className="toast__txt__des">{toast}</div>
