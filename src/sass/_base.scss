@@ -134,6 +134,14 @@ input {
     background-color: #18cddd;
   }
 }
+
+.two-lines {
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* Số dòng muốn hiển thị */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 // ::-webkit-scrollbar {
 //     width: 1rem;
 // }

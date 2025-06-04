@@ -1,7 +1,6 @@
 /* Calendar container */
 .calendar {
   padding: 2rem;
-  background: linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%);
   min-height: 100vh;
 }
 
@@ -230,7 +229,9 @@
 .css-1u3bzj6-MuiFormControl-root-MuiTextField-root{
   width: 100%;
 }
-
-.css-nxo287-MuiInputBase-input-MuiOutlinedInput-input{
-  font-size: 1.4rem!important;
+.css-1u3bzj6-MuiFormControl-root-MuiTextField-root input{
+  padding: 6px 10px;
+}
+.css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root{
+  font-size: 1.8rem!important;
 }

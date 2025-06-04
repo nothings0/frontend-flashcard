@@ -29,18 +29,16 @@ const ProLearn = () => {
     staleTime: Infinity,
   });
 
+  if (isLoading) return <Skeleton />;
+
   return (
     <div className="pro-learn">
       <HeaderPrimary title="Học tập" />
-      {isLoading ? (
-        <Skeleton />
-      ) : (
-        <>
-          {step === 1 && <Define data={data} setStep={setStep} />}
-          {step === 2 && <Choice data={data} setStep={setStep} />}
-          {step === 3 && <Write data={data} setStep={setStep} />}
-        </>
-      )}
+      <>
+        {step === 1 && <Define data={data} setStep={setStep} />}
+        {step === 2 && <Choice data={data} setStep={setStep} />}
+        {step === 3 && <Write data={data} setStep={setStep} />}
+      </>
     </div>
   );
 };

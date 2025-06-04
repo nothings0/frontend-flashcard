@@ -630,7 +630,7 @@ export const ActiveAccount = async (data) => {
     const res = await axios.post(`${genURL("/v1/auth/active")}`, data);
     return res.data;
   } catch (error) {
-    return error.response.data.success;
+    throw error;
   }
 };
 

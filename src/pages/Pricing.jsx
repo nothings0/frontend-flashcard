@@ -50,6 +50,7 @@ const Pricing = () => {
         }
     };
 
+    const monthPrice = prices.find(item => item.type === 'MONTHLY');
 
     return (
         <Helmet title="Nâng cấp tài khoản | Flux">
@@ -58,10 +59,10 @@ const Pricing = () => {
                 <div className="banner-content">
                     <h1 className="title">FluxQuiz Plus</h1>
                     <h2 className="subtitle">
-                        ĐĂNG KÝ LẦN ĐẦU TIÊN GIÁ 25.000đ
+                        ĐĂNG KÝ LẦN ĐẦU TIÊN GIÁ {monthPrice?.price.toLocaleString()}đ
                     </h2>
                     <p className="description">
-                        Ưu đãi có giới hạn: Nâng cấp lên gói FluxQuiz Plus với giá chỉ 25.000đ cho tháng đầu tiên. Sau đó sẽ quay lại giá gốc
+                        Ưu đãi có giới hạn: Nâng cấp lên gói FluxQuiz Plus với giá chỉ {monthPrice?.price.toLocaleString()}đ cho tháng đầu tiên. Sau đó sẽ quay lại giá gốc
                     </p>
                 </div>
 

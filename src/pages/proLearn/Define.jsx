@@ -37,7 +37,7 @@ const Define = ({ data, setStep }) => {
           Tiếp tục
         </div>
       </div>
-      <audio src={data.ques.audio} ref={audioRef} autoPlay></audio>
+      <audio src={data.ques.audio} ref={audioRef}></audio>
     </div>
   );
 };

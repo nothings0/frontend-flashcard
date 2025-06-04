@@ -44,7 +44,7 @@ const Card = ({ data, flex }) => {
         <Link to={`/card/${data?.slug}`}>
           <div className="card__title">{data?.title}</div>
         </Link>
-        <div className="card__info">
+        <div className="card__info two-lines">
           {flex ? (
             <p>{data?.description}</p>
           ) : (

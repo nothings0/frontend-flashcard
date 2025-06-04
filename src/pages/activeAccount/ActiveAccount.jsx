@@ -1,27 +1,42 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { ActiveAccount } from "../../redux/apiRequest";
-import logo from "../../assets/Lo-go.png"
+import logo from "../../assets/Lo-go.png";
+import Skeleton from "../../components/Skeleton";
+import { useDispatch } from "react-redux";
+import { showToast } from "../../redux/toastSlice";
+
 const ActiveAccountPage = () => {
   const { slug } = useParams();
-  const [msg, setMsg] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+
   useEffect(() => {
     const handleActive = async () => {
-      const res = await ActiveAccount({ active_token: slug });
-      if (res === false) {
-        setMsg(false);
-      } else {
-        setMsg(res.msg);
+      setLoading(true);
+      try {
+        const res = await ActiveAccount({ active_token: slug });
+        setError(false);
+        dispatch(showToast({ msg: res.msg, success: true }));
+        setLoading(false);
+      } catch (error) {
+        setError(true);
+        dispatch(showToast({ msg: error.response.data.msg, success: false }));
+        setLoading(false);
       }
     };
     handleActive();
   }, [slug]);
+
+  if (loading) return <Skeleton />;
+
   return (
     <div className="midle-active">
       <div className="midle-active__img">
         <img src={logo} alt="Logo" />
       </div>
-      {msg ? (
+      {!error ? (
         <>
           <div className="midle-active__heading">
             Chào mừng bạn đến với fluxquiz.com
