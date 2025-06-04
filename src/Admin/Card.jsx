@@ -87,7 +87,7 @@ const Card = () => {
         columns={['title', 'type', 'views', 'createdAt']}
         onPageChange={setPage}
         onEdit={setEditingCard}
-        onDelete={setEditingCard}
+        onDelete={setDeletingCard}
         customRender={{
           createdAt: (val) => dayjs(val).format('DD/MM/YYYY'),
           type: (val) => <span className={`badge badge-${val}`}>{val}</span>,
@@ -98,7 +98,7 @@ const Card = () => {
         <Modal modalOpen={true} setModalOpen={() => setDeletingCard(null)}>
           <ModalTitle fnClose={() => setDeletingCard(null)}>Xác nhận xoá</ModalTitle>
           <ModalBody>
-            <p>Bạn có chắc muốn xoá thẻ <strong>{deletingCard.title}</strong> không?</p>
+            <p>Bạn có chắc muốn xoá thẻ <strong className='highlight'>{deletingCard.title}</strong> không?</p>
           </ModalBody>
           <ModalFooter>
             <button onClick={() => setDeletingCard(null)} className="cancle-btn">Huỷ</button>

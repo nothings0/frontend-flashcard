@@ -50,14 +50,14 @@ const AdminDashboard = () => {
             <div>
               <h2 className="metric-title">{item.title}</h2>
               <p className="metric-value">
-                {item.value}
+                {item.value.toLocaleString()}
                 {item.percentageType === "increase" ? (
                   <span className="metric-change positive">
-                    <i className="fas fa-arrow-up"></i> {item.percentageValue}
+                    <i className="fas fa-arrow-up"></i> {item.percentageValue}%
                   </span>
                 ) : (
                   <span className="metric-change negative">
-                    <i className="fas fa-arrow-down"></i> {item.percentageValue}
+                    <i className="fas fa-arrow-down"></i> {item.percentageValue}%
                   </span>
                 )}
               </p>

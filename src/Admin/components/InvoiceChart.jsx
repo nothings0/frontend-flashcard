@@ -13,6 +13,13 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Invoice from "./Invoice";
 
+const formatNumber = (value) => {
+  return value.toLocaleString("vi-VN", {
+    style: "currency",
+    currency: "VND",
+  })
+};
+
 const InvoiceChart = () => {
   const accessToken = useSelector(
     (state) => state.user.currentUser?.accessToken
@@ -48,13 +55,13 @@ const InvoiceChart = () => {
       <div className="chart-card income-chart">
         <h2 className="chart-title">Doanh thu</h2>
         <ResponsiveContainer width="100%" height={300}>
-          <BarChart data={data.invoices}>
+          <BarChart data={data.invoices} margin={{left: 30}}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="day" />
-            <YAxis />
+            <YAxis tickFormatter={formatNumber}/>
             <Tooltip />
-            <Bar dataKey="income" fill="#82ca9d" />
-          </BarChart>
+            <Bar dataKey="income" fill="#7fc1ff" />
+          </BarChart >
         </ResponsiveContainer>
       </div>
       <div className="chart-card-wrap">
