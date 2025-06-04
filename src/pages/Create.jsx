@@ -192,11 +192,7 @@ const Create = () => {
       const response = await genAiCard({
         title: values.title, accessToken, existingPrompts})
 
-      if (!response.ok) {
-        throw new Error("Failed to fetch terms");
-      }
-
-      const reader = response.body.getReader();
+      const reader = response.getReader();
       const decoder = new TextDecoder();
       let buffer = "";
 
