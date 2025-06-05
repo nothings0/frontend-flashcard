@@ -161,7 +161,7 @@ const BannerManager = ({ accessToken }) => {
             {modalOpen && (
                 <Modal modalOpen={modalOpen} setModalOpen={setModalOpen}>
                     <ModalTitle fnClose={() => setModalOpen(false)}>
-                        <h4>{isEditMode ? "Edit Banner" : "Create Banner"}</h4>
+                        <h4>{isEditMode ? "Chỉnh sửa banner" : "Tạo Banner"}</h4>
                     </ModalTitle>
                     <ModalBody className="modal-body">
                         {error && <p className="error">{error}</p>}

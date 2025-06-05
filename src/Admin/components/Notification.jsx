@@ -101,7 +101,7 @@ const Notification = () => {
   return (
     <div className="service-manager">
       <h2 className="service__title">
-        Notification
+        Thông báo
         <button onClick={openCreateModal} className="btn primary"><i className="fa-solid fa-plus"></i></button>
       </h2>
 
@@ -145,7 +145,7 @@ const Notification = () => {
       {modalOpen && (
         <Modal modalOpen={modalOpen} setModalOpen={setModalOpen}>
           <ModalTitle fnClose={() => setModalOpen(false)}>
-            <h4>{isEditMode ? "Edit Notification" : "Create Notification"}</h4>
+            <h4>{isEditMode ? "Chỉnh sửa thông báo" : "Tạo thông báo"}</h4>
           </ModalTitle>
           <ModalBody className="modal-body">
             {error && <p className="error">{error}</p>}

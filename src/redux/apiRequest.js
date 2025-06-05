@@ -251,6 +251,20 @@ export const DeleteCard = async (slug, userId, accessToken, dispatch) => {
   }
 };
 
+export const AdminDeleteCard = async (id, accessToken, dispatch) => {
+  try {
+    dispatch(handleLoading());
+    const res = await axiosJWT.delete(`${genURL(`/v1/card/admin/${id}`)}`, {
+      headers: { token: `Bearer ${accessToken}` }
+    });
+    dispatch(showToast({ msg: "Xóa thành công", success: true }));
+
+    return res.data;
+  } catch (error) {
+    dispatch(showToast({ msg: error.response.data.msg, success: false }));
+  }
+};
+
 export const GetQuestion = async (dispatch, slug, limit) => {
   try {
     dispatch(play());
@@ -1079,7 +1093,6 @@ export const genAiCard = async (
 
   if (!res.ok) {
     const error = await res.json();
-    console.log(error.msg);
 
     dispatch(
       showToast({
@@ -1087,6 +1100,8 @@ export const genAiCard = async (
         success: false,
       })
     );
+
+    return false
   }
 
   return res.body;

@@ -1,25 +1,34 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { GetAllCard, UpdateCardAdmin, AdminAddCard } from '../redux/apiRequest';
-import Modal, { ModalTitle, ModalBody, ModalFooter } from '../components/Modal';
-import List from './components/List';
-import debounce from 'lodash/debounce';
-import CardModal from './components/CardModal';
-import dayjs from 'dayjs';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  GetAllCard,
+  UpdateCardAdmin,
+  AdminAddCard,
+  AdminDeleteCard,
+} from "../redux/apiRequest";
+import Modal, { ModalTitle, ModalBody, ModalFooter } from "../components/Modal";
+import List from "./components/List";
+import debounce from "lodash/debounce";
+import CardModal from "./components/CardModal";
+import dayjs from "dayjs";
 
 const Card = () => {
   const [cards, setCards] = useState([]);
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
 
-  const [searchInput, setSearchInput] = useState('');
-  const [search, setSearch] = useState('');
+  const [searchInput, setSearchInput] = useState("");
+  const [search, setSearch] = useState("");
 
   const [editingCard, setEditingCard] = useState(null);
   const [deletingCard, setDeletingCard] = useState(null);
 
+  const dispatch = useDispatch();
+
   const limit = 10;
-  const accessToken = useSelector(state => state.user.currentUser?.accessToken);
+  const accessToken = useSelector(
+    (state) => state.user.currentUser?.accessToken
+  );
 
   useEffect(() => {
     const handler = debounce((val) => {
@@ -31,12 +40,12 @@ const Card = () => {
   }, [searchInput]);
 
   useEffect(() => {
-    
     const fetchData = async () => {
       const res = await GetAllCard({ page, limit, search, accessToken });
       setCards(res.cards || []);
       setTotal(res.totalPages || 0);
     };
+
     if (accessToken) fetchData();
   }, [page, search, accessToken]);
 
@@ -56,15 +65,18 @@ const Card = () => {
     }
   };
 
-  const handleDeleteCard = async (cardId) => {
-    console.log('Deleting card:', cardId);
+  const handleDeleteCard = async (id) => {
+    await AdminDeleteCard(id, accessToken, dispatch);
+    const res = await GetAllCard({ page, limit, search, accessToken });
+    setCards(res.cards || []);
+    setTotal(res.totalPages || 0);
     setDeletingCard(null);
   };
 
   return (
     <>
       <div className="header-title">
-        <h1>Quản lý thẻ</h1>
+        <h1>Quản lý học phần</h1>
         <div className="header-control">
           <div className="search-wrapper">
             <input
@@ -73,7 +85,11 @@ const Card = () => {
               value={searchInput}
               onChange={(e) => setSearchInput(e.target.value)}
             />
-            <i className={`fa-solid fa-magnifying-glass search-icon ${searchInput ? "" : "disable"}`}></i>
+            <i
+              className={`fa-solid fa-magnifying-glass search-icon ${
+                searchInput ? "" : "disable"
+              }`}
+            ></i>
           </div>
           <button onClick={() => setEditingCard({})}>Thêm thẻ</button>
         </div>
@@ -84,25 +100,40 @@ const Card = () => {
         currentPage={page}
         total={total}
         limit={limit}
-        columns={['title', 'type', 'views', 'createdAt']}
+        columns={["title", "type", "views", "createdAt"]}
         onPageChange={setPage}
         onEdit={setEditingCard}
         onDelete={setDeletingCard}
         customRender={{
-          createdAt: (val) => dayjs(val).format('DD/MM/YYYY'),
+          createdAt: (val) => dayjs(val).format("DD/MM/YYYY"),
           type: (val) => <span className={`badge badge-${val}`}>{val}</span>,
         }}
       />
 
       {deletingCard && (
         <Modal modalOpen={true} setModalOpen={() => setDeletingCard(null)}>
-          <ModalTitle fnClose={() => setDeletingCard(null)}>Xác nhận xoá</ModalTitle>
+          <ModalTitle fnClose={() => setDeletingCard(null)}>
+            Xác nhận xoá
+          </ModalTitle>
           <ModalBody>
-            <p>Bạn có chắc muốn xoá thẻ <strong className='highlight'>{deletingCard.title}</strong> không?</p>
+            <p>
+              Bạn có chắc muốn xoá thẻ{" "}
+              <strong className="highlight">{deletingCard.title}</strong> không?
+            </p>
           </ModalBody>
           <ModalFooter>
-            <button onClick={() => setDeletingCard(null)} className="cancle-btn">Huỷ</button>
-            <button onClick={() => handleDeleteCard(deletingCard._id)} className="delete-btn">Xoá</button>
+            <button
+              onClick={() => setDeletingCard(null)}
+              className="cancle-btn"
+            >
+              Huỷ
+            </button>
+            <button
+              onClick={() => handleDeleteCard(deletingCard._id)}
+              className="delete-btn"
+            >
+              Xoá
+            </button>
           </ModalFooter>
         </Modal>
       )}

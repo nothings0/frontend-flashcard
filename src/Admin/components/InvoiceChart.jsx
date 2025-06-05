@@ -67,7 +67,7 @@ const InvoiceChart = () => {
       <div className="chart-card-wrap">
         <div className="chart-card visitor-chart">
           <div className="admin-header-title">
-            <h2 className="chart-title">Top thẻ flashcard</h2>
+            <h2 className="chart-title">Top học phần</h2>
             <Link to="/admin/flashcard" className="view-all-link">
               Xem thêm
             </Link>

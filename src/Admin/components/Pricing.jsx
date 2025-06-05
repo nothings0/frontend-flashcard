@@ -112,7 +112,7 @@ const PricingManager = ({ accessToken }) => {
 
     return (
         <div className="service-manager">
-            <h2 className="service__title">Pricing
+            <h2 className="service__title">Gói nâng cấp tài khoản
                 <button onClick={openCreateModal} className="btn primary">
                     <i className="fa-solid fa-plus"></i>
                 </button>
@@ -164,7 +164,7 @@ const PricingManager = ({ accessToken }) => {
             {modalOpen && (
                 <Modal modalOpen={modalOpen} setModalOpen={setModalOpen}>
                     <ModalTitle fnClose={() => setModalOpen(false)}>
-                        <h4>{isEditMode ? "Edit Pricing" : "Create Pricing"}</h4>
+                        <h4>{isEditMode ? "Chỉnh sửa gói" : "Tạo gói"}</h4>
                     </ModalTitle>
                     <ModalBody className="modal-body">
                         {error && <p className="error">{error}</p>}

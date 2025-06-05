@@ -2,17 +2,17 @@ import {Link, useLocation} from 'react-router-dom'
 
 const mainNav = [
     {
-        display: "Dashboard",
+        display: "Tổng quan",
         path: "/admin",
         icon: "fa-solid fa-house"
     },
     {
-        display: "User",
+        display: "Người dùng",
         path: "/admin/user",
         icon: "fa-solid fa-users"
     },
     {
-        display: "Card",
+        display: "Học phần",
         path: "/admin/flashcard",
         icon: "fa-solid fa-id-card"
     },

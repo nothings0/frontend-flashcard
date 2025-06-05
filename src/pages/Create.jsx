@@ -192,6 +192,8 @@ const Create = () => {
       const response = await genAiCard({
         title: values.title, accessToken, existingPrompts}, dispatch)
 
+        if (!response) return;
+
       const reader = response.getReader();
       const decoder = new TextDecoder();
       let buffer = "";
