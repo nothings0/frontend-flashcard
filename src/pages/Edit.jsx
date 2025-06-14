@@ -1,10 +1,17 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import {
+  getCardById,
+  UpdateCard,
+  genAiCard,
+  GetTranslate,
+} from "../redux/apiRequest";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 import Modal, { ModalBody, ModalFooter, ModalTitle } from "../components/Modal";
-import { getCardById, UpdateCard } from "../redux/apiRequest";
-import Helmet from "../components/Helmet";
 import Search from "../components/Search";
+import Helmet from "../components/Helmet";
 import Skeleton from "../components/Skeleton";
 import TermWrap from "../components/TermWrap";
 
@@ -35,6 +42,8 @@ const colors = [
   },
 ];
 
+let timer;
+
 const Edit = () => {
   const accessToken = useSelector(
     (state) => state.user.currentUser?.accessToken
@@ -42,83 +51,44 @@ const Edit = () => {
   const userId = useSelector((state) => state.user.currentUser?.user._id);
   const { loading } = useSelector((state) => state.middle);
   const { slug } = useParams();
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  // const [data, setData] = useState([])
-  const [total, setTotal] = useState(1);
   const [terms, setTerms] = useState([]);
-  const [title, setTitle] = useState("");
-  const [user, setUser] = useState("");
-  const [description, setDescription] = useState("");
-  const [background, setBackground] = useState([colors[0].css]);
-  const [share, setShare] = useState(true);
-  const [page, setPage] = useState(1);
   const [modalOpen, setModalOpen] = useState(false);
+  const [language, setLanguage] = useState("en-US");
+  const [isStreaming, setIsStreaming] = useState(false);
+  const [total, setTotal] = useState(1);
+  const [page, setPage] = useState(1);
   const topRef = useRef(null);
 
-  useEffect(() => {
-    if (!userId || !accessToken) {
-      navigate("/login");
-      return;
-    } else {
-      const getData = async () => {
-        const res = await getCardById(dispatch, slug, page, 50);
-        if (res.cards.user._id !== userId) {
-          navigate("/");
-        }
-        if (page === 1) {
-          setTotal(res.total);
-          setUser(res.cards.user.username);
-          setTitle(res.cards.title);
-          setDescription(res.cards.description);
-          setShare(res.cards.share);
-          setBackground(res.cards.background);
-        }
-        setTerms((terms) => [...terms, ...res.terms]);
-      };
-      getData();
-    }
-  }, [slug, page]);
-
-  useEffect(() => {
-    window.addEventListener("scroll", () => {
-      if (
-        document.body.scrollTop >= 60 ||
-        document.documentElement.scrollTop >= 60
-      ) {
-        topRef?.current?.classList.add("shrink");
-      } else {
-        topRef?.current?.classList.remove("shrink");
+  const formik = useFormik({
+    initialValues: {
+      title: "",
+      description: "",
+      share: true,
+      background: colors[0].css,
+    },
+    validationSchema: Yup.object({
+      title: Yup.string().max(50, "Tối đa 50 ký tự").required("Bắt buộc"),
+      description: Yup.string().max(200, "Tối đa 200 ký tự"),
+    }),
+    onSubmit: async (values) => {
+      const newTerms = terms.filter(
+        (term) => term.prompt.trim() !== "" && term.answer.trim() !== ""
+      );
+      if (newTerms.length < 2) {
+        setModalOpen(true);
+        return;
       }
-    });
-    return () => {
-      window.removeEventListener("scroll", null);
-    };
-  }, []);
-
-  const handleView = () => {
-    const newTerm = {
-      prompt: "",
-      answer: "",
-    };
-    let termArr = [...terms, newTerm];
-    setTerms(termArr);
-  };
-
-  const handleUpdate = async () => {
-    const newCard = {
-      title,
-      description,
-      background,
-      share,
-      term: terms,
-    };
-
-    if (newCard.term.length < 2) {
-      setModalOpen(true);
-    } else {
+      const newCard = {
+        title: values.title,
+        description: values.description,
+        share: values.share,
+        background: values.background,
+        language,
+        term: newTerms,
+      };
       const res = await UpdateCard(
         newCard,
         slug,
@@ -128,21 +98,208 @@ const Edit = () => {
       );
       if (res.type === "failure") return;
       navigate(`/card/${slug}`);
+    },
+  });
+
+  useEffect(() => {
+    if (!userId || !accessToken) {
+      navigate("/login");
+      return;
     }
+    const getData = async () => {
+      const res = await getCardById(dispatch, slug, page, 50);
+      if (res.cards.user._id !== userId) {
+        navigate("/");
+        return;
+      }
+      if (page === 1) {
+        setTotal(res.total);
+        formik.setValues({
+          title: res.cards.title,
+          description: res.cards.description,
+          share: res.cards.share,
+          background: res.cards.background,
+        });
+      }
+      setTerms((prev) => [...prev, ...res.terms]);
+    };
+    getData();
+  }, [slug, page, userId, accessToken, navigate, dispatch]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (
+        document.body.scrollTop >= 60 ||
+        document.documentElement.scrollTop >= 60
+      ) {
+        topRef?.current?.classList.add("shrink");
+      } else {
+        topRef?.current?.classList.remove("shrink");
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const handleView = () => {
+    setTerms([...terms, { prompt: "", answer: "" }]);
   };
 
   const handleLoadMore = () => {
     setPage(page + 1);
   };
 
+  const handleLanguageChange = (e) => {
+    setLanguage(e.target.value);
+  };
+
+  const handleGenerateTerms = async () => {
+    if (isStreaming || !formik.values.title) return;
+    setIsStreaming(true);
+    try {
+      const existingPrompts = terms
+        .filter((term) => term.prompt.trim() !== "")
+        .map((term) => term.prompt);
+      const response = await genAiCard(
+        { title: formik.values.title, language, accessToken, existingPrompts },
+        dispatch
+      );
+      if (!response) return;
+
+      const reader = response.getReader();
+      const decoder = new TextDecoder();
+      let buffer = "";
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        buffer += decoder.decode(value, { stream: true });
+        const lines = buffer.split("\n");
+        buffer = lines.pop();
+
+        for (const line of lines) {
+          if (line.trim()) {
+            try {
+              const term = JSON.parse(line);
+              if (term.prompt && term.answer) {
+                setTerms((prev) => {
+                  const newIndex = prev.length;
+                  const newTerms = [...prev, { prompt: "", answer: "" }];
+                  setTimeout(async () => {
+                    await typeText(newIndex, term.prompt, "prompt");
+                    await typeText(newIndex, term.answer, "answer");
+                  }, 0);
+                  return newTerms;
+                });
+              } else if (term.error) {
+                console.error("Server error:", term.error);
+                setTerms([{ prompt: "", answer: "" }]);
+                break;
+              }
+            } catch (e) {
+              console.error("Error parsing JSON:", line, e);
+            }
+          }
+        }
+      }
+
+      if (buffer.trim()) {
+        try {
+          const term = JSON.parse(buffer);
+          if (term.prompt && term.answer) {
+            setTerms((prev) => {
+              const newIndex = prev.length;
+              const newTerms = [...prev, { prompt: "", answer: "" }];
+              setTimeout(async () => {
+                await typeText(newIndex, term.prompt, "prompt");
+                await typeText(newIndex, term.answer, "answer");
+              }, 0);
+              return newTerms;
+            });
+          }
+        } catch (e) {
+          console.error("Error parsing final buffer:", buffer, e);
+        }
+      }
+    } catch (error) {
+      console.error("Error streaming terms:", error);
+      setTerms([{ prompt: "", answer: "" }]);
+    } finally {
+      setIsStreaming(false);
+    }
+  };
+
+  const typeText = async (index, text, field) => {
+    let currentText = "";
+    for (let i = 0; i < text.length; i++) {
+      currentText += text[i];
+      setTerms((prev) => {
+        const newTerms = [...prev];
+        newTerms[index] = { ...newTerms[index], [field]: currentText };
+        return newTerms;
+      });
+      await new Promise((resolve) => setTimeout(resolve, 50));
+    }
+  };
+
+  const handleCardChange = (e, index) => {
+    const { name, value } = e.target;
+
+    if (name === "prompt") {
+      const termArr = [...terms];
+      termArr[index] = { ...termArr[index], prompt: value };
+      setTerms(termArr);
+      clearTimeout(timer);
+      timer = setTimeout(async () => {
+        if (value === "") return;
+        const res = await GetTranslate(value);
+        const translate = res.matches.sort(
+          (a, b) => b["usage-count"] - a["usage-count"]
+        );
+        let termArr1 = [...terms];
+        termArr1[index] = {
+          prompt: value,
+          answer: translate[0].translation,
+        };
+        setTerms(termArr1);
+      }, 250);
+    } else {
+      let termArr = [...terms];
+      termArr[index] = { ...termArr[index], answer: value };
+      setTerms(termArr);
+    }
+  };
+
+  const handleCardDelete = (i) => {
+    let updatedTerms = [...terms];
+    updatedTerms.splice(i, 1);
+    setTerms(updatedTerms);
+  };
+
   return (
-    <Helmet title={`${title} | Flux` || `Loading`}>
+    <Helmet title={`${formik.values.title || "Loading"} | Flux`}>
       <div className="edit">
         <Search />
         <div className="edit__top" ref={topRef}>
           <div className="edit__top__left">Chỉnh sửa học phần</div>
-          <div className="edit__top__right" onClick={handleUpdate}>
-            Hoàn tất
+          <div className="edit__top__right">
+            <button
+              className="generate-terms-btn"
+              onClick={handleGenerateTerms}
+              disabled={isStreaming || !formik.values.title}
+            >
+              {isStreaming ? (
+                <i className="fa-solid fa-spinner fa-spin"></i>
+              ) : (
+                <i className="fa-solid fa-robot"></i>
+              )}
+            </button>
+            <div
+              className="edit__top__right__create"
+              onClick={formik.handleSubmit}
+            >
+              Hoàn tất
+            </div>
           </div>
         </div>
         <div className="edit__header">
@@ -150,26 +307,36 @@ const Edit = () => {
             <div className="edit__header__input">
               <div className="edit__header__input__wrap">
                 <textarea
-                  maxLength="30"
+                  maxLength="50"
                   placeholder="Nhập tiêu đề..."
-                  onChange={(e) => setTitle(e.target.value)}
-                  value={title}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.title}
+                  name="title"
                 ></textarea>
-                <small>{title.length}/30</small>
+                <small>{formik.values.title.length}/50</small>
+                {formik.touched.title && formik.errors.title && (
+                  <p className="errorMsg">{formik.errors.title}</p>
+                )}
               </div>
               <p>tiêu đề</p>
             </div>
             <div className="edit__header__input">
               <div className="edit__header__input__wrap">
                 <textarea
-                  className="edit__header__input__wrap__des"
                   maxLength="200"
                   placeholder="Thêm mô tả"
-                  onChange={(e) => setDescription(e.target.value)}
-                  value={description}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.description}
+                  name="description"
+                  className="edit__header__input__wrap__des"
                   rows={4}
                 ></textarea>
-                <small>{description.length}/200</small>
+                <small>{formik.values.description.length}/200</small>
+                {formik.touched.description && formik.errors.description && (
+                  <p className="errorMsg">{formik.errors.description}</p>
+                )}
               </div>
               <p>mô tả</p>
             </div>
@@ -178,41 +345,88 @@ const Edit = () => {
             <div className="edit__header__right__item">
               <div className="edit__header__right__item__txt">Ảnh nền</div>
               <div className="edit__header__right__item__color">
-                {colors.map((item, index) => {
-                  const style = {
-                    background: `${item.css}`,
-                  };
-                  return (
-                    <div
-                      className={`edit__header__right__item__color__item ${
-                        item.css === background ? "active" : ""
-                      }`}
-                      key={index}
-                      style={style}
-                      onClick={() => setBackground(item.css)}
-                    ></div>
-                  );
-                })}
+                {colors.map((item, index) => (
+                  <div
+                    className={`edit__header__right__item__color__item ${
+                      item.css === formik.values.background ? "active" : ""
+                    }`}
+                    key={index}
+                    style={{ background: item.css }}
+                    onClick={() => formik.setFieldValue("background", item.css)}
+                  ></div>
+                ))}
               </div>
             </div>
             <div className="edit__header__right__item">
               <div className="checkbox__private">
                 <div className="checkbox__private__txt">
-                  <span>Share</span>{" "}
+                  Share{" "}
                   <input
                     type="checkbox"
-                    onClick={(e) => setShare(e.target.checked)}
-                    value={share}
-                    checked={share}
-                  ></input>
+                    onChange={formik.handleChange}
+                    checked={formik.values.share}
+                    name="share"
+                  />
                 </div>
+              </div>
+
+              <div className="language__choice">
+                Ngôn ngữ
+                <select
+                  className="language__choice__select"
+                  value={language}
+                  onChange={handleLanguageChange}
+                >
+                  <option value="en-US">Tiếng Anh</option>
+                  <option value="ko-KR">Tiếng Hàn</option>
+                  <option value="cmn-Hant-TW">Tiếng Trung</option>
+                  <option value="ja-JP">Tiếng Nhật</option>
+                </select>
               </div>
             </div>
           </div>
         </div>
         <div className="edit__term">
-          <TermWrap terms={terms} setTerms={setTerms} iUsername={user} />
-          {total > page && (
+          <div className="create__term">
+            {terms &&
+              terms.map((item, index) => {
+                if (!item) return null; // Bỏ qua item undefined
+                return (
+                  <div className="term" key={index}>
+                    <div className="term__header">
+                      <div className="term__header__count">{index + 1}</div>
+                      <div
+                        className="term__header__control"
+                        onClick={() => handleCardDelete(index)}
+                      >
+                        <i className="fa-solid fa-trash-can"></i>
+                      </div>
+                    </div>
+                    <div className="term__content">
+                      <div className="term__content__input">
+                        <textarea
+                          name="prompt"
+                          maxLength="255"
+                          onChange={(e) => handleCardChange(e, index)}
+                          value={item.prompt || ""}
+                        ></textarea>
+                        <p>thuật ngữ</p>
+                      </div>
+                      <div className="term__content__input">
+                        <textarea
+                          name="answer"
+                          maxLength="255"
+                          onChange={(e) => handleCardChange(e, index)}
+                          value={item.answer || ""}
+                        ></textarea>
+                        <p>định nghĩa</p>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+          </div>
+          {total > terms.length && (
             <div className="load-more">
               <span onClick={handleLoadMore}>Xem thêm</span>
             </div>
@@ -226,26 +440,16 @@ const Edit = () => {
         {modalOpen && (
           <Modal modalOpen={modalOpen} setModalOpen={setModalOpen}>
             <ModalTitle fnClose={() => setModalOpen(false)}>
-              <h4>Lỗi tạo học phần</h4>
+              <h4>Lỗi chỉnh sửa học phần</h4>
             </ModalTitle>
             <ModalBody>
-              <p>Bạn phải có ít nhất 2 thuật ngữ để bắt đầu học tập</p>
+              <p>Bạn phải có ít nhất 2 thuật ngữ để lưu học phần</p>
             </ModalBody>
             <ModalFooter>
-              <button
-                className="cancel-btn"
-                onClick={() => {
-                  navigate(-1);
-                }}
-              >
+              <button className="cancel-btn" onClick={() => navigate(-1)}>
                 Quay lại
               </button>
-              <button
-                className="ok-btn"
-                onClick={() => {
-                  setModalOpen(false);
-                }}
-              >
+              <button className="ok-btn" onClick={() => setModalOpen(false)}>
                 Ok
               </button>
             </ModalFooter>

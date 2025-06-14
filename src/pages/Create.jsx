@@ -52,7 +52,7 @@ const Create = () => {
   const [background, setBackground] = useState(colors[0].css);
   const [share, setShare] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
-  const [matches, setMatches] = useState([]);
+  const [language, setLanguage] = useState("en-US");
   const [isStreaming, setIsStreaming] = useState(false);
   const topRef = useRef(null);
   const { loading } = useSelector((state) => state.middle);
@@ -121,7 +121,6 @@ const Create = () => {
       timer = setTimeout(async () => {
         if (value === "") return;
         const res = await GetTranslate(value);
-        setMatches(res.matches);
         const translate = res.matches.sort(
           (a, b) => b["usage-count"] - a["usage-count"]
         );
@@ -148,6 +147,7 @@ const Create = () => {
       description,
       share,
       background,
+      language,
       term: newTerms,
     };
     if (newCard.term.length < 2) {
@@ -156,9 +156,13 @@ const Create = () => {
       const res = await AddCard(newCard, accessToken, dispatch);
       if (res?.type === "failure") return;
       else {
-        navigate(`${res?.card? `/card/${res?.card?.slug}` : "/"}`); 
+        navigate(`${res?.card ? `/card/${res?.card?.slug}` : "/"}`);
       }
     }
+  };
+
+  const handleLanguageChange = (e) => {
+    setLanguage(e.target.value);
   };
 
   const handleCardDelete = (i) => {
@@ -186,13 +190,20 @@ const Create = () => {
 
     try {
       const existingPrompts = terms
-      .filter((term) => term.prompt.trim() !== "")
-      .map((term) => term.prompt);
+        .filter((term) => term.prompt.trim() !== "")
+        .map((term) => term.prompt);
 
-      const response = await genAiCard({
-        title: values.title, accessToken, existingPrompts}, dispatch)
+      const response = await genAiCard(
+        {
+          title: values.title,
+          language,
+          accessToken,
+          existingPrompts,
+        },
+        dispatch
+      );
 
-        if (!response) return;
+      if (!response) return;
 
       const reader = response.getReader();
       const decoder = new TextDecoder();
@@ -355,6 +366,19 @@ const Create = () => {
                     value={share}
                   ></input>
                 </div>
+              </div>
+              <div className="language__choice">
+                Ngôn ngữ
+                <select
+                  className="language__choice__select"
+                  value={language}
+                  onChange={handleLanguageChange}
+                >
+                  <option value="en-US">Tiếng Anh</option>
+                  <option value="ko-KR">Tiếng Hàn</option>
+                  <option value="cmn-Hant-TW">Tiếng Trung</option>
+                  <option value="ja-JP">Tiếng Nhật</option>
+                </select>
               </div>
             </div>
           </div>

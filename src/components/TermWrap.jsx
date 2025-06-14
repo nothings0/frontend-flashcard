@@ -7,7 +7,7 @@ import { useParams } from "react-router-dom";
 import { DeleteTerm, UpdateCard } from "../redux/apiRequest";
 import { showToast } from "../redux/toastSlice";
 
-const TermWrap = ({ terms, setTerms, iUsername, type }) => {
+const TermWrap = ({ terms, setTerms, iUsername, lang, type }) => {
   const dispatch = useDispatch();
   const { slug } = useParams();
   const accessToken = useSelector(
@@ -121,7 +121,8 @@ const TermWrap = ({ terms, setTerms, iUsername, type }) => {
                         handleVoice(
                           e.target.parentElement.parentElement.querySelector(
                             ".prompt"
-                          ).textContent
+                          ).textContent,
+                          lang
                         )
                       }
                     />

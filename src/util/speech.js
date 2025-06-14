@@ -8,9 +8,9 @@ const textToSpeech = (text) => {
     // synth.speak(utterance);
 }
 
-export const handleVoice = (text) => {
+export const handleVoice = (text, lang = "en-US") => {
     try {
-        const url = "https://proxy.junookyo.workers.dev/?language=en-US&speed=1";
+        const url = `https://proxy.junookyo.workers.dev/?language=${lang}&speed=1`;
         const urlObj = new URL(url);
         urlObj.searchParams.set('text', text);
 

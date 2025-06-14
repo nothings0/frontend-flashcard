@@ -255,7 +255,7 @@ export const AdminDeleteCard = async (id, accessToken, dispatch) => {
   try {
     dispatch(handleLoading());
     const res = await axiosJWT.delete(`${genURL(`/v1/card/admin/${id}`)}`, {
-      headers: { token: `Bearer ${accessToken}` }
+      headers: { token: `Bearer ${accessToken}` },
     });
     dispatch(showToast({ msg: "Xóa thành công", success: true }));
 
@@ -1069,7 +1069,7 @@ export const aiChat = async ({ accessToken, userMessage, context }) => {
   return res.body;
 };
 export const genAiCard = async (
-  { accessToken, title, existingPrompts },
+  { accessToken, language, title, existingPrompts },
   dispatch
 ) => {
   const URL =
@@ -1079,6 +1079,7 @@ export const genAiCard = async (
 
   const payload = {
     title,
+    language,
     existingPrompts,
   };
 
@@ -1101,13 +1102,13 @@ export const genAiCard = async (
       })
     );
 
-    return false
+    return false;
   }
 
   return res.body;
 };
 
-export const aiVoiceChat = async ({ accessToken, userMessage, audioFile }) => {
+export const aiVoiceChat = async ({ accessToken, audioFile, context }) => {
   const URL =
     process.env.NODE_ENV === "production"
       ? "https://backend-kfnn.onrender.com"
@@ -1120,23 +1121,13 @@ export const aiVoiceChat = async ({ accessToken, userMessage, audioFile }) => {
     };
 
     if (audioFile) {
-      // Voice input: Gửi file âm thanh
       const formData = new FormData();
       formData.append("audio", audioFile, "recording.mp3");
-      res = await fetch(`${URL}/v1/ai/chat`, {
+      formData.append("context", JSON.stringify(context));
+      res = await fetch(`${URL}/v1/ai/voice`, {
         method: "POST",
         headers,
         body: formData,
-      });
-    } else if (userMessage) {
-      // Text input: Gửi userMessage
-      res = await fetch(`${URL}/v1/ai/chat`, {
-        method: "POST",
-        headers: {
-          ...headers,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ userMessage }),
       });
     } else {
       throw new Error("Hihi, bạn cần gửi tin nhắn hoặc file âm thanh nha! 😺");
@@ -1149,7 +1140,7 @@ export const aiVoiceChat = async ({ accessToken, userMessage, audioFile }) => {
       );
     }
 
-    return res.body;
+    return await res.json();
   } catch (error) {
     console.error("AI Voice Chat error:", error);
     throw error;

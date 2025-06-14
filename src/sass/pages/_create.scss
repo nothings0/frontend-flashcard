@@ -96,6 +96,31 @@
             }
           }
         }
+
+        .language__choice{
+          margin-top: 1rem;
+          @include flex(center, unset);
+          gap: 2rem;
+          font-size: 1.6rem;
+          &__select {
+            padding: 4px 8px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+            background-color: #f9f9f9;
+            cursor: pointer;
+  
+            &:hover {
+              border-color: #888;
+            }
+  
+            &:focus {
+              outline: none;
+              border-color: #007bff;
+            }
+          }
+        }
+
         &__txt {
           font-size: 1.8rem;
           margin-bottom: 10px;

@@ -11,6 +11,7 @@ const ListenCpn = ({
   handleIndex,
   result,
   subType,
+  lang
 }) => {
   const [isShow, setShow] = useState(false);
   const handleEnter = (e) => {
@@ -29,7 +30,7 @@ const ListenCpn = ({
             Ấn vào loa để nghe
             <i
               className="fa-solid fa-volume-high"
-              onClick={() => handleVoice(data?.prompt)}
+              onClick={() => handleVoice(data?.prompt, lang)}
             ></i>
           </div>
           <div className="listen__top__define__alert">

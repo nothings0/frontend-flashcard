@@ -1,0 +1,48 @@
+Em xin chào các thầy trong hội đồng chấm điểm và các bạn.
+Em tên là Phạm Văn Nhân, sinh viên K45 khoa Công nghệ Thông tin, chuyên ngành Công nghệ phần mềm.
+Hôm nay, em xin được trình bày khóa luận tốt nghiệp với đề tài:
+"Xây dựng hệ thống học ngoại ngữ trực tuyến dựa trên ReactJS và NodeJS."
+Đề tài được em thực hiện dưới sự hướng dẫn của thầy thạc sỹ Hoàng Nguyễn Tuấn Minh.
+
+Nội dung bài trình bày của em gồm 4 phần chính:
+Phần 1: Lý do chọn đề tài
+Phần 2: Phân tích và thiết kế hệ thống.
+Phần 3: Demo sản phẩm.
+Phần 4: Kết luận và định hướng phát triển.
+
+Đi vào phần 1, Lý do chọn đề tài
+Em đã tổng hợp 2 thống kê về nhu cầu học ngoại ngữ tại Việt Nam trong những năm gần đây.
+
+Biểu đồ bên trái là số lượng thí sinh Việt Nam dự thi IELTS qua các năm. Có thể thấy từ năm 2021 đến 2023, số lượng thí sinh tăng đều đặn qua từng năm.
+
+Biểu đồ bên phải là thống kê về số lượng người học tiếng Nhật tại Việt Nam. Trong vòng 10 năm, số lượng người học tiếng Nhật đã tăng gấp 4 lần, từ 45.000 người năm 2009 lên 170000 người năm 2018.
+
+Từ hai thống kê trên, có thể thấy xu hướng học ngoại ngữ trực tuyến đang phát triển mạnh. Vì vậy, việc xây dựng một hệ thống học ngoại ngữ trực tuyến là rất cần thiết và có nhiều tiềm năng ứng dụng trong thực tế.
+
+Ngoài ra, Em chọn đề tài này xuất phát từ nhu cầu thực tế của bản thân khi học ngoại ngữ.
+Trong quá trình học, em nhận thấy các nền tảng học ngoại ngữ hiện tại còn nhiều hạn chế, như giao diện không thân thiện, trải nghiệm người dùng không được tốt và các tính năng nâng cao thì yêu cầu trả phí rất là cao
+Và qua đề tài này, em cũng muốn áp dụng các kiến thức đã học ở nhà trường để xây dựng một website hoàn chỉnh, từ đó nâng cao kỹ năng lập trình của mình lên
+
+Và từ những lý do đó, em đặt mục tiêu đề tài là
+Xây dựng một nền tảng học ngoại ngữ trực tuyến thân thiện, dễ sử dụng
+Ứng dụng Reactjs và Nodejs để cải thiện trải nghiệm người dùng
+Hỗ trợ người học ghi nhớ từ vựng hiệu quả hơn
+Phát triển hệ thống có thể đáp ứng được nhu cầu thực tế, từ đó có thể thương mại hóa sản phẩm
+
+Em sẽ demo một vài tính năng chính của hệ thống
+- Đầu tiên là các tính năng của người dùng
+
+Đầu tiên là xác thực người dùng, em đã làm các phần như là đăng nhập, đăng ký, quên mật khẩu và lấy lại mật khẩu
+Vì không có nhiều thời gian nên em sẽ chỉ demo phần đăng nhập
+- sau khi đăng nhập thành công, người dùng sẽ được chuyển đến trang chủ
+Ở trang chủ, người dùng có thể xem các học phần hiện có, xem các học phần theo các danh mục như là Phổ biến, Đề xuất, được đánh giá cao
+Ấn vào một học phần, người dùng sẽ được chuyển đến trang chi tiết của học phần đó
+- Tại trang chi tiết học phần, người dùng có thể xem các thông tin về học phần, ở đây sẽ hiện thị danh sách các flashcard của học phần đó
+- Người dùng có thể chọn các tính năng học tập
+Thứ nhất là trắc nghiệm, người dùng có thể làm các bài trắc nghiệm để kiểm tra kiến thức của mình
+Thứ hai là luyện viết, người dùng có thể luyện viết các từ vựng để ghi nhớ chúng tốt hơn
+Thứ ba là luyện nghe, người dùng có thể luyện nghe các từ vựng để cải thiện kỹ năng nghe của mình
+Thứ tư là chơi ghép thẻ, người dùng có thể chơi trò chơi ghép thẻ để ghi nhớ từ vựng một cách vui vẻ
+Thứ năm là kiểm tra, người dùng có thể làm các bài kiểm tra tổng hợp để đánh giá mức độ tiến bộ của mình trong quá trình học.
+thứ sáu là học với bạn bè, người dùng có thể mời bạn bè cùng học với mình, tạo thành một nhóm học tập
+thứ bày là fluxquiz plus, đây là một tính năng học tập nâng cao hơn, yêu cầu người dùng phải trả phí để sử dụng

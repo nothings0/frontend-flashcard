@@ -449,6 +449,7 @@ const Detail = () => {
                   terms={terms}
                   setTerms={setTerms}
                   iUsername={data.cards.user.username}
+                  lang={data.cards.lang}
                   type="detail"
                 />
                 {data.total > page && (

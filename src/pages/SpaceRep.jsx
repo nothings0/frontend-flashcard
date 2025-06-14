@@ -10,6 +10,7 @@ import Helmet from "../components/Helmet";
 import Skeleton from "../components/Skeleton";
 import HeaderPrimary from "../components/HeaderPrimary";
 import { play } from "../redux/audioSlice";
+import { lang } from "moment-timezone";
 
 const SpaceRep = () => {
   const dispatch = useDispatch();
@@ -18,7 +19,7 @@ const SpaceRep = () => {
   const { accessToken } = useSelector((state) => state.user.currentUser);
   const user = useSelector((state) => state.user.currentUser?.user._id);
   //   mang cau hoi
-  const [question, setQuestion] = useState([]);
+  const [question, setQuestion] = useState({ question: [], lang: "en-US" });
   const [result, setResult] = useState([]);
   const [isResult, setIsResult] = useState(false);
   const [isSubmit, setIsSubmit] = useState(false);
@@ -34,7 +35,7 @@ const SpaceRep = () => {
       setModalOpen(true);
     } else {
       setRound((round) => round + 1);
-      setQuestion(res.question);
+      setQuestion(res);
       let initState = [];
       for (let i = 0; i < res.question.length; i++) {
         let newObj = {
@@ -55,7 +56,7 @@ const SpaceRep = () => {
   const handleIndex = () => {
     dispatch(play());
     let nextIndex = index + 1;
-    if (nextIndex < question.length) {
+    if (nextIndex < question.question.length) {
       setIndex(nextIndex);
       setAnswer("");
     } else {
@@ -65,13 +66,13 @@ const SpaceRep = () => {
   const handleQues = (e) => {
     const newArr = [...answerArr];
     newArr[index].answer =
-      question[index].type === 1 || question[index].type === "learn"
+      question.question[index].type === 1 || question.question[index].type === "learn"
         ? e.target.innerHTML
         : answer;
-    newArr[index].type = question[index].type;
+    newArr[index].type = question.question[index].type;
     setAnswerArr(newArr);
     let nextIndex = index + 1;
-    if (nextIndex < question.length) {
+    if (nextIndex < question.question.length) {
       setIndex(nextIndex);
       setAnswer("");
     } else {
@@ -108,13 +109,13 @@ const SpaceRep = () => {
       <div className="test">
         <HeaderPrimary
           value={index}
-          length={question?.length}
+          length={question.question?.length}
           round={round}
           title="Kiểm tra"
         />
         <div className="test__container">
           <TestContainer
-            question={question[index]}
+            question={question.question[index]}
             setAnswer={setAnswer}
             answer={answer}
             handleQues={handleQues}
@@ -128,7 +129,7 @@ const SpaceRep = () => {
         </div>
         <div className="test__bottom">
           <div className="test__nums">
-            {question.map((i, idx) => (
+            {question.question.map((i, idx) => (
               <div
                 className={`test__nums__item ${index === idx ? "active" : ""} ${
                   isSubmit
@@ -240,6 +241,7 @@ const TestContainer = ({
           data={question}
           setAnswer={setAnswer}
           answer={answer || answerArr[index]?.answer}
+          lang={question.lang}
         />
       );
     } else {
