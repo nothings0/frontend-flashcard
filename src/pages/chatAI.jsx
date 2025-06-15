@@ -125,7 +125,7 @@ export default function VoiceChatPage() {
   };
 
   const speakText = async (text) => {
-    await handleVoice(text);
+    await handleVoice(text, "en-UK");
   };
 
   const handleSendMessage = async (e) => {

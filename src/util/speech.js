@@ -8,7 +8,7 @@ const textToSpeech = (text) => {
     // synth.speak(utterance);
 }
 
-export const handleVoice = (text, lang = "en-US") => {
+export const handleVoice = (text, lang = "en-UK") => {
     try {
         const url = `https://proxy.junookyo.workers.dev/?language=${lang}&speed=1`;
         const urlObj = new URL(url);
