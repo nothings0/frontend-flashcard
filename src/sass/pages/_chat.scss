@@ -40,6 +40,17 @@ $transition: all 0.2s ease;
   border-radius: $border-radius;
   box-shadow: $box-shadow;
   overflow: hidden;
+  position: relative;
+
+  .ai-bg{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 20rem;
+    opacity: 0.1;
+    color: #a7a3f5
+  }
 }
 
 // Chat header
@@ -79,6 +90,28 @@ $transition: all 0.2s ease;
   &.aiMessage {
     justify-content: flex-start;
   }
+
+  &.loading-dots {
+    display: flex;
+    gap: 5px;
+
+    & span {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      background-color: $text-color;
+      border-radius: 50%;
+      animation: dot-flashing 1s infinite linear alternate;
+
+      &:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+
+      &:nth-child(3) {
+        animation-delay: 0.4s;
+      }
+    }
+  }
 }
 
 // Message bubble
@@ -109,7 +142,7 @@ $transition: all 0.2s ease;
 
 // Input area
 .inputArea {
-  @include flex-column;
+  @include flex-center();
   padding: 1rem;
   border-top: 1px solid $secondary-color;
   gap: 0.75rem;
@@ -117,6 +150,7 @@ $transition: all 0.2s ease;
 
 // Voice input display
 .voiceInputDisplay {
+  flex: 1;
   background-color: $secondary-color;
   padding: 0.75rem;
   border-radius: $border-radius;
@@ -162,13 +196,13 @@ $transition: all 0.2s ease;
 
 // Input form
 .inputForm {
-  width: 100%;
+  flex: 1;
 }
 
 // Text input
 .textInput {
   width: 100%;
-  padding: 0.75rem;
+  padding: 1.4rem 0.75rem;
   border: 1px solid $secondary-color;
   border-radius: $border-radius;
   font-size: 1.4rem;
@@ -179,12 +213,6 @@ $transition: all 0.2s ease;
     border-color: $primary-color;
     box-shadow: 0 0 0 2px rgba($primary-color, 0.2);
   }
-}
-
-// Controls
-.controls {
-  display: flex;
-  gap: 0.5rem;
 }
 
 // Control button
@@ -224,6 +252,7 @@ $transition: all 0.2s ease;
   border: none;
   cursor: pointer;
   transition: $transition;
+  margin-left: 1rem;
 
   &:hover {
     background-color: darken($primary-color, 5%);
@@ -238,7 +267,7 @@ $transition: all 0.2s ease;
 // Media queries for responsiveness
 @media (max-width: 600px) {
   .chatCard {
-    height: 90vh;
+    height: 80vh;
     max-width: 100%;
   }
 

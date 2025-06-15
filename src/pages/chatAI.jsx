@@ -7,7 +7,6 @@ import Search from "../components/Search";
 export default function VoiceChatPage() {
   const [isRecording, setIsRecording] = useState(false);
   const [transcript, setTranscript] = useState("");
-  const [isSpeaking, setIsSpeaking] = useState(false);
   const [inputMode, setInputMode] = useState("text");
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
@@ -45,30 +44,29 @@ export default function VoiceChatPage() {
         const userId = Date.now();
         const aiId = userId + 1;
         try {
-
           const reversed = [...messages].reverse();
-      const context = [];
-      let userCount = 0;
+          const context = [];
+          let userCount = 0;
 
-      for (let i = 0; i < reversed.length && userCount < 3; i++) {
-        const msg = reversed[i];
-        if (msg.role === "ai") {
-          context.unshift({ sender: "ai", message: msg.content });
-        } else if (msg.role === "user") {
-          context.unshift({ sender: "user", message: msg.content });
-          userCount++;
-        }
-      }
+          for (let i = 0; i < reversed.length && userCount < 3; i++) {
+            const msg = reversed[i];
+            if (msg.role === "ai") {
+              context.unshift({ sender: "ai", message: msg.content });
+            } else if (msg.role === "user") {
+              context.unshift({ sender: "user", message: msg.content });
+              userCount++;
+            }
+          }
 
           const response = await aiVoiceChat({
             accessToken,
             audioFile: blob,
-            context
+            context,
           });
 
           const { user, reply, cardLink } = response;
 
-          // Thêm user message và AI reply (không stream)
+          // Thêm user message và AI reply
           setMessages((prev) => [
             ...prev,
             { id: userId, role: "user", content: user },
@@ -88,9 +86,7 @@ export default function VoiceChatPage() {
                 )
               );
             },
-            () => {
-              // Done typing
-            }
+            () => {}
           );
 
           setTranscript("");
@@ -129,9 +125,7 @@ export default function VoiceChatPage() {
   };
 
   const speakText = async (text) => {
-    setIsSpeaking(true);
     await handleVoice(text);
-    setIsSpeaking(false);
   };
 
   const handleSendMessage = async (e) => {
@@ -226,7 +220,7 @@ export default function VoiceChatPage() {
       <Search />
       <div className="chatCard">
         <div className="chatHeader">
-          <h1>Voice Chat with AI</h1>
+          <h1>Flux AI</h1>
         </div>
 
         <div className="chatMessages">
@@ -251,10 +245,37 @@ export default function VoiceChatPage() {
               </div>
             </div>
           ))}
+          {isLoading && (
+            <>
+              <div className="messageContainer userMessage loading-dots">
+                <span>.</span>
+                <span>.</span>
+                <span>.</span>
+              </div>
+              <div className="messageContainer aiMessage loading-dots">
+                <span>.</span>
+                <span>.</span>
+                <span>.</span>
+              </div>
+            </>
+          )}
           <div ref={messagesEndRef} />
         </div>
 
         <div className="inputArea">
+          <button
+            className={`controlButton ${isRecording ? "active" : ""}`}
+            onClick={toggleRecording}
+            type="button"
+            aria-label={isRecording ? "Stop recording" : "Start recording"}
+            disabled={isLoading} // Disable button during loading
+          >
+            <i
+              className={
+                isRecording ? "fas fa-microphone-slash" : "fas fa-microphone"
+              }
+            />
+          </button>
           {inputMode === "voice" && isRecording ? (
             <div className="voiceInputDisplay">
               <div className="recordingIndicator">
@@ -271,39 +292,26 @@ export default function VoiceChatPage() {
                 onChange={handleInputChange}
                 placeholder="Type a message or click the mic to speak..."
                 className="textInput"
+                disabled={isLoading} // Disable input during loading
               />
             </form>
           )}
-
-          <div className="controls">
-            <button
-              className={`controlButton ${isRecording ? "active" : ""}`}
-              onClick={toggleRecording}
-              type="button"
-              aria-label={isRecording ? "Stop recording" : "Start recording"}
-            >
-              <i
-                className={
-                  isRecording ? "fas fa-microphone-slash" : "fas fa-microphone"
-                }
-              />
-            </button>
-
-            <button
-              className="sendButton"
-              onClick={handleSendMessage}
-              disabled={
-                (inputMode === "text" && !input.trim()) ||
-                (inputMode === "voice" && !transcript.trim()) ||
-                isLoading
-              }
-              type="submit"
-              aria-label="Send message"
-            >
-              <i className="fas fa-paper-plane" />
-            </button>
-          </div>
+          <button
+            className="sendButton"
+            onClick={handleSendMessage}
+            disabled={
+              (inputMode === "text" && !input.trim()) ||
+              (inputMode === "voice" && !transcript.trim()) ||
+              isLoading
+            }
+            type="submit"
+            aria-label="Send message"
+          >
+            <i className="fas fa-paper-plane" />
+          </button>
         </div>
+
+        <i class="fa-solid fa-robot ai-bg"></i>
       </div>
     </div>
   );

@@ -20,6 +20,11 @@ const mainNav = [
     icon: "fa-brands fa-hive",
   },
   {
+      display: "Flux AI",
+      path: "/chat-ai",
+      icon: "fa-solid fa-robot"
+  },
+  {
     display: "Tạo",
     path: "/card/create",
     icon: "fa-solid fa-plus",

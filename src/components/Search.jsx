@@ -28,15 +28,20 @@ const mainNav = [
       icon: "fa-brands fa-hive"
   },
   {
+      display: "Flux AI",
+      path: "/chat-ai",
+      icon: "fa-solid fa-robot"
+  },
+  {
       display: "Tạo",
       path: "/card/create",
       icon: "fa-solid fa-plus"
   },
-  {
-      display: "Lyric training",
-      path: "/lyric",
-      icon: "fa-solid fa-music"
-  }
+  // {
+  //     display: "Lyric training",
+  //     path: "/lyric",
+  //     icon: "fa-solid fa-music"
+  // }
 ]
 
 const Search = () => {
