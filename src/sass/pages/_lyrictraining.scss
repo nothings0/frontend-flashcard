@@ -111,7 +111,11 @@
   }
   &__input{
     font-size: 1.4rem;
-    flex: 1;
+    width: 40%;
+
+    @include tablet {
+      width: 100%;
+    }
     textarea{
       padding: 1rem;
       border: 1px solid var(--success-color);
@@ -155,6 +159,7 @@
     .sentences{
       font-size: 16px;
       margin-top: 2rem;
+      word-wrap: break-word;
     }
     &__control{
       display: flex;

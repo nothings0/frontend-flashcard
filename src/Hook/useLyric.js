@@ -4,7 +4,7 @@ import { GetTedTranslation } from "../redux/lyricApi";
 
 const useLyric = (slug, time) => {
   const [lyr, setLyr] = useState();
-  const timeIntro = time ? 2999 : 0;
+  const timeIntro = time ? 3100 : 0;
   const dispatch = useDispatch();
 
   useEffect(() => {
