@@ -40,7 +40,7 @@
 }
 .lyric-main {
   @include flex(flex-start, space-around);
-  gap: 0 2rem;
+  gap: 0 3rem;
   @include tablet {
     flex-direction: column;
     gap: 20px 0;
@@ -51,8 +51,8 @@
   &__video {
     position: sticky;
     top: $top-height;
-    padding: 20px 0 10px 0;
     background-color: var(--main-bg);
+    width: 60%;
     @include tablet {
       width: 100%;
       @include flex(center, center);
@@ -107,6 +107,59 @@
         padding-right: 10px;
         line-height: 30px;
       }
+    }
+  }
+  &__input{
+    font-size: 1.4rem;
+    flex: 1;
+    textarea{
+      padding: 1rem;
+      border: 1px solid var(--success-color);
+      width: 100%;
+      margin: 1.4rem 0;
+      font-size: 1.6rem;
+      border-radius: 10px;
+      resize: vertical; /* Allows vertical resizing */
+      min-height: 80px;
+      &:focus {
+        outline: none;
+        border-width: 3px;
+      }
+    }
+    .flex{
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+    button{
+      padding: 6px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      &.bg-outline{
+        background-color: transparent;
+        border: 1px solid var(--success-color);
+        color: var(--success-color);
+      }
+      &.bg-primary{
+        background-color: var(--success-color);
+        color: #fff;
+      }
+    }
+    i{
+      cursor: pointer;
+    }
+    i.disable{
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
+    .sentences{
+      font-size: 16px;
+      margin-top: 2rem;
+    }
+    &__control{
+      display: flex;
+      align-items: center;
+      gap: 2rem;
     }
   }
   &__submit {

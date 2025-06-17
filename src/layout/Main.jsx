@@ -20,6 +20,7 @@ import AllList from "../pages/AllList";
 import NotFound from "../pages/NotFound";
 import LyricTraining from "../pages/LyricTraining";
 import LyricMain from "../pages/LyricMain";
+import Dictation from "../pages/Dictation";
 import SpaceRep from "../pages/SpaceRep";
 import Pricing from "../pages/Pricing";
 import ProLearn from "../pages/proLearn/ProLearn";
@@ -50,7 +51,7 @@ const Main = () => {
         <Route path="/test/space-repetition" element={<SpaceRep />} />
         <Route path="/test/:slug" element={<Test />} />
         <Route path="/lyric" element={<LyricTraining />} />
-        <Route path="/lyric/:slug" element={<LyricMain />} />
+        <Route path="/lyric/:slug" element={<Dictation />} />
         <Route path="/calendar" element={<Calendar />} />
         <Route path="/pricing" element={<Pricing />} />
         <Route path="/payment/:invoiceId" element={<PaymentPage />} />

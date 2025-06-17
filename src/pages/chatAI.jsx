@@ -3,8 +3,10 @@ import { aiChat, aiVoiceChat } from "../redux/apiRequest";
 import { useSelector } from "react-redux";
 import { handleVoice } from "../util/speech";
 import Search from "../components/Search";
+import { useRequireAuth } from "../Hook/useRequireAuth";
 
 export default function VoiceChatPage() {
+  useRequireAuth();
   const [isRecording, setIsRecording] = useState(false);
   const [transcript, setTranscript] = useState("");
   const [inputMode, setInputMode] = useState("text");

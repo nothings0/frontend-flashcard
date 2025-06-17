@@ -5,8 +5,11 @@ import Search from "../components/Search";
 import Header from "../components/Header";
 import {ChangePassword} from "../redux/apiRequest"
 import { useDispatch, useSelector } from "react-redux";
+import {useRequireAuth} from "../Hook/useRequireAuth";
 
 const ChangePasswordPage = () => {
+  useRequireAuth();
+
   const dispatch = useDispatch();
   const accessToken = useSelector(state => state.user.currentUser?.accessToken);
 

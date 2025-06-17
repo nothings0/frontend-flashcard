@@ -37,11 +37,11 @@ const mainNav = [
       path: "/card/create",
       icon: "fa-solid fa-plus"
   },
-  // {
-  //     display: "Lyric training",
-  //     path: "/lyric",
-  //     icon: "fa-solid fa-music"
-  // }
+  {
+      display: "Lyric training",
+      path: "/lyric",
+      icon: "fa-solid fa-music"
+  }
 ]
 
 const Search = () => {
