@@ -915,13 +915,12 @@ export const getExerciseById = async (slug) => {
   }
 };
 
-export const createExercise = async ({ data: youtube_url, accessToken }) => {
-  console.log(youtube_url);
+export const createExercise = async ({ data, accessToken }) => {
   
   try {
     const response = await axiosJWT.post(
       `${genURL(`/v1/exercise`)}`,
-      {youtube_url},
+      data,
       {
         headers: { token: `Bearer ${accessToken}` },
       }

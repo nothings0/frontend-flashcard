@@ -77,7 +77,7 @@ const ExerciseManager = ({ accessToken }) => {
                     )
                 );
             } else {
-                const newExercise = await createExercise({data: formData.slug, accessToken});
+                const newExercise = await createExercise({data: formData, accessToken});
                 setExercises((prev) => [...prev, newExercise]);
             }
             setModalOpen(false);
