@@ -896,6 +896,66 @@ export const deletePricing = async ({ id, accessToken }) => {
     throw error;
   }
 };
+// exercise api
+export const getExercises = async () => {
+  try {
+    const res = await axios.get(`${genURL(`/v1/exercise`)}`);
+    return res.data.exercises;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getExerciseById = async (slug) => {
+  try {
+    const response = await axios.get(`${genURL(`/v1/exercise/${slug}`)}`);
+    return response.data.exercise;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const createExercise = async ({ data: youtube_url, accessToken }) => {
+  console.log(youtube_url);
+  
+  try {
+    const response = await axiosJWT.post(
+      `${genURL(`/v1/exercise`)}`,
+      {youtube_url},
+      {
+        headers: { token: `Bearer ${accessToken}` },
+      }
+    );
+    return response.data.exercise;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const updateExercise = async ({ id, data, accessToken }) => {
+  try {
+    const response = await axiosJWT.patch(
+      `${genURL(`/v1/exercise/${id}`)}`,
+      data,
+      {
+        headers: { token: `Bearer ${accessToken}` },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const deleteExercise = async ({ id, accessToken }) => {
+  try {
+    await axiosJWT.delete(`${genURL(`/v1/exercise/${id}`)}`, {
+      headers: { token: `Bearer ${accessToken}` },
+    });
+  } catch (error) {
+    throw error;
+  }
+};
 
 // invoice api
 export const updatePlan = async ({ accessToken }) => {

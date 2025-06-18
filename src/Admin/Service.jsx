@@ -4,6 +4,7 @@ import Notification from "./components/Notification";
 import PlusRequests from "./components/PlusRequests";
 import BannerManager from "./components/Banner";
 import PricingManager from "./components/Pricing";
+import ExerciseManager from "./components/Exercise";
 
 const Service = () => {
   const accessToken = useSelector(
@@ -15,6 +16,7 @@ const Service = () => {
       {/* <ContactList accessToken={accessToken} /> */}
       <div className="service__left">
         <Notification accessToken={accessToken} />
+        <ExerciseManager />
       </div>
       <div className="service__right">
         <BannerManager accessToken={accessToken}/>

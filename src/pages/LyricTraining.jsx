@@ -1,13 +1,13 @@
 import React from "react";
 import Search from "../components/Search";
-import { GetListTed } from "../redux/lyricApi";
 import Skeleton from "../components/Skeleton";
 import { useQuery } from "react-query";
+import { getExercises } from "../redux/apiRequest";
 const LyricItem = React.lazy(() => import("./LyricItem"));
 
 const LyricTraining = () => {
   const { data: listData, isLoading } = useQuery({
-    queryFn: () => GetListTed(),
+    queryFn: () => getExercises(),
     queryKey: "list-training",
     staleTime: 24 * 60 * 60 * 1000,
   });
@@ -19,7 +19,7 @@ const LyricTraining = () => {
         <Skeleton />
       ) : (
         <div className="lyric-training__container">
-          {listData?.topic.videos.nodes.map((item, index) => (
+          {listData?.map((item, index) => (
             <LyricItem item={item} key={index} />
           ))}
         </div>
