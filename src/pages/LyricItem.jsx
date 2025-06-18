@@ -14,6 +14,7 @@ const LyricItem = ({ item }) => {
           Posted {moment(item?.createdAt).format("MMM YYYY")}
         </div>
       </div>
+      <span className="level">{item.level}</span>
     </Link>
   );
 };

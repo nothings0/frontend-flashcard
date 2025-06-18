@@ -5,6 +5,7 @@
   }
   &__item {
     width: 100%;
+    position: relative;
     &__img {
       position: relative;
       img {
@@ -35,6 +36,15 @@
       font-size: 1.4rem;
       font-weight: 400;
       line-height: 1.6;
+    }
+    .level{
+      position: absolute;
+      padding: 6px 10px;
+      top: 0;
+      right: 0;
+      background-color: var(--success-color);
+      color: #fff;
+      border-radius: 10px;
     }
   }
 }
