@@ -97,8 +97,12 @@
                     gap: 1rem;
                 }
                 h2{
-                    font-size: 2rem;
-                font-weight: 700;
+                    font-size: 2.75rem;
+                    font-weight: 700;
+
+                    @include mobile{
+                        font-size: 1.8rem;
+                    }
                 }
 
                 span{
@@ -164,8 +168,8 @@
             &__des{
                 font-size: 1.5rem;
                 line-height: 1.8rem;
-                & > span{
-                    font-weight: 600;
+                p{
+                    margin-bottom: 1rem;
                 }
                 &__item{
                     margin-bottom: 1rem;
@@ -286,8 +290,6 @@
                         color: $main-color
                     }
                 }
-            }
-            &__des{
             }
             & > p{
                 font-size: 1.4rem;

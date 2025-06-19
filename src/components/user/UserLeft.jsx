@@ -16,7 +16,8 @@ const UserLeft = ({data}) => {
                 Giới thiệu
             </div>
             <div className="user__left__item__des">
-                <span>Bắt đầu học tập trên <span>Fluxquiz.com</span> từ <b>{day}</b></span>
+                <p>Bắt đầu học tập trên <b>Fluxquiz</b> từ <b>{day}</b></p>
+                <p>Mã giới thiệu: <b>{data?.referralCode || "None"}</b></p>
             </div>
         </div>
         <UserInfo data={data}/>

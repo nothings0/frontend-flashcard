@@ -133,7 +133,7 @@ const SearchAva = () => {
               onClick={handleLogoutActive}
               ref={logoutRef}
             >
-              <img src={profile ? profile : ava} alt="Avatar" />
+              <img src={profile ? profile : ava} alt="Avatar" className={`${user ? user?.plan.type : ""}`}/>
               <div
                 className={`searching__ava__list sm ${isLogoutActive ? "active" : ""
                   }`}

@@ -859,8 +859,8 @@ export const getPries = async () => {
 
 export const getPricingById = async (id) => {
   try {
-    const response = await axiosJWT.get(`${genURL(`/v1/pricing`, { id })}`);
-    return response.data.pricing;
+    const response = await axiosJWT.get(`${genURL(`/v1/pricing/${id}`)}`);
+    return response.data.data;
   } catch (error) {
     throw error;
   }
@@ -1016,6 +1016,14 @@ export const getInvoices = async ({ page, limit, skip = 0, accessToken }) => {
     console.log(error);
   }
 };
+export const verifyReferralCode = async (code, accessToken) => {
+  const res = await axiosJWT.get(`${genURL(`/v1/affiliate/verify`, { referralCode: code })}`, {
+    headers: { token: `Bearer ${accessToken}` },
+  });
+  return res.data.data;
+};
+
+
 // admin
 export const statistical = async ({ accessToken, period }) => {
   try {

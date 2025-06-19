@@ -27,6 +27,7 @@ import ProLearn from "../pages/proLearn/ProLearn";
 import PaymentPage from "../pages/Payment";
 import ChatWindow from "../pages/chatAI";
 import VoiceRecorder from "../components/VoiceRecorder";
+import Checkout from "../pages/Checkout";
 
 const Main = () => {
   return (
@@ -54,6 +55,7 @@ const Main = () => {
         <Route path="/lyric/:slug" element={<Dictation />} />
         <Route path="/calendar" element={<Calendar />} />
         <Route path="/pricing" element={<Pricing />} />
+        <Route path="/checkout/:plan" element={<Checkout />} />
         <Route path="/payment/:invoiceId" element={<PaymentPage />} />
         <Route path="/chat-ai" element={<ChatWindow />} />
 

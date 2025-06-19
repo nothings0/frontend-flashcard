@@ -385,6 +385,9 @@
           border-radius: 50%;
           object-fit: cover;
           cursor: pointer;
+          &.MONTHLY, &.YEARLY {
+            border: 3px solid #ffa318;
+          }
         }
 
         // &__list{
