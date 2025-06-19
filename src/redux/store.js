@@ -11,7 +11,7 @@ import audioSlice from "./audioSlice";
 const persistConfig = {
   key: "root",
   storage,
-  blacklist: ["middle"],
+  blacklist: ["middle", "user"],
 };
 
 const rootReducer = combineReducers({

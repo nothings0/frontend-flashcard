@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import { useRef } from "react";
 import useOnEnter from "../../Hook/useOnEnter";
 
 const Define = ({ data, setStep }) => {

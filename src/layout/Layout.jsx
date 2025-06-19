@@ -12,16 +12,26 @@ import QuizLive from "../pages/QuizLive";
 import QuizRoot from "../pages/QuizRoot";
 import ChatWidget from "../components/ChatWidget";
 import ScrollToTop from "../components/ScrollToTop";
+import { syncUserToLocal } from "../util";
 
 const Layout = () => {
   const dispatch = useDispatch();
   const { theme } = useSelector((state) => state.theme);
   const { toast } = useSelector((state) => state.toast);
+  const user = useSelector((state) => state.user.currentUser);
 
   useEffect(() => {
     const themeMode = localStorage.getItem("themeMode");
     dispatch(toggle(themeMode));
   }, [dispatch]);
+
+  useEffect(() => {
+    const token = JSON.parse(localStorage.getItem("accessToken"));
+    
+    if (token && !user) {
+      syncUserToLocal(token, dispatch);
+    }
+  }, []);
 
   ReactGA.initialize("G-QL0WF8XH3D");
 

@@ -36,7 +36,7 @@ const Listen = () => {
       setModalType(2);
       setModalOpen(true);
     } else {
-      setData(res);
+      setData(res.question);
       setRound((round) => round + 1);
     }
   };
@@ -47,7 +47,7 @@ const Listen = () => {
   const handleIndex = () => {
     dispatch(play());
     let nextIndex = index + 1;
-    if (nextIndex < data.question.length) {
+    if (nextIndex < data.length) {
       setIndex(nextIndex);
       setResult({});
       setIsResult(false);
@@ -59,7 +59,7 @@ const Listen = () => {
   const handleQues = async () => {
     let ques = {
       answer: answer,
-      id: data.question[index]._id,
+      id: data[index]._id,
     };
 
     const res = await GetMarkListen(dispatch, slug, ques, user);
@@ -94,14 +94,14 @@ const Listen = () => {
         <Search />
         <HeaderPrimary
           value={index}
-          length={data.question?.length}
+          length={data?.length}
           round={round}
           title="Luyện nghe"
         />
         <ListenCpn
           subType={true}
           handleQues={handleQues}
-          data={data.question[index]}
+          data={data[index]}
           setAnswer={setAnswer}
           answer={answer}
           isResult={isResult}
@@ -117,7 +117,7 @@ const Listen = () => {
             </ModalTitle>
             <ModalBody>
               <p>
-                Bạn trả lời đúng {mark}/{data.question.length}
+                Bạn trả lời đúng {mark}/{data.length}
               </p>
             </ModalBody>
             <ModalFooter>

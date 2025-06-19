@@ -41,10 +41,19 @@ export const LoginUser = async (user, dispatch) => {
 };
 
 export const getCurrentUser = async (accessToken) => {
-  const res = await axiosJWT.get(`${genURL("/v1/auth/user/me")}`, {
-    headers: { token: `Bearer ${accessToken}` },
-  });
-  return res.data;
+  if (!accessToken) {
+    console.error("Missing accessToken");
+    return;
+  }
+  try {
+    const res = await axiosJWT.get(`${genURL("/v1/auth/user/me")}`, {
+      headers: { token: `Bearer ${accessToken}` },
+    });
+
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const LoginGoogle = async (id_token, dispatch, navigate) => {
@@ -916,15 +925,10 @@ export const getExerciseById = async (slug) => {
 };
 
 export const createExercise = async ({ data, accessToken }) => {
-  
   try {
-    const response = await axiosJWT.post(
-      `${genURL(`/v1/exercise`)}`,
-      data,
-      {
-        headers: { token: `Bearer ${accessToken}` },
-      }
-    );
+    const response = await axiosJWT.post(`${genURL(`/v1/exercise`)}`, data, {
+      headers: { token: `Bearer ${accessToken}` },
+    });
     return response.data.exercise;
   } catch (error) {
     throw error;

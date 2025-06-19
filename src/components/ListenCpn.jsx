@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { handleVoice } from "../util/speech";
 import InputAnswer from "./InputAnswer.jsx";
 
 const ListenCpn = ({
@@ -11,9 +10,10 @@ const ListenCpn = ({
   handleIndex,
   result,
   subType,
-  lang
+  lang,
 }) => {
   const [isShow, setShow] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
   const handleEnter = (e) => {
     if (e.key === "Enter") {
       handleQues();
@@ -22,6 +22,17 @@ const ListenCpn = ({
   const handleChange = (e) => {
     setAnswer(e.target.value);
   };
+
+  const handleListen = (url) => {
+    const audio = new Audio(url);
+    setIsPlaying(true);
+    audio.play().catch(() => {
+      alert("Trình duyệt không hỗ trợ tốt, vui lòng dùng Chrome.");
+      setIsPlaying(false);
+    });
+    audio.onended = () => setIsPlaying(false);
+  };
+
   return (
     <div className="listen__container">
       <div className="listen__top">
@@ -29,8 +40,8 @@ const ListenCpn = ({
           <div className="listen__top__define__title">
             Ấn vào loa để nghe
             <i
-              className="fa-solid fa-volume-high"
-              onClick={() => handleVoice(data?.prompt, lang)}
+              className={`fa-solid fa-volume-high speaker-icon ${isPlaying ? "active" : ""}`}
+              onClick={() => handleListen(data?.prompt)}
             ></i>
           </div>
           <div className="listen__top__define__alert">

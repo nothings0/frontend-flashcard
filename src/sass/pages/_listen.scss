@@ -22,9 +22,36 @@
       &__title {
         font-size: 1.4rem;
         @include flex(center, unset);
-        gap: 0 1.5rem;
+        gap: 0 4rem;
         i {
           cursor: pointer;
+          font-size: 4rem;
+          &:hover {
+            color: $main-color;
+          }
+          &.active {
+            color: #00c8ff;
+            animation: pulse 1s infinite;
+            pointer-events: none;
+          }
+
+          @keyframes pulse {
+            0% {
+              transform: translateX(0);
+            }
+            25% {
+              transform: translateX(-2px);
+            }
+            50% {
+              transform: translateX(2px);
+            }
+            75% {
+              transform: translateX(-2px);
+            }
+            100% {
+              transform: translateX(0);
+            }
+          }
         }
       }
       &__alert {

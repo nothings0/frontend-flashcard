@@ -59,6 +59,9 @@ const refreshToken = async () => {
 axiosJWT.interceptors.request.use(
   async (config) => {
     const user = store.getState().user.currentUser;
+    if(user === null || !user?.accessToken) {
+      return config;
+    }
     let date = new Date();
     const decodeDToken = jwt_decode(user?.accessToken);
     if (decodeDToken.exp < date.getTime() / 1000) {
