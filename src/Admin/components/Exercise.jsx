@@ -14,7 +14,7 @@ const ExerciseManager = ({ accessToken }) => {
     const [isEditMode, setIsEditMode] = useState(false);
     const [currentExercise, setCurrentExercise] = useState(null);
     const [formData, setFormData] = useState({
-        slug: "",
+        youtube_url: "",
         level: "",
     });
     const [error, setError] = useState("");
@@ -44,7 +44,7 @@ const ExerciseManager = ({ accessToken }) => {
 
     // Open modal for creating a new exercise
     const openCreateModal = () => {
-        setFormData({ slug: "", level: "" });
+        setFormData({ youtube_url: "", level: "" });
         setIsEditMode(false);
         setError("");
         setModalOpen(true);
@@ -53,7 +53,7 @@ const ExerciseManager = ({ accessToken }) => {
     // Open modal for editing a exercise
     const openEditModal = (exercise) => {
         setFormData({
-            slug: exercise.slug,
+            youtube_url: exercise.youtube_url,
             level: exercise.level,
         });
         setCurrentExercise(exercise);
@@ -81,7 +81,7 @@ const ExerciseManager = ({ accessToken }) => {
                 setExercises((prev) => [...prev, newExercise]);
             }
             setModalOpen(false);
-            setFormData({ slug: "", level: "" });
+            setFormData({ youtube_url: "", level: "" });
             setError("");
         } catch (err) {
             setError(err.response?.data?.message || "Failed to save exercise");
@@ -123,8 +123,8 @@ const ExerciseManager = ({ accessToken }) => {
                     <table className="table">
                         <thead>
                             <tr>
-                                <th>slug</th>
-                                <th>level</th>
+                                <th>Title</th>
+                                <th>Level</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -132,7 +132,7 @@ const ExerciseManager = ({ accessToken }) => {
                             {exercises.map((n) => (
                                 <tr key={n._id}>
                                     <td>
-                                        <Link to={`/lyric/${n.slug}`}>{n.title}</Link>
+                                        <Link to={`/lyric/${n.youtube_url}`}>{n.title}</Link>
                                     </td>
                                     <td>
                                         {n.level}
@@ -164,13 +164,13 @@ const ExerciseManager = ({ accessToken }) => {
                     <ModalBody className="modal-body">
                         {error && <p className="error">{error}</p>}
                         <div className="modal-input-wrap">
-                            <label htmlFor="slug">Slug:</label>
+                            <label htmlFor="youtube_url">Youtube Url:</label>
                             <input
                                 type="text"
-                                id="slug"
-                                name="slug"
-                                placeholder="Slug"
-                                value={formData.slug}
+                                id="youtube_url"
+                                name="youtube_url"
+                                placeholder="https://www.youtube.com/watch?v=UqU19dR0bFE"
+                                value={formData.youtube_url}
                                 onChange={handleInputChange}
                             />
                         </div>

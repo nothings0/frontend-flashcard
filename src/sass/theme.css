@@ -2,7 +2,7 @@
   --main-bg-light: #ffffff;
   --second-bg-light: #fafafb;
   --txt-color-light: #455560;
-  --box-shadow-light: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  --box-shadow-light: rgba(149, 157, 165, 0.2) 0px 2px 4px;
   --hover-light: #e8ebed;
   --icon-light: rgba(22, 25, 35, 0.25);
   --icon-light-2: rgba(22, 25, 35, 0.75);
@@ -12,7 +12,7 @@
   --main-bg-dark: #2d2d2d;
   --second-bg-dark: #202020;
   --txt-color-dark: #dddddd;
-  --box-shadow-dark: rgba(0, 0, 0, 0.2) 0px 5px 10px;
+  --box-shadow-dark: rgba(0, 0, 0, 0.2) 0px 2px 4px;
   --hover-dark: #3f434c;
   --icon-dark: rgba(215, 215, 215, 0.4);
   --icon-dark-2: rgba(215, 215, 215, 0.95);

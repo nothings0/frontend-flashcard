@@ -1,6 +1,4 @@
-import React from "react";
 import { Link } from "react-router-dom";
-import moment from "moment-timezone";
 
 const LyricItem = ({ item }) => {
   return (
@@ -10,11 +8,8 @@ const LyricItem = ({ item }) => {
       </div>
       <div className="lyric-training__item__txt">
         <div className="lyric-training__item__title">{item.title}</div>
-        <div className="lyric-training__item__time">
-          Posted {moment(item?.createdAt).format("MMM YYYY")}
-        </div>
       </div>
-      <span className="level">{item.level}</span>
+      <span className={`level level__${item.level}`}>{item.level}</span>
     </Link>
   );
 };

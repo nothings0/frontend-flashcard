@@ -217,7 +217,8 @@ const LyricPractice = () => {
 
   const handlePlay = () => {
     if (subtitles.length > 0 && currentSentenceIndex < subtitles.length) {
-      playerRef.current.seekTo(subtitles[currentSentenceIndex].sTime / 1000);
+      const timeSeek = subtitles[currentSentenceIndex].sTime / 1000 > 1 ? subtitles[currentSentenceIndex].sTime / 1000 : 0;
+      playerRef.current.seekTo(timeSeek);
       setIsPlaying(true);
     }
   };
