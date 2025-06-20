@@ -124,10 +124,10 @@ input {
   &-REGULAR{
     background-color: #1846dd;
   }
-  &-PRO{
+  &-PRO, &-REJECTED{
     background-color: #dd2f18;
   }
-  &-PLUS{
+  &-PLUS, &-SUCCESS{
     background-color: #18dd18;
   }
   &-PENDING{

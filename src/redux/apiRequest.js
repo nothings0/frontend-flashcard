@@ -980,11 +980,11 @@ export const updatePlan = async ({ accessToken }) => {
   }
 };
 
-export const createInvoice = async ({ planType, amount, accessToken }) => {
+export const createInvoice = async ({ planType, amount, referralCode, accessToken }) => {
   try {
     const res = await axiosJWT.post(
       `${genURL(`/v1/invoice`)}`,
-      { planType, amount },
+      { planType, amount, referralCode },
       {
         headers: { token: `Bearer ${accessToken}` },
       }

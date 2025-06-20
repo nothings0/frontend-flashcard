@@ -1,5 +1,4 @@
-import React from "react";
-import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import NavBar from "./components/NavBar";
 import AdminDashboard from "./AdminDashboard";
 import { useSelector } from "react-redux";
@@ -13,15 +12,11 @@ import { useEffect } from "react";
 
 const Admin = () => {
   const isAdmin = useSelector((state) => state.user.currentUser?.user.isAdmin);
-  const isLoading = useSelector((state) => state.user.isLoading);
   const navigate = useNavigate();
 
   useEffect(() => {
     if (!isAdmin) navigate("/");
   }, [isAdmin]);
-
-  console.log(isAdmin, isLoading);
-  
 
   return (
     <Helmet title="Admin">

@@ -65,7 +65,6 @@ function PaymentPage() {
         setInvoice(res.invoice);
         if (res.invoice.status === "SUCCESS") {
           setStatus("SUCCESS");
-          await syncUserToLocal(accessToken, dispatch);
           setShowSuccessPopup(true);
           clearInterval(intervalId);
         }

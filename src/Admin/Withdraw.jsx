@@ -27,7 +27,7 @@ const AdminWithdrawal = () => {
 
   return (
     <div className="header-title">
-      <h1>Quản lý người dùng</h1>
+      <h1>Quản lý rút tiền</h1>
       <List
         data={data}
         currentPage={page}

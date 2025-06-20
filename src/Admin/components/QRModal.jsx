@@ -13,7 +13,7 @@ const QRModal = ({ data, onClose, accessToken }) => {
     const intervalId = setInterval(async () => {
       try {
         const res = await getRequestWithdrawal(data._id, accessToken);
-        if (res.invoice.status === "SUCCESS") {
+        if (res.status === "SUCCESS") {
           clearInterval(intervalId);
           queryClient.invalidateQueries("admin-withdrawals")
           onClose()
@@ -30,7 +30,10 @@ const QRModal = ({ data, onClose, accessToken }) => {
     <Modal modalOpen={true} setModalOpen={onClose}>
       <ModalTitle fnClose={onClose}>Thanh toán</ModalTitle>
       <ModalBody>
+        {
+          data.status === "SUCCESS" ? <p>✅ Đã thanh toán</p> :
         <img src={qrUrl} alt="QR Code" className="qr-image" />
+        }
       </ModalBody>
     </Modal>
   );

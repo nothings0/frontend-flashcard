@@ -72,6 +72,7 @@ const Checkout = () => {
       const res = await createInvoice({
         planType: planType.type,
         amount: total,
+        referralCode: referralCode.trim(),
         accessToken,
       });
 
