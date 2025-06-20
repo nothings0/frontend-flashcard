@@ -4,7 +4,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const userSlice = createSlice({
     name: "user",
     initialState: {
-        currentUser: null
+        currentUser: null,
+        isLoading: true
     },
     reducers: {
         loginSuccess: (state, actions) => {
@@ -17,10 +18,13 @@ const userSlice = createSlice({
         logoutSuccess: (state, _) => {
             state.currentUser = null
             localStorage.removeItem("accessToken");
+        },
+        setLoading: (state, actions) => {
+            state.isLoading = actions.payload
         }
     }
 })
 
 
-export const {loginSuccess, logoutSuccess} = userSlice.actions
+export const {loginSuccess, logoutSuccess, setLoading} = userSlice.actions
 export default userSlice.reducer

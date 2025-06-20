@@ -1,0 +1,228 @@
+.income-page {
+  h2 {
+    font-size: 2.8rem;
+    margin-bottom: 2rem;
+  }
+
+  .balance-box {
+    background: #f5faff;
+    border: 1px solid #cce5ff;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    margin-bottom: 2rem;
+
+    p {
+      margin: 0;
+      font-size: 1.4rem;
+    }
+
+    h3 {
+      font-size: 2.4rem;
+      color: #007bff;
+      margin-top: 0.5rem;
+    }
+  }
+
+  .withdraw-section {
+    margin-bottom: 2rem;
+
+    h4 {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+    }
+
+    input {
+      padding: 1rem;
+      font-size: 1.4rem;
+      width: 100%;
+      border: 1px solid #ccc;
+      border-radius: 0.8rem;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      font-size: 1.4rem;
+      color: #333;
+    }
+
+    .edit-btn {
+      background: #ffc107;
+
+      &:hover {
+        background: #e0a800;
+      }
+    }
+
+    .bank-actions{
+      font-size: 1.6rem;
+
+      &__button{
+        margin-top: 2rem;
+        @include flex(center, unset);
+        gap: 2rem;
+      }
+    }
+
+    button {
+      width: 100%;
+      padding: 1rem;
+      background: #28a745;
+      color: #fff;
+      border: none;
+      font-size: 1.4rem;
+      border-radius: 0.8rem;
+      cursor: pointer;
+
+      &:hover {
+        background: #218838;
+      }
+
+      &:disabled {
+        background: #ccc;
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  .no-bank {
+    padding: 1rem;
+    background: #fff3cd;
+    border: 1px solid #ffeeba;
+    border-radius: 0.8rem;
+    margin-bottom: 2rem;
+
+    p {
+      margin: 0 0 0.5rem;
+      font-size: 1.4rem;
+    }
+
+    span {
+      color: #007bff;
+      text-decoration: underline;
+      font-size: 1.4rem;
+      cursor: pointer;
+    }
+  }
+
+  .history-section {
+    h4 {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+    }
+
+    .withdraw-history-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 1.4rem;
+      margin-top: 2rem;
+      background: #fff;
+      border-radius: 1rem;
+      overflow: hidden;
+      box-shadow: 0 0.3rem 1rem rgba(0, 0, 0, 0.05);
+
+      th,
+      td {
+        padding: 1.2rem;
+        border-bottom: 1px solid #eee;
+        text-align: left;
+      }
+
+      th {
+        background-color: #f5f7ff;
+        color: #444;
+        font-weight: 600;
+      }
+
+      tr:last-child td {
+        border-bottom: none;
+      }
+
+      td {
+        color: #333;
+      }
+
+      .status {
+        font-weight: bold;
+        text-transform: uppercase;
+        padding: 4px 8px;
+        border-radius: 5px;
+
+        &.success {
+          color: #28a745;
+          background-color: #9bffb2;
+        }
+
+        &.pending {
+          color: #ffc107;
+          background-color: #fff7db;
+        }
+
+        &.rejected {
+          color: #dc3545;
+          background-color: #ffdadd;
+        }
+      }
+    }
+  }
+
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+  }
+
+  .modal-box {
+    background: white;
+    padding: 2rem;
+    border-radius: 1rem;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.1);
+
+    h3 {
+      margin-bottom: 1.5rem;
+      font-size: 2rem;
+    }
+
+    input {
+      width: 100%;
+      padding: 1rem;
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
+      border-radius: 0.5rem;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      width: 100%;
+      padding: 1rem;
+      font-size: 1.4rem;
+      margin-top: 0.5rem;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 0.6rem;
+      cursor: pointer;
+
+      &:hover {
+        background: #0062cc;
+      }
+    }
+
+    .close-btn {
+      background: #ccc;
+      margin-top: 1rem;
+
+      &:hover {
+        background: #999;
+      }
+    }
+  }
+}

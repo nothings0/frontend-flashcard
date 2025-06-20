@@ -39,7 +39,7 @@ const List = ({
                         {headers.map((key) => (
                             <th key={key}>{formatHeader(key)}</th>
                         ))}
-                        {(onEdit || onDelete) && <th>Actions</th>}
+                        {(onEdit || onDelete || onView) && <th>Actions</th>}
                     </tr>
                 </thead>
                 <tbody>

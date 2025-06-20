@@ -1,6 +1,6 @@
 import axios from "axios";
 import axiosJWT, { genURL } from "./axiosConfig";
-import { loginSuccess, logoutSuccess } from "./userSlice";
+import { loginSuccess, logoutSuccess, setLoading } from "./userSlice";
 import { handleLoading, handleRemove } from "./middleSlice";
 import { showToast } from "./toastSlice";
 import { play } from "./audioSlice";
@@ -40,19 +40,22 @@ export const LoginUser = async (user, dispatch) => {
   }
 };
 
-export const getCurrentUser = async (accessToken) => {
+export const getCurrentUser = async (accessToken, dispatch) => {
   if (!accessToken) {
     console.error("Missing accessToken");
     return;
   }
   try {
+    dispatch(setLoading(true))
     const res = await axiosJWT.get(`${genURL("/v1/auth/user/me")}`, {
       headers: { token: `Bearer ${accessToken}` },
     });
-
+    dispatch(loginSuccess(res.data));
     return res.data;
   } catch (error) {
-    console.log(error);
+    throw error
+  } finally {
+    dispatch(setLoading(false))
   }
 };
 
@@ -1005,6 +1008,7 @@ export const getInvoice = async ({ invoiceId, accessToken }) => {
     console.log(error);
   }
 };
+
 export const getInvoices = async ({ page, limit, skip = 0, accessToken }) => {
   try {
     const res = await axiosJWT.get(`${genURL(`/v1/invoice/admin`)}`, {
@@ -1016,11 +1020,53 @@ export const getInvoices = async ({ page, limit, skip = 0, accessToken }) => {
     console.log(error);
   }
 };
+
 export const verifyReferralCode = async (code, accessToken) => {
   const res = await axiosJWT.get(`${genURL(`/v1/affiliate/verify`, { referralCode: code })}`, {
     headers: { token: `Bearer ${accessToken}` },
   });
   return res.data.data;
+};
+
+export const requestWithdrawal = async (accessToken) => {
+  const res = await axiosJWT.post(`${genURL(`/v1/affiliate/withdraw`)}`, {}, {
+    headers: { token: `Bearer ${accessToken}` },
+  });
+  return res.data.withdrawal;
+};
+export const getUserWithdrawals = async (accessToken) => {
+  const res = await axiosJWT.get(`${genURL(`/v1/affiliate/history-withdraw`)}`, {
+    headers: { token: `Bearer ${accessToken}` },
+  });
+  return res.data.data;
+};
+
+export const getRequestWithdrawal = async (id, accessToken) => {
+  const res = await axiosJWT.get(`${genURL(`/v1/affiliate/admin/withdraw/${id}`)}`, {
+    headers: { token: `Bearer ${accessToken}` },
+  });
+  return res.data.invoice;
+};
+
+export const getRequestWithdrawals = async (accessToken) => {
+  const res = await axiosJWT.get(`${genURL(`/v1/affiliate/admin/withdraws`)}`, {
+    headers: { token: `Bearer ${accessToken}` },
+  });
+  return res.data.invoices;
+};
+
+export const updateBankAccount = async (data, accessToken) => {
+  const res = await axiosJWT.post(`${genURL(`/v1/affiliate/bank-account`)}`, data, {
+    headers: { token: `Bearer ${accessToken}` },
+  });
+  return res.data.bankAccount;
+};
+
+export const getAffiliateInfo = async (accessToken) => {
+  const res = await axiosJWT.get(`${genURL(`/v1/affiliate/get-affiliate-info`)}`, {
+    headers: { token: `Bearer ${accessToken}` },
+  });
+  return res.data;
 };
 
 

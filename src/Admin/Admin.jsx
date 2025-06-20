@@ -8,6 +8,7 @@ import Helmet from "../components/Helmet";
 import Search from "../components/Search";
 import User from "./User";
 import Card from "./Card";
+import AdminWithdrawal from "./Withdraw";
 
 const Admin = () => {
   const isAdmin = useSelector((state) => state.user.currentUser?.user.isAdmin);
@@ -26,12 +27,13 @@ const Admin = () => {
               />
               <Route path="/user" element={<User />} />
               <Route path="/flashcard" element={<Card />} />
+              <Route path="/withdraw" element={<AdminWithdrawal />} />
               <Route path="/service" element={<Service />} />
             </Routes>
           </div>
         </> :
           <>
-            <Navigate to="/login" />
+            <Navigate to="/" />
           </>
       }
 

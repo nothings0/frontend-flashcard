@@ -6,6 +6,7 @@ import ActiveAccount from "../pages/activeAccount/ActiveAccount";
 import MidleActive from "../pages/activeAccount/MidleActive";
 import MiddleForgot from "../pages/forgotPassword/MiddleForgot";
 import ChangePasswordPage from "../pages/ChangePasswordPage";
+import IncomePage from "../pages/IncomePage";
 
 const UserRoute = () => {
   return (
@@ -13,6 +14,7 @@ const UserRoute = () => {
       <Routes>
         <Route path="/:username" element={<User />} />
         <Route path="/change-password" element={<ChangePasswordPage />} />
+        <Route path="/income" element={<IncomePage />} />
         <Route path="/active" element={<MidleActive />} />
         <Route path="/reset-password/:slug" element={<MiddleForgot />} />
         <Route path="/active/:slug" element={<ActiveAccount />} />

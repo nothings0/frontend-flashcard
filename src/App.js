@@ -9,7 +9,14 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 
 // ReactGA.initialize("G-QL0WF8XH3D")
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      retry: false
+    }
+  }
+});
 
 function App() {
   return (

@@ -1,5 +1,4 @@
 import { getCurrentUser } from "../redux/apiRequest";
-import { loginSuccess } from "../redux/userSlice";
 
 export const applyDrag = (arr, dragResult) => {
   const { removedIndex, addedIndex, payload } = dragResult;
@@ -83,6 +82,5 @@ export function getRandomArbitrary(min, max) {
 }
 
 export const syncUserToLocal = async (accessToken, dispatch) => {
-  const res = await getCurrentUser(accessToken);
-  dispatch(loginSuccess(res));
+  await getCurrentUser(accessToken, dispatch);
 };

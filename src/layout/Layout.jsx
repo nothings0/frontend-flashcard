@@ -13,12 +13,14 @@ import QuizRoot from "../pages/QuizRoot";
 import ChatWidget from "../components/ChatWidget";
 import ScrollToTop from "../components/ScrollToTop";
 import { syncUserToLocal } from "../util";
+import Skeleton from "../components/Skeleton";
 
 const Layout = () => {
   const dispatch = useDispatch();
   const { theme } = useSelector((state) => state.theme);
   const { toast } = useSelector((state) => state.toast);
   const user = useSelector((state) => state.user.currentUser);
+  const isLoading = useSelector((state) => state.user.isLoading);
 
   useEffect(() => {
     const themeMode = localStorage.getItem("themeMode");
@@ -27,7 +29,7 @@ const Layout = () => {
 
   useEffect(() => {
     const token = JSON.parse(localStorage.getItem("accessToken"));
-    
+
     if (token && !user) {
       syncUserToLocal(token, dispatch);
     }
@@ -42,15 +44,22 @@ const Layout = () => {
           theme === "dark" ? "theme-mode-dark" : "theme-mode-light"
         }`}
       >
-        <Routes>
-          <Route path="/admin/*" element={<Admin />} />
-          <Route path="/user/*" element={<UserRoute />} />
-          <Route path="/info/*" element={<OtherRoute />} />
-          <Route path="/live" element={<QuizLive />} />
-          <Route path="/live/:roomId" element={<QuizLive />} />
-          <Route path="/:slug/live" element={<QuizRoot />} />
-          <Route path="/*" element={<Main />} />
-        </Routes>
+        {isLoading ? (
+          <Skeleton />
+        ) : (
+          <>
+            <Routes>
+              <Route path="/admin/*" element={<Admin />} />
+              <Route path="/user/*" element={<UserRoute />} />
+              <Route path="/info/*" element={<OtherRoute />} />
+              <Route path="/live" element={<QuizLive />} />
+              <Route path="/live/:roomId" element={<QuizLive />} />
+              <Route path="/:slug/live" element={<QuizRoot />} />
+              <Route path="/*" element={<Main />} />
+            </Routes>
+          </>
+        )}
+
         {toast && <Toast />}
         <ChatWidget />
         <ScrollToTop />

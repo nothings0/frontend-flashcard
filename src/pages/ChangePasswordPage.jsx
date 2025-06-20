@@ -50,6 +50,7 @@ const ChangePasswordPage = () => {
                 <div className="form-group">
                   <label htmlFor="oldPassword">Mật khẩu cũ</label>
                   <Field
+                  autoFocus={true}
                     type="password"
                     name="oldPassword"
                     className="form-input"

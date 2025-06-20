@@ -147,6 +147,12 @@ const SearchAva = () => {
                   Trang cá nhân<i className="fa-solid fa-user"></i>
                 </Link>
                 <Link
+                  to={`/user/income`}
+                  className="searching__ava__list__item"
+                >
+                  Thu nhập<i className="fa-solid fa-user"></i>
+                </Link>
+                <Link
                   to={`/user/change-password`}
                   className="searching__ava__list__item"
                 >

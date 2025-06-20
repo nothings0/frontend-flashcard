@@ -17,6 +17,11 @@ const mainNav = [
         icon: "fa-solid fa-id-card"
     },
     {
+        display: "Rút tiền",
+        path: "/admin/withdraw",
+        icon: "fa-solid fa-id-card"
+    },
+    {
         display: "Service",
         path: "/admin/service",
         icon: "fa-brands fa-servicestack"

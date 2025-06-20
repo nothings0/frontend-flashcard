@@ -87,7 +87,7 @@ function PaymentPage() {
 
   if (!invoice) return <Skeleton type="loading" />;
 
-  const qrUrl = `https://qr.sepay.vn/img?bank=BIDV&acc=96247FLUXQUIZ&template=compact&amount=${invoice.amount}&des=${invoice.code}&accountName=PHAM VAN NHAN`;
+  const qrUrl = `https://qr.sepay.vn/img?acc=105874750114&bank=VietinBank&amount=${invoice.amount}&des=SEVQR+${invoice.code}&template=compact`;
 
   const progressPercent =
     ((COUNTDOWN_DURATION - remainingSeconds) / COUNTDOWN_DURATION) * 100;
@@ -163,11 +163,11 @@ function PaymentPage() {
               </p>
               <p>
                 <strong>Nội dung CK:</strong>{" "}
-                <span className="payment-code">{invoice.code}</span>
+                <span className="payment-code">SEVQR {invoice.code}</span>
               </p>
               <p className="note">
                 <strong>Lưu ý:</strong> Vui lòng giữ nguyên nội dung chuyển
-                khoản <strong>{invoice.code}</strong> để hệ thống tự động xác
+                khoản <strong>SEVQR {invoice.code}</strong> để hệ thống tự động xác
                 nhận thanh toán.
               </p>
             </div>

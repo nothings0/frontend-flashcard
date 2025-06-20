@@ -15,8 +15,8 @@ const Service = () => {
     <div className="service">
       {/* <ContactList accessToken={accessToken} /> */}
       <div className="service__left">
-        <Notification accessToken={accessToken} />
         <ExerciseManager />
+        <Notification accessToken={accessToken} />
       </div>
       <div className="service__right">
         <BannerManager accessToken={accessToken}/>
