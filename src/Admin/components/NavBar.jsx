@@ -19,7 +19,7 @@ const mainNav = [
     {
         display: "Rút tiền",
         path: "/admin/withdraw",
-        icon: "fa-solid fa-id-card"
+        icon: "fa-solid fa-money-bill"
     },
     {
         display: "Service",

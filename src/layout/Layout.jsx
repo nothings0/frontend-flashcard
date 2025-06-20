@@ -14,6 +14,7 @@ import ChatWidget from "../components/ChatWidget";
 import ScrollToTop from "../components/ScrollToTop";
 import { syncUserToLocal } from "../util";
 import Skeleton from "../components/Skeleton";
+import { setLoading } from "../redux/userSlice";
 
 const Layout = () => {
   const dispatch = useDispatch();
@@ -32,6 +33,8 @@ const Layout = () => {
 
     if (token && !user) {
       syncUserToLocal(token, dispatch);
+    }else if(!token) {
+      dispatch(setLoading(false))
     }
   }, []);
 

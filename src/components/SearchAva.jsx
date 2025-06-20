@@ -150,7 +150,7 @@ const SearchAva = () => {
                   to={`/user/income`}
                   className="searching__ava__list__item"
                 >
-                  Thu nhập<i className="fa-solid fa-user"></i>
+                  Thu nhập<i className="fa-solid fa-money-bill"></i>
                 </Link>
                 <Link
                   to={`/user/change-password`}
@@ -158,6 +158,7 @@ const SearchAva = () => {
                 >
                   Đổi mật khẩu<i className="fa-solid fa-user"></i>
                 </Link>
+                <br />
                 <div
                   className="searching__ava__list__item"
                   onClick={handleLogout}

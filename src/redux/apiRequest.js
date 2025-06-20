@@ -43,6 +43,7 @@ export const LoginUser = async (user, dispatch) => {
 export const getCurrentUser = async (accessToken, dispatch) => {
   if (!accessToken) {
     console.error("Missing accessToken");
+    dispatch(setLoading(false))
     return;
   }
   try {

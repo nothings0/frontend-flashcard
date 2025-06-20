@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import NavBar from "./components/NavBar";
 import AdminDashboard from "./AdminDashboard";
 import { useSelector } from "react-redux";
@@ -9,34 +9,33 @@ import Search from "../components/Search";
 import User from "./User";
 import Card from "./Card";
 import AdminWithdrawal from "./Withdraw";
+import { useEffect } from "react";
 
 const Admin = () => {
   const isAdmin = useSelector((state) => state.user.currentUser?.user.isAdmin);
+  const isLoading = useSelector((state) => state.user.isLoading);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!isAdmin) navigate("/");
+  }, [isAdmin]);
+
+  console.log(isAdmin, isLoading);
+  
 
   return (
     <Helmet title="Admin">
-      {
-        isAdmin ? <>
-          <div className="admin">
-            <NavBar />
-            <Search />
-            <Routes>
-              <Route
-                path="/"
-                element={<AdminDashboard />}
-              />
-              <Route path="/user" element={<User />} />
-              <Route path="/flashcard" element={<Card />} />
-              <Route path="/withdraw" element={<AdminWithdrawal />} />
-              <Route path="/service" element={<Service />} />
-            </Routes>
-          </div>
-        </> :
-          <>
-            <Navigate to="/" />
-          </>
-      }
-
+      <div className="admin">
+        <NavBar />
+        <Search />
+        <Routes>
+          <Route path="/" element={<AdminDashboard />} />
+          <Route path="/user" element={<User />} />
+          <Route path="/flashcard" element={<Card />} />
+          <Route path="/withdraw" element={<AdminWithdrawal />} />
+          <Route path="/service" element={<Service />} />
+        </Routes>
+      </div>
     </Helmet>
   );
 };

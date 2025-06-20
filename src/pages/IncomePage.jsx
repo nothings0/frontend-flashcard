@@ -150,7 +150,7 @@ const IncomePage = () => {
                 ) : (
                   <tr>
                     <td
-                      colSpan="3"
+                      colSpan="4"
                       style={{ textAlign: "center", padding: "1rem" }}
                     >
                       Không có lịch sử rút tiền
