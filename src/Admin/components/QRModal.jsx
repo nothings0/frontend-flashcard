@@ -16,6 +16,7 @@ const QRModal = ({ data, onClose, accessToken }) => {
         if (res.invoice.status === "SUCCESS") {
           clearInterval(intervalId);
           queryClient.invalidateQueries("admin-withdrawals")
+          onClose()
         }
       } catch (err) {
         console.error("Lỗi kiểm tra trạng thái:", err);
