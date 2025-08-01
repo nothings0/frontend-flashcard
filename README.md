@@ -2,6 +2,8 @@
 
 Đây là giao diện người dùng (frontend) cho ứng dụng Flashcard. Dự án sử dụng **ReactJS**
 
+Website: https://fluxquiz.vercel.app (sleep 30s)
+
 ## 🚀 Chức năng chính
 
 * 📌 Xác thực, phân quyền người dùng
